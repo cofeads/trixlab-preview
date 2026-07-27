@@ -56,6 +56,20 @@ assert.equal(document.querySelector('[data-studio]').dataset.hq,'true','all cust
 assert.equal(document.querySelector('[data-wrap-layer]').hidden,true,'crude vector polygons never stack over the customer photo');
 assert.equal(document.querySelector('[data-studio]').dataset.pattern,'bolt','design changes vector pattern');
 
+click('[data-tab="coverage"]');
+click('[data-coverage="side"]');
+assert.equal(document.querySelector('[data-studio]').dataset.coverage,'side','side kit becomes active');
+assert.equal(document.querySelector('[data-studio]').dataset.hq,'false','side kit uses the neutral base plus its own panel map');
+assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/trixx-2022-left/,'side kit is shown on the fixed neutral left base');
+assert.equal(document.querySelector('[data-wrap-layer]').hidden,false,'side-kit panel mapping is visible');
+assert.match(document.querySelector('[data-coverage-label]').textContent,/SIDE KIT/,'side-kit coverage label is visible');
+click('[data-coverage="accent"]');
+assert.equal(document.querySelector('[data-studio]').dataset.coverage,'accent','accent kit becomes active');
+assert.match(document.querySelector('[data-coverage-label]').textContent,/ACCENT KIT/,'accent-kit coverage label is visible');
+click('[data-coverage="full"]');
+assert.equal(document.querySelector('[data-studio]').dataset.hq,'true','full kit restores its finished render');
+assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),electricRender,'full kit restores the selected high-quality design');
+
 click('[data-products-open]');
 assert.ok(document.querySelector('[data-products-drawer]').classList.contains('open'),'product menu opens');
 assert.equal(document.querySelector('[data-product="trixx-1up"]').disabled,true,'Trixx 1UP is coming soon and cannot select the wrong geometry');
@@ -68,8 +82,17 @@ click('[data-randomize]');
 assert.match(document.querySelector('[data-variant-id]').textContent,/\/ 240/,'random button selects one of 240 live variants');
 
 click('[data-tab="mats"]');
+assert.equal(document.querySelector('[data-studio]').dataset.view,'rear','mats step automatically opens the useful rear perspective');
+assert.equal(document.querySelector('[data-mat-layer]').hidden,false,'traction mats are visible in rear view');
+assert.equal(document.querySelector('[data-camera-mats="rear"]').hasAttribute('hidden'),false,'rear mat geometry is selected');
 click('[data-mat-pattern="hive"]');
 assert.equal(document.querySelector('[data-studio]').dataset.matPattern,'hive','mat pattern changes');
+click('[data-view="left"]');
+assert.equal(document.querySelector('[data-camera-mats="left"]').hasAttribute('hidden'),false,'left perspective uses its matching traction mat geometry');
+click('[data-view="right"]');
+assert.equal(document.querySelector('[data-camera-mats="right"]').hasAttribute('hidden'),false,'right perspective uses its matching traction mat geometry');
+click('[data-view="front"]');
+assert.equal(document.querySelector('[data-mat-layer]').hidden,true,'front perspective hides mats that are not visible from this angle');
 const matsToggle = document.querySelector('[data-mats-enabled]');
 const priceWithMats = document.querySelector('[data-price]').textContent;
 matsToggle.checked=false;
@@ -118,6 +141,7 @@ click('[data-save]');
 assert.equal(document.querySelector('[data-build-count]').textContent,'1','build saves locally');
 click('[data-add]');
 assert.equal(document.querySelector('[data-cart] b').textContent,'1','configured kit adds to cart');
+assert.equal(JSON.parse(dom.window.localStorage.getItem('trixlab-cart-v1')).length,1,'configured cart item persists for homepage checkout');
 
 console.log('TRIXLAB interactions: base-lock, product menu, mats, logo drag, save and cart passed.');
 dom.window.close();
