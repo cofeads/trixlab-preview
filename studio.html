@@ -70,6 +70,7 @@
           <button type="button" data-view="front">FRONT</button>
           <button type="button" data-view="rear">REAR + MATS</button>
           <button type="button" data-view="template">PANEL LAYOUT</button>
+          <button type="button" data-view="mat-template">MAT LAYOUT</button>
         </div>
       </div>
       <div class="vehicle-viewer" data-viewer>
@@ -206,24 +207,32 @@
               <pattern id="photo-mat-wave" width="24" height="16" patternUnits="userSpaceOnUse"><path d="M0 9Q6 1 12 9t12 0" fill="none" stroke="var(--mat-bottom)" stroke-width="3"/></pattern>
             </defs>
             <g class="camera-mats" data-camera-mats="left">
-              <path class="photo-mat" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350Z"/>
-              <path class="photo-mat" d="M554 320 618 337 651 373 627 385 586 365Z"/>
-              <path class="photo-mat-routing" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350ZM554 320 618 337 651 373 627 385 586 365Z"/>
-              <text x="438" y="340" data-mat-preview>TRIXLAB</text>
+              <path class="photo-mat mat-piece-footwell" d="M365 331 478 315 566 329 553 351 462 347 389 362 361 350Z"/>
+              <path class="photo-mat mat-piece-rear-deck" d="M553 319 617 334 654 369 629 386 584 363Z"/>
+              <path class="photo-mat mat-piece-heel" d="M337 349 369 338 385 361 352 375 332 365Z"/>
+              <path class="photo-mat-routing" d="M365 331 478 315 566 329 553 351 462 347 389 362 361 350ZM553 319 617 334 654 369 629 386 584 363ZM337 349 369 338 385 361 352 375 332 365Z"/>
+              <text x="587" y="356" data-mat-preview>CK</text>
             </g>
-            <g class="camera-mats" data-camera-mats="right" hidden transform="translate(800 0) scale(-1 1)">
-              <path class="photo-mat" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350Z"/>
-              <path class="photo-mat" d="M554 320 618 337 651 373 627 385 586 365Z"/>
-              <path class="photo-mat-routing" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350ZM554 320 618 337 651 373 627 385 586 365Z"/>
+            <g class="camera-mats" data-camera-mats="right" hidden>
+              <g transform="translate(800 0) scale(-1 1)">
+                <path class="photo-mat mat-piece-footwell" d="M365 331 478 315 566 329 553 351 462 347 389 362 361 350Z"/>
+                <path class="photo-mat mat-piece-rear-deck" d="M553 319 617 334 654 369 629 386 584 363Z"/>
+                <path class="photo-mat mat-piece-heel" d="M337 349 369 338 385 361 352 375 332 365Z"/>
+                <path class="photo-mat-routing" d="M365 331 478 315 566 329 553 351 462 347 389 362 361 350ZM553 319 617 334 654 369 629 386 584 363ZM337 349 369 338 385 361 352 375 332 365Z"/>
+              </g>
+              <text x="205" y="356" data-mat-preview>CK</text>
             </g>
             <g class="camera-mats" data-camera-mats="front" hidden></g>
             <g class="camera-mats" data-camera-mats="rear" hidden>
-              <path class="photo-mat" d="M254 230 291 213 333 246 351 315 323 312 284 288 260 258Z"/>
-              <path class="photo-mat" d="M546 230 509 213 467 246 449 315 477 312 516 288 540 258Z"/>
-              <path class="photo-mat" d="M238 329 304 308 355 328 344 385 287 379 246 354Z"/>
-              <path class="photo-mat" d="M562 329 496 308 445 328 456 385 513 379 554 354Z"/>
-              <path class="photo-mat-routing" d="M254 230 291 213 333 246 351 315 323 312 284 288 260 258ZM546 230 509 213 467 246 449 315 477 312 516 288 540 258ZM238 329 304 308 355 328 344 385 287 379 246 354ZM562 329 496 308 445 328 456 385 513 379 554 354Z"/>
-              <text x="275" y="349" data-mat-preview>TRIXLAB</text>
+              <path class="photo-mat mat-piece-footwell" d="M252 228 291 211 334 244 352 315 322 312 281 286 257 257Z"/>
+              <path class="photo-mat mat-piece-footwell" d="M548 228 509 211 466 244 448 315 478 312 519 286 543 257Z"/>
+              <path class="photo-mat mat-piece-rear-deck" d="M236 328 303 307 357 328 344 387 285 380 243 354Z"/>
+              <path class="photo-mat mat-piece-rear-deck" d="M564 328 497 307 443 328 456 387 515 380 557 354Z"/>
+              <path class="photo-mat mat-piece-heel" d="M303 303 336 315 349 354 320 349 296 331Z"/>
+              <path class="photo-mat mat-piece-heel" d="M497 303 464 315 451 354 480 349 504 331Z"/>
+              <path class="photo-mat-routing" d="M252 228 291 211 334 244 352 315 322 312 281 286 257 257ZM548 228 509 211 466 244 448 315 478 312 519 286 543 257ZM236 328 303 307 357 328 344 387 285 380 243 354ZM564 328 497 307 443 328 456 387 515 380 557 354ZM303 303 336 315 349 354 320 349 296 331ZM497 303 464 315 451 354 480 349 504 331Z"/>
+              <text x="275" y="351" data-mat-preview>CK</text>
+              <text x="525" y="351" text-anchor="end" data-mat-preview>CK</text>
             </g>
           </svg>
           <div class="coverage-mask"></div>
@@ -254,6 +263,39 @@
             <span class="template-mat-line" data-template-mat-line><i></i><span data-template-mat>DIAMOND MATS · #151917 / #9CFF00</span></span>
           </div>
           <div class="template-legend"><b>ONE FULL DESIGN KIT</b><span><i class="legend-primary"></i>PRIMARY</span><span><i class="legend-secondary"></i>SECONDARY</span><span><i class="legend-accent"></i>ACCENT</span><em>LEFT + RIGHT CUT PANELS</em></div>
+        </div>
+        <div class="mat-template-board" data-mat-template-view hidden>
+          <svg viewBox="0 0 1200 700" role="img" aria-label="Sea-Doo Spark Trixx 2UP eight-piece traction mat production layout">
+            <defs>
+              <pattern id="layout-mat-diamond" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect x="4" y="4" width="18" height="18" rx="2" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
+              <pattern id="layout-mat-hive" width="36" height="32" patternUnits="userSpaceOnUse"><path d="M10 2h16l8 14-8 14H10L2 16Z" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
+              <pattern id="layout-mat-razor" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="10" height="40" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="layout-mat-spark" width="42" height="42" patternUnits="userSpaceOnUse"><path d="m21 2 5 13 14 6-14 5-5 14-6-14-13-5 13-6Z" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="layout-mat-topo" width="54" height="44" patternUnits="userSpaceOnUse"><path d="M-4 12Q16-5 59 14M-4 35Q18 18 59 37" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
+              <pattern id="layout-mat-wave" width="54" height="38" patternUnits="userSpaceOnUse"><path d="M0 21Q14 3 27 21t27 0" fill="none" stroke="var(--mat-bottom)" stroke-width="6"/></pattern>
+              <path id="mat-lf-01" d="M88 114 474 94 526 142 482 220 132 211 68 170Z"/>
+              <path id="mat-rf-01" d="M1112 114 726 94 674 142 718 220 1068 211 1132 170Z"/>
+              <path id="mat-lr-02" d="M74 278 224 250 270 302 242 382 98 369 54 324Z"/>
+              <path id="mat-rr-02" d="M1126 278 976 250 930 302 958 382 1102 369 1146 324Z"/>
+              <path id="mat-ld-03" d="M318 292 520 274 558 324 520 411 341 404 300 355Z"/>
+              <path id="mat-rd-03" d="M882 292 680 274 642 324 680 411 859 404 900 355Z"/>
+              <path id="mat-lh-04" d="M356 490 518 471 550 512 513 591 372 584 336 537Z"/>
+              <path id="mat-rh-04" d="M844 490 682 471 650 512 687 591 828 584 864 537Z"/>
+            </defs>
+            <rect x="18" y="18" width="1164" height="664" rx="24" class="mat-sheet-outline"/>
+            <g class="mat-cut-pieces">
+              <g data-mat-cut-piece="LF-01"><use href="#mat-lf-01" class="mat-cut-base"/><use href="#mat-lf-01" class="mat-cut-routing"/><text x="92" y="142">LF-01 · LEFT FOOTWELL</text></g>
+              <g data-mat-cut-piece="RF-01"><use href="#mat-rf-01" class="mat-cut-base"/><use href="#mat-rf-01" class="mat-cut-routing"/><text x="1108" y="142" text-anchor="end">RF-01 · RIGHT FOOTWELL</text></g>
+              <g data-mat-cut-piece="LR-02"><use href="#mat-lr-02" class="mat-cut-base"/><use href="#mat-lr-02" class="mat-cut-routing"/><text x="78" y="304">LR-02</text></g>
+              <g data-mat-cut-piece="RR-02"><use href="#mat-rr-02" class="mat-cut-base"/><use href="#mat-rr-02" class="mat-cut-routing"/><text x="1122" y="304" text-anchor="end">RR-02</text></g>
+              <g data-mat-cut-piece="LD-03"><use href="#mat-ld-03" class="mat-cut-base"/><use href="#mat-ld-03" class="mat-cut-routing"/><text x="330" y="320">LD-03 · REAR DECK</text><text class="mat-personalization" x="430" y="363" text-anchor="middle" data-mat-preview>CK</text></g>
+              <g data-mat-cut-piece="RD-03"><use href="#mat-rd-03" class="mat-cut-base"/><use href="#mat-rd-03" class="mat-cut-routing"/><text x="870" y="320" text-anchor="end">RD-03 · REAR DECK</text><text class="mat-personalization" x="770" y="363" text-anchor="middle" data-mat-preview>CK</text></g>
+              <g data-mat-cut-piece="LH-04"><use href="#mat-lh-04" class="mat-cut-base"/><use href="#mat-lh-04" class="mat-cut-routing"/><text x="350" y="520">LH-04 · HEEL</text></g>
+              <g data-mat-cut-piece="RH-04"><use href="#mat-rh-04" class="mat-cut-base"/><use href="#mat-rh-04" class="mat-cut-routing"/><text x="850" y="520" text-anchor="end">RH-04 · HEEL</text></g>
+            </g>
+            <g class="mat-layout-ticket"><text x="50" y="644">TRIXLAB · SPARK TRIXX 2UP 2017–2023 · 8 PIECES · <tspan data-mat-layout-spec>6MM DUAL LAYER</tspan></text><text x="1150" y="644" text-anchor="end">PRODUCTION PROOF · VERIFY CUT DIMENSIONS</text></g>
+          </svg>
+          <div class="mat-layout-legend"><b>TRACTION MAT LAYOUT</b><span><i></i>TOP</span><span><i></i>REVEAL</span><span><i></i>CORE</span><em>8 SEPARATE CNC PIECES</em></div>
         </div>
         <div class="drag-hint" data-drag-hint hidden>LOGO ZIEHEN, UM ES ZU POSITIONIEREN</div>
         <div class="vehicle-meta"><b data-design-name>DIGITAL VOID</b><span data-variant-id>VARIANT 196 / 240</span><span data-coverage-label>FULL KIT · UPPER + SIDE PANELS</span><span data-vehicle-meta>SEA-DOO TRIXX 2UP · 2022</span></div>
@@ -363,8 +405,23 @@
 
         <section class="panel-section" data-panel="mats" hidden>
           <p class="step">05 · CUSTOM TRACTION MATS</p>
-          <label class="toggle-row"><span><b>ADD TRACTION MAT KIT</b><small>UV-resistant marine EVA · preview</small></span><input type="checkbox" checked data-mats-enabled></label>
+          <label class="toggle-row"><span><b>ADD TRACTION MAT KIT</b><small>Sea-Doo Spark Trixx 2UP · 2017–2023 · 8 pieces</small></span><input type="checkbox" checked data-mats-enabled></label>
           <div class="mat-controls">
+            <div class="mat-view-actions">
+              <button type="button" data-mat-view="rear">REAR PREVIEW</button>
+              <button type="button" data-mat-view="left">LEFT SIDE</button>
+              <button type="button" data-mat-view="right">RIGHT SIDE</button>
+              <button class="active" type="button" data-mat-view="mat-template">8-PIECE LAYOUT</button>
+            </div>
+            <p>COLOR PRESETS</p>
+            <div class="mat-color-presets">
+              <button class="active" type="button" data-mat-colorway="race" style="--mat-a:#151917;--mat-b:#ef1f2d;--mat-c:#f5f7f5">RACE</button>
+              <button type="button" data-mat-colorway="toxic" style="--mat-a:#151917;--mat-b:#9cff00;--mat-c:#f5f7f5">TOXIC</button>
+              <button type="button" data-mat-colorway="mono" style="--mat-a:#f1f3f1;--mat-b:#151917;--mat-c:#8e9690">MONO</button>
+              <button type="button" data-mat-colorway="ice" style="--mat-a:#13202b;--mat-b:#08a9ff;--mat-c:#dffaff">ICE</button>
+              <button type="button" data-mat-colorway="candy" style="--mat-a:#151917;--mat-b:#ff2b92;--mat-c:#08e7e2">CANDY</button>
+              <button type="button" data-mat-colorway="custom" style="--mat-a:#444;--mat-b:#aaa;--mat-c:#eee">CUSTOM</button>
+            </div>
             <p>ROUTED PATTERN</p>
             <div class="pattern-grid">
               <button class="pattern active" type="button" data-mat-pattern="diamond"><i></i>DIAMOND</button>
@@ -392,10 +449,22 @@
             </div>
             <div class="field-grid">
               <label>TOP COLOR<input type="color" value="#151917" data-mat-color="top"></label>
-              <label>REVEAL COLOR<input type="color" value="#9cff00" data-mat-color="bottom"></label>
+              <label>REVEAL COLOR<input type="color" value="#ef1f2d" data-mat-color="bottom"></label>
             </div>
-            <label>ROUTED TEXT<input type="text" value="TRIXLAB" maxlength="12" data-mat-text></label>
-            <div class="fit-note"><b>+189,00 €</b><span>Two-layer mat preview. Exact cut lines are confirmed in the production proof.</span></div>
+            <div class="field-grid">
+              <label>CORE COLOR<input type="color" value="#f5f7f5" data-mat-color="core"></label>
+              <label>FOAM PROFILE<select data-mat-profile><option value="dual-6">6MM · DUAL LAYER</option><option value="triple-9">9MM · TRIPLE LAYER +49 €</option></select></label>
+            </div>
+            <div class="field-grid">
+              <label>REAR BADGE<select data-mat-badge><option value="ck">CK BADGE</option><option value="trixlab">TRIXLAB</option><option value="custom">CUSTOM TEXT</option><option value="none">NO BADGE</option></select></label>
+              <label>EDGE<select data-mat-edge><option value="bevel">BEVELLED EDGE</option><option value="straight">STRAIGHT EDGE</option></select></label>
+            </div>
+            <label>CUSTOM ROUTED TEXT<input type="text" value="CK" maxlength="12" data-mat-text></label>
+            <div class="mat-order-actions">
+              <button type="button" data-export-mats-svg>EXPORT MAT SVG</button>
+              <button class="primary" type="button" data-add-mats>ADD MATS ONLY · <b data-mats-only-price>189,00 €</b></button>
+            </div>
+            <div class="fit-note"><b data-mat-price-note>+189,00 €</b><span>Separate 8-piece CNC proof at 1:1. Final cut dimensions must be checked against the factory DXF before production.</span></div>
           </div>
         </section>
 
