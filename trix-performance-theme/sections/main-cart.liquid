@@ -1,0 +1,71 @@
+<section class="tp-section tp-cart">
+  <div class="tp-container">
+    <p class="tp-kicker">TRIXLAB</p>
+    <h1 class="tp-heading">{{ 'cart.title' | t }}</h1>
+    {% if cart.empty? %}
+      <div class="tp-cart__empty">
+        <p>{{ 'cart.empty' | t }}</p>
+        <a class="tp-button tp-button--accent" href="{{ routes.all_products_collection_url }}">Shop wraps</a>
+      </div>
+    {% else %}
+      <form action="{{ routes.cart_url }}" method="post">
+        <div class="tp-cart__items">
+          {% for item in cart.items %}
+            <article class="tp-cart__item">
+              <a href="{{ item.url }}">
+                {% if item.image %}{{ item.image | image_url: width: 280 | image_tag: loading: 'lazy' }}{% endif %}
+              </a>
+              <div>
+                <span>{{ item.vendor }}</span>
+                <h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+                {% unless item.product.has_only_default_variant %}<p>{{ item.variant.title }}</p>{% endunless %}
+                {% for property in item.properties %}
+                  {% assign first_character = property.first | slice: 0 %}
+                  {% if property.last != blank and first_character != '_' %}
+                    <small><b>{{ property.first }}:</b> {{ property.last }}</small>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <label>Qty<input type="number" name="updates[]" value="{{ item.quantity }}" min="0"></label>
+              <strong>{{ item.final_line_price | money }}</strong>
+              <a href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a>
+            </article>
+          {% endfor %}
+        </div>
+        <div class="tp-cart__summary">
+          <p><span>Total</span><strong>{{ cart.total_price | money }}</strong></p>
+          <button class="tp-button tp-button--outline" type="submit" name="update">Update</button>
+          <button class="tp-button tp-button--accent" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-cart { min-height: 70svh; }
+  .tp-cart .tp-heading { margin-bottom: 50px; }
+  .tp-cart__empty { display: grid; gap: 22px; justify-items: start; padding: 50px 0; color: var(--tp-muted); }
+  .tp-cart__items { border-top: 1px solid var(--tp-line); }
+  .tp-cart__item { display: grid; grid-template-columns: 140px 1fr 90px auto auto; align-items: center; gap: 28px; padding: 24px 0; border-bottom: 1px solid var(--tp-line); }
+  .tp-cart__item > a:first-child { aspect-ratio: 1; border-radius: 14px; background: #eef0ee; overflow: hidden; }
+  .tp-cart__item img { width: 100%; height: 100%; object-fit: cover; }
+  .tp-cart__item span, .tp-cart__item small { display: block; color: var(--tp-muted); font-size: 10px; }
+  .tp-cart__item h2 { margin: 7px 0; font-size: 22px; text-transform: uppercase; }
+  .tp-cart__item label { display: grid; gap: 6px; color: var(--tp-muted); font-size: 9px; text-transform: uppercase; }
+  .tp-cart__item input { width: 70px; padding: 10px; border: 1px solid var(--tp-line); border-radius: 9px; background: var(--tp-surface); color: var(--tp-text); }
+  .tp-cart__summary { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; margin-top: 34px; }
+  .tp-cart__summary p { display: flex; max-width: 420px; justify-content: space-between; font-size: 20px; }
+  @media (max-width: 760px) {
+    .tp-cart__item { grid-template-columns: 90px 1fr; }
+    .tp-cart__item label, .tp-cart__item > strong, .tp-cart__item > a:last-child { grid-column: 2; }
+    .tp-cart__summary { grid-template-columns: 1fr; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Main cart",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,60 @@
+{
+  "accessibility": {
+    "skip_to_content": "Zum Inhalt springen",
+    "close": "Schließen"
+  },
+  "general": {
+    "page": "Seite {{ number }}",
+    "menu": "Menü",
+    "search": "Suche",
+    "account": "Konto",
+    "cart": "Warenkorb",
+    "newsletter_email": "E-Mail-Adresse",
+    "newsletter_submit": "Jetzt anmelden"
+  },
+  "configurator": {
+    "preview_alt": "Live-Vorschau einer Folierung auf einem Performance-Jetski",
+    "studio": "Design Studio",
+    "back": "Zurück",
+    "save": "Entwurf speichern",
+    "saved": "Meine Entwürfe",
+    "select_model": "Modell wählen",
+    "current_build": "Aktuelle Konfiguration",
+    "price_updates": "Der Preis folgt der gewählten Produktvariante",
+    "price_breakdown": "Preisdetails",
+    "zoom_in": "Vergrößern",
+    "zoom_out": "Verkleinern",
+    "undo": "Rückgängig",
+    "redo": "Wiederholen",
+    "randomize": "Design Mixer",
+    "material": "Material",
+    "colors": "Farben",
+    "logo": "Logo",
+    "text": "Text",
+    "coverage": "Abdeckung",
+    "overlay": "Overlay",
+    "assistant": "Design Mix",
+    "notes": "Hinweise",
+    "add_to_cart": "Konfigurierte Folie hinzufügen",
+    "choose_variant": "Optionen auswählen",
+    "upload_logo": "Logo hochladen",
+    "custom_text": "Eigener Text",
+    "order_notes": "Hinweise zur Bestellung",
+    "build_name": "Name des Entwurfs",
+    "save_confirm": "Entwurf auf diesem Gerät gespeichert",
+    "empty_builds": "Noch keine Entwürfe gespeichert",
+    "load": "Laden",
+    "delete": "Löschen"
+  },
+  "products": {
+    "from": "Ab {{ price }}",
+    "sold_out": "Ausverkauft",
+    "view": "Konfigurieren"
+  },
+  "cart": {
+    "title": "Dein Warenkorb",
+    "empty": "Dein Warenkorb ist leer",
+    "checkout": "Zur Kasse",
+    "remove": "Entfernen"
+  }
+}

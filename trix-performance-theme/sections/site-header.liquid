@@ -1,0 +1,119 @@
+<header class="tp-header" data-tp-header>
+  <div class="tp-container tp-header__inner">
+    <button class="tp-header__menu" type="button" aria-expanded="false" aria-controls="tp-menu-{{ section.id }}" data-tp-menu-toggle>
+      <span></span><span></span>
+      <b>{{ 'general.menu' | t }}</b>
+    </button>
+    <a class="tp-header__logo" href="{{ routes.root_url }}">
+      {% render 'brand-logo', class: 'tp-header__logo-svg', variant: 'full' %}
+    </a>
+    <nav class="tp-header__actions" aria-label="Shop">
+      <a href="{{ routes.search_url }}">{{ 'general.search' | t }}</a>
+      {% if shop.customer_accounts_enabled %}<a href="{{ routes.account_url }}">{{ 'general.account' | t }}</a>{% endif %}
+      <a href="{{ routes.cart_url }}">{{ 'general.cart' | t }} <span>{{ cart.item_count }}</span></a>
+    </nav>
+  </div>
+  <div class="tp-menu" id="tp-menu-{{ section.id }}" hidden data-tp-menu>
+    <div class="tp-container tp-menu__grid">
+      <div>
+        <span class="tp-menu__eyebrow">{{ section.settings.menu_eyebrow }}</span>
+        <nav aria-label="Main navigation">
+          {% for link in section.settings.menu.links %}
+            <a href="{{ link.url }}">{{ link.title }} <span>↗</span></a>
+          {% else %}
+            <a href="{{ routes.all_products_collection_url }}">All wraps <span>↗</span></a>
+            <a href="/pages/contact">Custom projects <span>↗</span></a>
+          {% endfor %}
+        </nav>
+      </div>
+      <div class="tp-menu__feature">
+        <p>{{ section.settings.feature_kicker }}</p>
+        <h2>{{ section.settings.feature_title }}</h2>
+        <a class="tp-button tp-button--accent" href="{{ section.settings.feature_link }}">{{ section.settings.feature_label }}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% stylesheet %}
+  .tp-header { position: sticky; z-index: 30; top: 0; border-bottom: 1px solid var(--tp-line); background: color-mix(in srgb, var(--tp-bg) 88%, transparent); backdrop-filter: blur(18px); }
+  .tp-header__inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 84px; }
+  .tp-header__menu { display: inline-flex; width: max-content; align-items: center; gap: 7px; border: 0; background: transparent; cursor: pointer; }
+  .tp-header__menu span { display: block; width: 18px; height: 1px; background: currentColor; transition: transform .2s ease; }
+  .tp-header__menu span + span { margin-left: -25px; transform: translateY(5px); }
+  .tp-header__menu b { margin-left: 10px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+  .tp-header__logo { width: min(300px, 36vw); }
+  .tp-header__logo-svg { width: 100%; }
+  .tp-header__actions { display: flex; justify-content: end; gap: 24px; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  .tp-header__actions span { display: inline-grid; min-width: 22px; height: 22px; margin-left: 4px; place-items: center; border-radius: 50%; background: var(--tp-accent); color: #080a09; }
+  .tp-menu { position: absolute; top: 100%; right: 0; left: 0; border-bottom: 1px solid var(--tp-line); background: var(--tp-bg); }
+  .tp-menu__grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 70px; padding-block: 58px; }
+  .tp-menu__eyebrow, .tp-menu__feature p { color: var(--tp-muted); font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+  .tp-menu nav { display: grid; margin-top: 20px; }
+  .tp-menu nav a { display: flex; justify-content: space-between; padding: 17px 0; border-bottom: 1px solid var(--tp-line); font-size: clamp(28px, 4vw, 56px); font-weight: 900; letter-spacing: -.04em; text-transform: uppercase; }
+  .tp-menu__feature { padding: 36px; border-radius: var(--tp-radius); background: var(--tp-surface); }
+  .tp-menu__feature h2 { margin: 18px 0 34px; font-size: clamp(32px, 4vw, 60px); line-height: .92; letter-spacing: -.05em; text-transform: uppercase; }
+  @media (max-width: 760px) {
+    .tp-header__inner { min-height: 68px; }
+    .tp-header__menu b, .tp-header__actions > :not(:last-child) { display: none; }
+    .tp-header__actions { gap: 0; }
+    .tp-header__logo { width: 210px; }
+    .tp-menu__grid { grid-template-columns: 1fr; gap: 24px; padding-block: 30px; }
+    .tp-menu__feature { display: none; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('[data-tp-header]').forEach((header) => {
+    const toggle = header.querySelector('[data-tp-menu-toggle]');
+    const menu = header.querySelector('[data-tp-menu]');
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      menu.hidden = open;
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_eyebrow",
+      "label": "Menu eyebrow",
+      "default": "CHOOSE YOUR MACHINE"
+    },
+    {
+      "type": "text",
+      "id": "feature_kicker",
+      "label": "Feature kicker",
+      "default": "LIVE DESIGN STUDIO"
+    },
+    {
+      "type": "text",
+      "id": "feature_title",
+      "label": "Feature title",
+      "default": "BUILD A WRAP THAT LOOKS LIKE YOURS."
+    },
+    {
+      "type": "text",
+      "id": "feature_label",
+      "label": "Feature label",
+      "default": "START CONFIGURING"
+    },
+    {
+      "type": "url",
+      "id": "feature_link",
+      "label": "Feature link"
+    }
+  ]
+}
+{% endschema %}

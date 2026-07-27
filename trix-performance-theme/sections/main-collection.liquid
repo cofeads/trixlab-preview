@@ -1,0 +1,75 @@
+<section class="tp-section tp-collection">
+  <div class="tp-container">
+    <div class="tp-section-head">
+      <div>
+        <p class="tp-kicker">{{ section.settings.kicker }}</p>
+        <h1 class="tp-heading">{{ collection.title }}</h1>
+      </div>
+      {% if collection.description != blank %}<div class="tp-collection__description">{{ collection.description }}</div>{% endif %}
+    </div>
+    {% paginate collection.products by section.settings.products_per_page %}
+      <div class="tp-collection__grid">
+        {% for product in collection.products %}
+          {% assign product_price = product.price_min | money %}
+          <article class="tp-collection-card">
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900' }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag }}
+              {% endif %}
+            </a>
+            <div>
+              <span>{{ product.vendor }}</span>
+              <h2><a href="{{ product.url }}">{{ product.title }}</a></h2>
+              <p>{{ 'products.from' | t: price: product_price }}</p>
+              <a class="tp-link-arrow" href="{{ product.url }}">{{ 'products.view' | t }} <span>→</span></a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+      <div class="tp-pagination">{{ paginate | default_pagination }}</div>
+    {% endpaginate %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-collection { min-height: 70svh; }
+  .tp-collection__description { max-width: 560px; color: var(--tp-muted); line-height: 1.65; }
+  .tp-collection__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tp-collection-card { border-radius: 18px; background: #f2f4f2; color: #0b0d0c; overflow: hidden; }
+  .tp-collection-card > a { display: block; aspect-ratio: 1.1; background: #e2e6e2; overflow: hidden; }
+  .tp-collection-card img, .tp-collection-card svg { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+  .tp-collection-card:hover img { transform: scale(1.04); }
+  .tp-collection-card > div { padding: 25px; }
+  .tp-collection-card > div > span { color: #687069; font-size: 9px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .tp-collection-card h2 { margin: 9px 0; font-size: 24px; letter-spacing: -.04em; text-transform: uppercase; }
+  .tp-collection-card p { color: #687069; }
+  .tp-pagination { margin-top: 50px; text-align: center; }
+  .tp-pagination .page, .tp-pagination .next, .tp-pagination .prev { display: inline-grid; min-width: 40px; height: 40px; place-items: center; border: 1px solid var(--tp-line); border-radius: 50%; }
+  @media (max-width: 900px) { .tp-collection__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .tp-collection__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Main collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "CHOOSE A STARTING POINT"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

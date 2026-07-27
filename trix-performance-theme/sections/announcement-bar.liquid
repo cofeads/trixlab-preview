@@ -1,0 +1,56 @@
+{% if section.settings.show %}
+  <div class="tp-announcement">
+    <div class="tp-container tp-announcement__inner">
+      <div class="tp-announcement__socials">
+        {% if settings.social_instagram != blank %}<a href="{{ settings.social_instagram }}">IG</a>{% endif %}
+        {% if settings.social_tiktok != blank %}<a href="{{ settings.social_tiktok }}">TT</a>{% endif %}
+        {% if settings.social_youtube != blank %}<a href="{{ settings.social_youtube }}">YT</a>{% endif %}
+      </div>
+      <p>{{ section.settings.text }}</p>
+      <a href="{{ section.settings.link }}">{{ section.settings.link_label }} <span>→</span></a>
+    </div>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .tp-announcement { position: relative; z-index: 35; border-bottom: 1px solid rgba(255,255,255,.12); background: #090b0a; color: #fff; }
+  .tp-announcement__inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 38px; gap: 20px; font-size: 10px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .tp-announcement__inner p { margin: 0; text-align: center; }
+  .tp-announcement__inner > a { justify-self: end; }
+  .tp-announcement__socials { display: flex; gap: 12px; }
+  @media (max-width: 760px) {
+    .tp-announcement__inner { display: flex; justify-content: center; }
+    .tp-announcement__socials, .tp-announcement__inner > a { display: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show",
+      "label": "Show announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "DESIGN YOUR WRAP LIVE — BUILT FOR REAL RIDING"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "START DESIGNING"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+  ]
+}
+{% endschema %}

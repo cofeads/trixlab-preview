@@ -1,0 +1,424 @@
+<section class="tp-home">
+  <div class="tp-hero">
+    <div class="tp-hero__grid"></div>
+    <div class="tp-container tp-hero__content">
+      <div class="tp-hero__copy">
+        <p class="tp-kicker">{{ section.settings.hero_kicker }}</p>
+        <h1>{{ section.settings.hero_title }}</h1>
+        <p>{{ section.settings.hero_text }}</p>
+        <div class="tp-hero__actions">
+          <a class="tp-button tp-button--accent" href="{{ section.settings.hero_link }}">{{ section.settings.hero_label }}</a>
+          <a class="tp-button tp-button--outline" href="#how-it-works">{{ section.settings.secondary_label }}</a>
+        </div>
+      </div>
+      <div class="tp-hero__machine">
+        {% render 'machine-preview', id_prefix: section.id, class: 'tp-hero__svg' %}
+        <div class="tp-hero__badge">
+          <b>360°</b>
+          <span>LIVE DESIGN<br>PREVIEW</span>
+        </div>
+      </div>
+    </div>
+    <div class="tp-hero__ticker" aria-hidden="true">
+      <span>CUSTOM WRAPS</span><i>✦</i><span>PRECISION CUT</span><i>✦</i><span>PREMIUM VINYL</span><i>✦</i><span>RIDE DIFFERENT</span>
+    </div>
+  </div>
+
+  <div class="tp-stats">
+    <div class="tp-container tp-stats__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'stat' %}
+          <div {{ block.shopify_attributes }}>
+            <strong>{{ block.settings.number }}</strong>
+            <span>{{ block.settings.label }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="tp-section tp-categories">
+    <div class="tp-container">
+      <div class="tp-section-head">
+        <div>
+          <p class="tp-kicker">{{ section.settings.categories_kicker }}</p>
+          <h2>{{ section.settings.categories_title }}</h2>
+        </div>
+        <p>{{ section.settings.categories_text }}</p>
+      </div>
+      <div class="tp-categories__grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'category' %}
+            <a class="tp-category" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+              <div class="tp-category__art tp-category__art--{{ forloop.index }}">
+                <span>{{ block.settings.code }}</span>
+              </div>
+              <div>
+                <p>{{ block.settings.eyebrow }}</p>
+                <h3>{{ block.settings.title }}</h3>
+                <span class="tp-link-arrow">{{ block.settings.label }} <span>→</span></span>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-section tp-process" id="how-it-works">
+    <div class="tp-container">
+      <div class="tp-section-head">
+        <div>
+          <p class="tp-kicker">{{ section.settings.process_kicker }}</p>
+          <h2>{{ section.settings.process_title }}</h2>
+        </div>
+      </div>
+      <div class="tp-process__grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'step' %}
+            <article {{ block.shopify_attributes }}>
+              <span>0{{ forloop.index }}</span>
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-section tp-studio-intro">
+    <div class="tp-container tp-studio-intro__grid">
+      <div>
+        <p class="tp-kicker">{{ section.settings.studio_kicker }}</p>
+        <h2>{{ section.settings.studio_title }}</h2>
+        <p>{{ section.settings.studio_text }}</p>
+        <a class="tp-button tp-button--accent" href="{{ section.settings.studio_link }}">{{ section.settings.studio_label }}</a>
+      </div>
+      <div class="tp-studio-card">
+        <div class="tp-studio-card__bar">
+          <span></span><span></span><span></span>
+          <b>TRIXLAB DESIGN STUDIO</b>
+        </div>
+        {% render 'machine-preview', id_prefix: 'studio-intro', class: 'tp-studio-card__machine' %}
+        <div class="tp-studio-card__tools">
+          <span>Material</span><span>Colors</span><span>Logo</span><span>Text</span><span>Coverage</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-section tp-features">
+    <div class="tp-container">
+      <div class="tp-section-head">
+        <div>
+          <p class="tp-kicker">{{ section.settings.features_kicker }}</p>
+          <h2>{{ section.settings.features_title }}</h2>
+        </div>
+      </div>
+      <div class="tp-features__grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'feature' %}
+            <article {{ block.shopify_attributes }}>
+              <span>{{ block.settings.icon }}</span>
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-section tp-products">
+    <div class="tp-container">
+      <div class="tp-section-head">
+        <div>
+          <p class="tp-kicker">{{ section.settings.products_kicker }}</p>
+          <h2>{{ section.settings.products_title }}</h2>
+        </div>
+        {% if section.settings.collection != blank %}
+          <a class="tp-link-arrow" href="{{ section.settings.collection.url }}">View all <span>→</span></a>
+        {% endif %}
+      </div>
+      <div class="tp-products__grid">
+        {% for product in section.settings.collection.products limit: 4 %}
+          {% assign product_price = product.price_min | money %}
+          <article class="tp-product-card">
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900' }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag }}
+              {% endif %}
+            </a>
+            <div>
+              <span>{{ product.vendor }}</span>
+              <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+              <p>{{ 'products.from' | t: price: product_price }}</p>
+              <a class="tp-link-arrow" href="{{ product.url }}">{{ 'products.view' | t }} <span>→</span></a>
+            </div>
+          </article>
+        {% else %}
+          {% for i in (1..4) %}
+            <article class="tp-product-card">
+              <div class="tp-product-card__placeholder">{% render 'machine-preview', id_prefix: i, class: 'tp-product-card__machine' %}</div>
+              <div><span>TRIXLAB</span><h3>WRAP CONCEPT 0{{ i }}</h3><p>Configure your machine</p></div>
+            </article>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-section tp-proof">
+    <div class="tp-container tp-proof__grid">
+      <div>
+        <p class="tp-kicker">{{ section.settings.proof_kicker }}</p>
+        <h2>{{ section.settings.proof_title }}</h2>
+      </div>
+      <blockquote>
+        <p>“{{ section.settings.quote }}”</p>
+        <footer>{{ section.settings.quote_author }}</footer>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="tp-section tp-faq">
+    <div class="tp-container">
+      <div class="tp-section-head">
+        <div><p class="tp-kicker">SUPPORT</p><h2>{{ section.settings.faq_title }}</h2></div>
+      </div>
+      <div class="tp-faq__list">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq' %}
+            <details {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question }} <span>+</span></summary>
+              <div>{{ block.settings.answer }}</div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-hero { position: relative; min-height: calc(100svh - 122px); overflow: hidden; background: radial-gradient(circle at 74% 43%, #303731 0, #151916 28%, #090b0a 62%); }
+  .tp-hero__grid { position: absolute; inset: 0; opacity: .12; background-image: linear-gradient(rgba(255,255,255,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.22) 1px, transparent 1px); background-size: 76px 76px; mask-image: linear-gradient(to right, transparent, #000 42%); }
+  .tp-hero__content { position: relative; display: grid; grid-template-columns: .82fr 1.18fr; min-height: calc(100svh - 176px); align-items: center; gap: 20px; }
+  .tp-hero__copy { position: relative; z-index: 2; padding: 80px 0 120px; }
+  .tp-hero__copy h1 { max-width: 840px; margin: 0; font-size: clamp(60px, 8vw, 126px); line-height: .82; letter-spacing: -.075em; text-transform: uppercase; }
+  .tp-hero__copy > p:not(.tp-kicker) { max-width: 560px; margin: 28px 0 0; color: #bbc1bd; font-size: 17px; line-height: 1.7; }
+  .tp-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .tp-hero__machine { position: relative; align-self: stretch; display: grid; place-items: center; margin-right: -8vw; }
+  .tp-hero__svg { width: 112%; filter: drop-shadow(0 34px 40px rgba(0,0,0,.42)); transform: rotate(-2deg); --tp-preview-primary: #f5f7f5; --tp-preview-secondary: #9cff00; --tp-preview-accent: #6e746f; --tp-preview-overlay: rgba(0,0,0,.28); }
+  .tp-hero__badge { position: absolute; right: 8%; bottom: 20%; display: flex; width: 128px; height: 128px; align-items: center; justify-content: center; flex-direction: column; border: 1px solid rgba(255,255,255,.28); border-radius: 50%; background: rgba(9,11,10,.72); backdrop-filter: blur(16px); }
+  .tp-hero__badge b { color: var(--tp-accent); font-size: 26px; }
+  .tp-hero__badge span { margin-top: 4px; text-align: center; font-size: 8px; font-weight: 900; letter-spacing: .12em; }
+  .tp-hero__ticker { position: absolute; right: 0; bottom: 0; left: 0; display: flex; justify-content: space-around; gap: 24px; padding: 17px 20px; background: var(--tp-accent); color: #090b0a; font-size: 11px; font-weight: 900; letter-spacing: .15em; white-space: nowrap; text-transform: uppercase; }
+  .tp-stats { border-bottom: 1px solid var(--tp-line); }
+  .tp-stats__grid { display: grid; grid-template-columns: repeat(5, 1fr); }
+  .tp-stats__grid div { display: grid; gap: 8px; padding: 34px 18px; border-right: 1px solid var(--tp-line); text-align: center; }
+  .tp-stats__grid div:first-child { border-left: 1px solid var(--tp-line); }
+  .tp-stats strong { font-size: clamp(26px, 3vw, 46px); letter-spacing: -.04em; }
+  .tp-stats span { color: var(--tp-muted); font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .tp-categories { background: #f1f3f0; color: #0a0c0b; }
+  .tp-categories .tp-kicker { color: #547700; }
+  .tp-categories .tp-section-head p:not(.tp-kicker) { color: #5f6762; }
+  .tp-categories__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tp-category { min-width: 0; border: 1px solid #d6dad7; border-radius: 18px; background: #fff; overflow: hidden; transition: transform .25s ease; }
+  .tp-category:hover { transform: translateY(-6px); }
+  .tp-category__art { position: relative; display: grid; min-height: 330px; place-items: center; overflow: hidden; background: radial-gradient(circle, #354037 0, #151916 58%, #090b0a 100%); }
+  .tp-category__art::before { position: absolute; width: 260px; height: 100px; border: 18px solid var(--tp-accent); border-radius: 56% 44% 62% 38%; content: ""; transform: rotate(-12deg) skewX(-16deg); filter: drop-shadow(0 20px 20px rgba(0,0,0,.6)); }
+  .tp-category__art--2::before { width: 225px; height: 160px; border-radius: 20px 70px 22px 86px; transform: rotate(-7deg) skewX(-10deg); }
+  .tp-category__art--3::before { width: 230px; height: 120px; border-width: 12px 22px; border-radius: 50% 30% 50% 30%; transform: rotate(5deg) skewX(-8deg); }
+  .tp-category__art--4::before { width: 210px; height: 180px; border-radius: 28px; transform: rotate(8deg) skewX(-5deg); }
+  .tp-category__art span { position: relative; z-index: 1; font-size: 72px; font-style: italic; font-weight: 900; letter-spacing: -.08em; }
+  .tp-category > div:last-child { padding: 24px; }
+  .tp-category p { margin: 0 0 10px; color: #687069; font-size: 9px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .tp-category h3 { margin: 0 0 22px; font-size: 25px; letter-spacing: -.04em; text-transform: uppercase; }
+  .tp-process { border-top: 1px solid var(--tp-line); }
+  .tp-process__grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--tp-line); border-left: 1px solid var(--tp-line); }
+  .tp-process article { min-height: 340px; padding: 34px; border-right: 1px solid var(--tp-line); border-bottom: 1px solid var(--tp-line); }
+  .tp-process article > span { color: var(--tp-accent); font-size: 11px; font-weight: 900; }
+  .tp-process h3 { margin: 100px 0 16px; font-size: 30px; line-height: 1; letter-spacing: -.04em; text-transform: uppercase; }
+  .tp-process article p { margin: 0; color: var(--tp-muted); line-height: 1.65; }
+  .tp-studio-intro { background: var(--tp-accent); color: #090b0a; }
+  .tp-studio-intro__grid { display: grid; grid-template-columns: .72fr 1.28fr; align-items: center; gap: 70px; }
+  .tp-studio-intro .tp-kicker { color: #090b0a; }
+  .tp-studio-intro h2 { margin: 0; font-size: clamp(50px, 7vw, 104px); line-height: .84; letter-spacing: -.07em; text-transform: uppercase; }
+  .tp-studio-intro p:not(.tp-kicker) { max-width: 570px; margin: 28px 0 34px; line-height: 1.65; }
+  .tp-studio-intro .tp-button--accent { border-color: #090b0a; background: #090b0a; color: #fff; }
+  .tp-studio-card { border-radius: 26px; background: #f4f5f3; box-shadow: 0 35px 90px rgba(0,0,0,.28); overflow: hidden; transform: rotate(1.5deg); }
+  .tp-studio-card__bar { display: flex; align-items: center; gap: 7px; padding: 15px 20px; border-bottom: 1px solid #dde0dd; color: #151815; }
+  .tp-studio-card__bar span { width: 8px; height: 8px; border-radius: 50%; background: #b7bbb8; }
+  .tp-studio-card__bar b { margin-left: auto; font-size: 9px; letter-spacing: .12em; }
+  .tp-studio-card__machine { padding: 10px 24px; --tp-preview-primary: #0d1010; --tp-preview-secondary: #9cff00; --tp-preview-accent: #e8ebe8; --tp-preview-overlay: rgba(255,255,255,.18); }
+  .tp-studio-card__tools { display: flex; justify-content: center; gap: 10px; padding: 14px; color: #0d100e; }
+  .tp-studio-card__tools span { padding: 9px 13px; border: 1px solid #d6dad7; border-radius: 999px; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+  .tp-features__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tp-features article { min-height: 270px; padding: 32px; border: 1px solid var(--tp-line); border-radius: 18px; background: var(--tp-surface); }
+  .tp-features article > span { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: var(--tp-accent); color: #0a0c0b; font-size: 22px; }
+  .tp-features h3 { margin: 70px 0 14px; font-size: 24px; letter-spacing: -.035em; text-transform: uppercase; }
+  .tp-features article p { margin: 0; color: var(--tp-muted); line-height: 1.6; }
+  .tp-products { background: #f1f3f0; color: #0b0d0c; }
+  .tp-products .tp-kicker { color: #547700; }
+  .tp-products__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tp-product-card { border-radius: 16px; background: #fff; overflow: hidden; }
+  .tp-product-card > a, .tp-product-card__placeholder { display: grid; aspect-ratio: 1 / .86; place-items: center; background: #e7eae7; overflow: hidden; }
+  .tp-product-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+  .tp-product-card:hover img { transform: scale(1.04); }
+  .tp-product-card__machine { width: 110%; --tp-preview-primary: #f5f7f5; --tp-preview-secondary: #9cff00; --tp-preview-accent: #5d655f; --tp-preview-overlay: rgba(0,0,0,.22); }
+  .tp-product-card > div:last-child { padding: 22px; }
+  .tp-product-card > div span { color: #687069; font-size: 9px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+  .tp-product-card h3 { margin: 9px 0 8px; font-size: 21px; letter-spacing: -.03em; text-transform: uppercase; }
+  .tp-product-card p { margin: 0 0 20px; color: #687069; }
+  .tp-proof__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 90px; }
+  .tp-proof h2 { margin: 0; font-size: clamp(48px, 7vw, 100px); line-height: .85; letter-spacing: -.07em; text-transform: uppercase; }
+  .tp-proof blockquote { margin: 0; padding: 50px; border: 1px solid var(--tp-line); border-radius: var(--tp-radius); background: var(--tp-surface); }
+  .tp-proof blockquote p { margin: 0; font-size: clamp(26px, 3vw, 42px); line-height: 1.15; letter-spacing: -.035em; }
+  .tp-proof blockquote footer { margin-top: 32px; color: var(--tp-accent); font-size: 10px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+  .tp-faq { border-top: 1px solid var(--tp-line); }
+  .tp-faq__list { max-width: 980px; margin-left: auto; border-top: 1px solid var(--tp-line); }
+  .tp-faq details { border-bottom: 1px solid var(--tp-line); }
+  .tp-faq summary { display: flex; justify-content: space-between; gap: 20px; padding: 26px 0; font-size: 19px; font-weight: 800; cursor: pointer; list-style: none; }
+  .tp-faq summary::-webkit-details-marker { display: none; }
+  .tp-faq summary span { color: var(--tp-accent); }
+  .tp-faq details[open] summary span { transform: rotate(45deg); }
+  .tp-faq details div { padding: 0 60px 28px 0; color: var(--tp-muted); line-height: 1.7; }
+  @media (max-width: 1000px) {
+    .tp-hero__content { grid-template-columns: 1fr; }
+    .tp-hero__copy { padding-bottom: 10px; }
+    .tp-hero__machine { min-height: 440px; margin: -40px -16vw 20px -8vw; }
+    .tp-stats__grid { grid-template-columns: repeat(3, 1fr); }
+    .tp-categories__grid, .tp-products__grid { grid-template-columns: repeat(2, 1fr); }
+    .tp-process__grid { grid-template-columns: repeat(2, 1fr); }
+    .tp-studio-intro__grid, .tp-proof__grid { grid-template-columns: 1fr; }
+    .tp-features__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .tp-hero__copy h1 { font-size: 58px; }
+    .tp-hero__machine { min-height: 320px; margin-top: -10px; }
+    .tp-hero__badge { right: 1%; bottom: 8%; width: 94px; height: 94px; }
+    .tp-hero__ticker { justify-content: flex-start; overflow: hidden; }
+    .tp-stats__grid { grid-template-columns: repeat(2, 1fr); }
+    .tp-categories__grid, .tp-products__grid, .tp-process__grid, .tp-features__grid { grid-template-columns: 1fr; }
+    .tp-category__art { min-height: 250px; }
+    .tp-process article { min-height: 260px; }
+    .tp-process h3 { margin-top: 60px; }
+    .tp-studio-intro__grid { gap: 40px; }
+    .tp-studio-card__tools { overflow-x: auto; justify-content: start; }
+    .tp-proof blockquote { padding: 30px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TRIXLAB homepage",
+  "settings": [
+    {"type":"text","id":"hero_kicker","label":"Hero kicker","default":"RACE GRAPHICS & PERFORMANCE PARTS"},
+    {"type":"text","id":"hero_title","label":"Hero title","default":"EVERYTHING YOUR SEA-DOO NEEDS TO STAND OUT."},
+    {"type":"textarea","id":"hero_text","label":"Hero text","default":"Custom graphics, premium vinyl and performance parts."},
+    {"type":"text","id":"hero_label","label":"Hero button","default":"BUILD YOUR WRAP"},
+    {"type":"url","id":"hero_link","label":"Hero link"},
+    {"type":"text","id":"secondary_label","label":"Secondary button","default":"HOW IT WORKS"},
+    {"type":"text","id":"categories_kicker","label":"Categories kicker","default":"CHOOSE YOUR PLATFORM"},
+    {"type":"text","id":"categories_title","label":"Categories title","default":"WRAPS FOR THE MACHINES YOU ACTUALLY RIDE."},
+    {"type":"textarea","id":"categories_text","label":"Categories text","default":"Premium materials, exact templates and a clean digital approval process from the first click to final production."},
+    {"type":"text","id":"process_kicker","label":"Process kicker","default":"SIMPLE PROCESS"},
+    {"type":"text","id":"process_title","label":"Process title","default":"FROM STOCK TO YOURS IN FOUR STEPS."},
+    {"type":"text","id":"studio_kicker","label":"Studio kicker","default":"LIVE CONFIGURATOR"},
+    {"type":"text","id":"studio_title","label":"Studio title","default":"SEE IT BEFORE WE PRINT IT."},
+    {"type":"textarea","id":"studio_text","label":"Studio text","default":"Choose a model, material and coverage. Mix colors, place your logo, add custom text and save multiple versions before ordering."},
+    {"type":"text","id":"studio_label","label":"Studio button","default":"OPEN DESIGN STUDIO"},
+    {"type":"url","id":"studio_link","label":"Studio link"},
+    {"type":"text","id":"features_kicker","label":"Features kicker","default":"BUILT DIFFERENT"},
+    {"type":"text","id":"features_title","label":"Features title","default":"EVERYTHING YOU NEED TO MAKE IT YOURS."},
+    {"type":"text","id":"products_kicker","label":"Products kicker","default":"STARTING POINTS"},
+    {"type":"text","id":"products_title","label":"Products title","default":"POPULAR WRAP DESIGNS."},
+    {"type":"collection","id":"collection","label":"Featured collection"},
+    {"type":"text","id":"proof_kicker","label":"Proof kicker","default":"TESTED IN THE REAL WORLD"},
+    {"type":"text","id":"proof_title","label":"Proof title","default":"LOOKS HARD. RIDES HARDER."},
+    {"type":"textarea","id":"quote","label":"Quote","default":"The configurator made the choices easy and the finished kit fitted every panel exactly. It completely changed the machine."},
+    {"type":"text","id":"quote_author","label":"Quote author","default":"VERIFIED RIDER"},
+    {"type":"text","id":"faq_title","label":"FAQ title","default":"BEFORE YOU START."}
+  ],
+  "blocks": [
+    {
+      "type":"stat",
+      "name":"Stat",
+      "settings":[
+        {"type":"text","id":"number","label":"Number","default":"2,500+"},
+        {"type":"text","id":"label","label":"Label","default":"Vehicle templates"}
+      ]
+    },
+    {
+      "type":"category",
+      "name":"Category",
+      "settings":[
+        {"type":"text","id":"code","label":"Visual code","default":"PWC"},
+        {"type":"text","id":"eyebrow","label":"Eyebrow","default":"WATERCRAFT"},
+        {"type":"text","id":"title","label":"Title","default":"JET SKI WRAPS"},
+        {"type":"text","id":"label","label":"Link label","default":"SHOP DESIGNS"},
+        {"type":"url","id":"link","label":"Link"}
+      ]
+    },
+    {
+      "type":"step",
+      "name":"Step",
+      "settings":[
+        {"type":"text","id":"title","label":"Title","default":"PICK YOUR MACHINE"},
+        {"type":"textarea","id":"text","label":"Text","default":"Choose the exact year, brand and model so every panel fits correctly."}
+      ]
+    },
+    {
+      "type":"feature",
+      "name":"Feature",
+      "settings":[
+        {"type":"text","id":"icon","label":"Icon","default":"✦"},
+        {"type":"text","id":"title","label":"Title","default":"LIVE COLOR CONTROL"},
+        {"type":"textarea","id":"text","label":"Text","default":"Swap primary, secondary and accent colors and see the full machine update instantly."}
+      ]
+    },
+    {
+      "type":"faq",
+      "name":"FAQ",
+      "settings":[
+        {"type":"text","id":"question","label":"Question","default":"Can I change every color?"},
+        {"type":"richtext","id":"answer","label":"Answer","default":"<p>Yes. The configurator includes primary, secondary and accent controls plus curated starting presets.</p>"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name":"TRIXLAB homepage",
+      "blocks":[
+        {"type":"stat","settings":{"number":"2,500+","label":"Vehicle templates"}},
+        {"type":"stat","settings":{"number":"4.9/5","label":"Rider rating"}},
+        {"type":"stat","settings":{"number":"5+ YEARS","label":"Outdoor durability"}},
+        {"type":"stat","settings":{"number":"100%","label":"Precision cut"}},
+        {"type":"stat","settings":{"number":"EU","label":"Production ready"}},
+        {"type":"category","settings":{"code":"PWC","eyebrow":"WATERCRAFT","title":"JET SKI WRAPS","label":"SHOP DESIGNS"}},
+        {"type":"category","settings":{"code":"MX","eyebrow":"MOTOCROSS","title":"DIRT BIKE KITS","label":"SHOP DESIGNS"}},
+        {"type":"category","settings":{"code":"SNW","eyebrow":"WINTER","title":"SNOWMOBILE WRAPS","label":"SHOP DESIGNS"}},
+        {"type":"category","settings":{"code":"UTV","eyebrow":"OFFROAD","title":"SIDE-BY-SIDE WRAPS","label":"SHOP DESIGNS"}},
+        {"type":"step","settings":{"title":"PICK YOUR MACHINE","text":"Choose the exact year, brand and model so every panel fits correctly."}},
+        {"type":"step","settings":{"title":"MAKE IT YOURS","text":"Change colors, material, coverage, text and logos in the live studio."}},
+        {"type":"step","settings":{"title":"APPROVE THE BUILD","text":"Save versions and send the exact configuration with your order."}},
+        {"type":"step","settings":{"title":"INSTALL + RIDE","text":"Receive a precision-cut kit ready for a clean home or professional install."}},
+        {"type":"feature","settings":{"icon":"◐","title":"PREMIUM MATERIALS","text":"Standard, chrome and holographic finishes with protective laminate."}},
+        {"type":"feature","settings":{"icon":"⌁","title":"LIVE COLORS","text":"Adjust three color zones and apply curated presets in real time."}},
+        {"type":"feature","settings":{"icon":"＋","title":"YOUR LOGO","text":"Upload your own logo and include the production file with the order."}},
+        {"type":"feature","settings":{"icon":"T","title":"CUSTOM TEXT","text":"Add rider names, race numbers, companies or social handles."}},
+        {"type":"feature","settings":{"icon":"▦","title":"COVERAGE CONTROL","text":"Choose partial, standard or full coverage using real product variants."}},
+        {"type":"feature","settings":{"icon":"↻","title":"SAVE BUILDS","text":"Keep multiple designs on your device and return to them before ordering."}},
+        {"type":"faq","settings":{"question":"Can I use my own logo?","answer":"<p>Yes. Upload a PNG, SVG, JPG or PDF. A preview appears in the studio and the original file is attached to the order.</p>"}},
+        {"type":"faq","settings":{"question":"Does the preview change the real price?","answer":"<p>Yes when your Shopify product uses variants for material, coverage and model. The selected variant is added to the cart at its actual Shopify price.</p>"}},
+        {"type":"faq","settings":{"question":"Will the kit fit my exact machine?","answer":"<p>Create product variants for the supported year and model combinations. The chosen values are submitted with the configured order.</p>"}},
+        {"type":"faq","settings":{"question":"Can I save more than one design?","answer":"<p>Yes. Saved builds are stored locally in the rider’s browser and can be loaded or deleted at any time.</p>"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

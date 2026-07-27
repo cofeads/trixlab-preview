@@ -1,0 +1,20 @@
+{
+  "current": {
+    "color_background": "#0b0d0c",
+    "color_surface": "#131614",
+    "color_text": "#f5f7f5",
+    "color_muted": "#a4aaa6",
+    "color_border": "#2a2f2b",
+    "color_accent": "#9cff00"
+  },
+  "presets": {
+    "TRIXLAB": {
+      "color_background": "#0b0d0c",
+      "color_surface": "#131614",
+      "color_text": "#f5f7f5",
+      "color_muted": "#a4aaa6",
+      "color_border": "#2a2f2b",
+      "color_accent": "#9cff00"
+    }
+  }
+}

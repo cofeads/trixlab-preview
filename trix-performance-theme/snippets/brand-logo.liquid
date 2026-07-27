@@ -1,0 +1,27 @@
+{% doc %}
+Renders the TRIXLAB brand mark.
+@param {string} [class] - Optional CSS class.
+@param {string} [variant] - Use mark for the compact monogram.
+@example
+{% render 'brand-logo', class: 'site-logo', variant: 'full' %}
+{% enddoc %}
+
+{% if variant == 'mark' %}
+  <svg class="{{ class }}" viewBox="0 0 92 72" role="img" aria-label="TRIXLAB">
+    <path fill="currentColor" d="M8 8h72L66 23H36l-8 8h36L38 64H17l16-17H3l13-14H5z"/>
+    <path fill="var(--tp-accent)" d="M18 63 36 44l-5 19z"/>
+  </svg>
+{% else %}
+  <svg class="{{ class }}" viewBox="0 0 760 112" role="img" aria-label="TRIXLAB — Race Graphics and Performance Parts">
+    <g fill="currentColor">
+      <path d="M4 12h84L72 30H38l-9 9h40L39 73H15l19-21H0l15-17H2z"/>
+      <path d="M120 16h93l-14 18h-32l-30 39h-25l30-39h-36z"/>
+      <path d="M208 16h76c17 0 23 10 14 23-6 9-16 14-29 16l17 18h-30l-22-24h30c6 0 10-2 13-7 3-4 1-7-5-7h-47l-29 38h-25z"/>
+      <path d="M310 16h25l-44 57h-25z"/>
+      <path d="M351 16h29l14 18 42-18h31l-61 27 23 30h-30l-14-20-45 20h-31l64-29z"/>
+    </g>
+    <path fill="var(--tp-accent)" d="M18 74 40 50l-6 24z"/>
+    <text x="472" y="73" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="76" font-style="italic" font-weight="900" letter-spacing="-6">LAB</text>
+    <text x="122" y="104" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="11" font-style="italic" font-weight="800" letter-spacing="3.2">RACE GRAPHICS &amp; PERFORMANCE PARTS</text>
+  </svg>
+{% endif %}

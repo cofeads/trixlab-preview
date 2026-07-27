@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-configurator"
+    }
+  },
+  "order": ["main"]
+}

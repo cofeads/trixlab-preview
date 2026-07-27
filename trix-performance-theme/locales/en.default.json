@@ -1,0 +1,60 @@
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close"
+  },
+  "general": {
+    "page": "Page {{ number }}",
+    "menu": "Menu",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Cart",
+    "newsletter_email": "Email address",
+    "newsletter_submit": "Join now"
+  },
+  "configurator": {
+    "preview_alt": "Live wrap preview on a performance personal watercraft",
+    "studio": "Design studio",
+    "back": "Back",
+    "save": "Save build",
+    "saved": "Saved builds",
+    "select_model": "Select model",
+    "current_build": "Current build",
+    "price_updates": "Price updates with selected product variant",
+    "price_breakdown": "Price breakdown",
+    "zoom_in": "Zoom in",
+    "zoom_out": "Zoom out",
+    "undo": "Undo",
+    "redo": "Redo",
+    "randomize": "Design mixer",
+    "material": "Material",
+    "colors": "Colors",
+    "logo": "Logo",
+    "text": "Text",
+    "coverage": "Coverage",
+    "overlay": "Overlay",
+    "assistant": "Design mix",
+    "notes": "Notes",
+    "add_to_cart": "Add configured wrap",
+    "choose_variant": "Choose options",
+    "upload_logo": "Upload logo",
+    "custom_text": "Custom text",
+    "order_notes": "Order notes",
+    "build_name": "Build name",
+    "save_confirm": "Build saved on this device",
+    "empty_builds": "No saved builds yet",
+    "load": "Load",
+    "delete": "Delete"
+  },
+  "products": {
+    "from": "From {{ price }}",
+    "sold_out": "Sold out",
+    "view": "Configure"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "checkout": "Checkout",
+    "remove": "Remove"
+  }
+}

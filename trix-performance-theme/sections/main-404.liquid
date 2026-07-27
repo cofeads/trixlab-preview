@@ -1,0 +1,22 @@
+<section class="tp-section tp-404">
+  <div class="tp-container">
+    <span>404</span>
+    <h1>OFF THE TEMPLATE.</h1>
+    <p>This page does not fit this machine.</p>
+    <a class="tp-button tp-button--accent" href="{{ routes.root_url }}">Back home</a>
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-404 { display: grid; min-height: 72svh; place-items: center; text-align: center; }
+  .tp-404 span { color: var(--tp-accent); font-size: 14px; font-weight: 900; letter-spacing: .16em; }
+  .tp-404 h1 { margin: 12px 0; font-size: clamp(60px, 11vw, 150px); line-height: .82; letter-spacing: -.08em; }
+  .tp-404 p { margin: 0 0 30px; color: var(--tp-muted); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "404",
+  "settings": []
+}
+{% endschema %}

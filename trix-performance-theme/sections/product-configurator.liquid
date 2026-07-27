@@ -1,0 +1,746 @@
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'tp-product-form-' | append: section.id
+%}
+
+<section
+  class="tp-configurator"
+  data-trix-configurator
+  data-product-handle="{{ product.handle }}"
+  data-currency="{{ cart.currency.iso_code | default: 'EUR' }}"
+  style="--tp-preview-primary: {{ section.settings.primary_color }}; --tp-preview-secondary: {{ section.settings.secondary_color }}; --tp-preview-accent: {{ section.settings.accent_color }}; --tp-preview-text-color: #ffffff;"
+>
+  <script type="application/json" data-tp-variants>{{ product.variants | json }}</script>
+  <header class="tp-configurator__header">
+    <div class="tp-configurator__header-actions">
+      <a class="tp-studio-pill tp-studio-pill--dark" href="{{ routes.all_products_collection_url }}">← {{ 'configurator.back' | t }}</a>
+      <button class="tp-studio-pill" type="button" data-tp-open-builds>{{ 'configurator.saved' | t }}</button>
+      <button class="tp-studio-pill" type="button" data-tp-save>{{ 'configurator.save' | t }}</button>
+    </div>
+    <a class="tp-configurator__brand" href="{{ routes.root_url }}">{% render 'brand-logo', class: 'tp-configurator__brand-svg', variant: 'full' %}</a>
+    <button class="tp-studio-pill tp-studio-pill--dark" type="button" data-tp-open-model>{{ 'configurator.select_model' | t }} →</button>
+  </header>
+
+  <div class="tp-configurator__workspace">
+    <aside class="tp-configurator__presets">
+      <div class="tp-configurator__title">
+        <span>{{ product.vendor }}</span>
+        <h1>{{ product.title }}</h1>
+      </div>
+      <button class="tp-preset is-active" type="button" data-tp-preset="#e8ece8,#111512,#9cff00" aria-pressed="true">
+        <span class="tp-preset__swatch tp-preset__swatch--stealth"></span>
+        <b>STEALTH LIME</b>
+      </button>
+      <button class="tp-preset" type="button" data-tp-preset="#28abe2,#111827,#ec008c" aria-pressed="false">
+        <span class="tp-preset__swatch tp-preset__swatch--electric"></span>
+        <b>ELECTRIC</b>
+      </button>
+      <button class="tp-preset" type="button" data-tp-preset="#254074,#f5f7f5,#9cff00" aria-pressed="false">
+        <span class="tp-preset__swatch tp-preset__swatch--midnight"></span>
+        <b>MIDNIGHT</b>
+      </button>
+      <button class="tp-preset" type="button" data-tp-preset="#86cdf2,#f7f8f7,#111512" aria-pressed="false">
+        <span class="tp-preset__swatch tp-preset__swatch--glacier"></span>
+        <b>GLACIER</b>
+      </button>
+      <button class="tp-preset" type="button" data-tp-preset="#80c346,#050706,#dfe5df" aria-pressed="false">
+        <span class="tp-preset__swatch tp-preset__swatch--toxic"></span>
+        <b>TOXIC</b>
+      </button>
+      <button class="tp-preset" type="button" data-tp-preset="#f05123,#0a0d0b,#ffffff" aria-pressed="false">
+        <span class="tp-preset__swatch tp-preset__swatch--blaze"></span>
+        <b>BLAZE</b>
+      </button>
+    </aside>
+
+    <div class="tp-configurator__canvas-wrap">
+      <div class="tp-configurator__canvas-toolbar">
+        <button type="button" data-tp-undo disabled aria-label="{{ 'configurator.undo' | t }}">↶</button>
+        <button type="button" data-tp-redo disabled aria-label="{{ 'configurator.redo' | t }}">↷</button>
+        <button type="button" data-tp-random aria-label="{{ 'configurator.randomize' | t }}">✦</button>
+      </div>
+      <div class="tp-configurator__canvas" data-tp-canvas>
+        {% render 'machine-preview', id_prefix: section.id, class: 'tp-configurator__machine' %}
+      </div>
+      <div class="tp-configurator__zoom">
+        <button type="button" data-tp-zoom-in aria-label="{{ 'configurator.zoom_in' | t }}">+</button>
+        <span data-tp-zoom-label>100%</span>
+        <button type="button" data-tp-zoom-out aria-label="{{ 'configurator.zoom_out' | t }}">−</button>
+      </div>
+      <div class="tp-configurator__price">
+        <span>{{ 'configurator.current_build' | t }}</span>
+        <strong data-tp-price>{{ current_variant.price | money }}</strong>
+        <small>{{ 'configurator.price_updates' | t }}</small>
+        <button type="button" data-tp-price-breakdown>{{ 'configurator.price_breakdown' | t }}</button>
+      </div>
+    </div>
+
+    <div class="tp-configurator__panel" data-tp-panel-wrap hidden>
+      <button class="tp-configurator__panel-close" type="button" data-tp-close-panel aria-label="{{ 'accessibility.close' | t }}">×</button>
+      <div class="tp-panel" data-tp-panel="material">
+        <p class="tp-panel__kicker">01</p>
+        <h2>{{ 'configurator.material' | t }}</h2>
+        <div class="tp-panel__choices" data-tp-material-options>
+          {% assign material_rendered = false %}
+          {% for option in product.options_with_values %}
+            {% assign option_name = option.name | downcase %}
+            {% if option_name contains 'material' %}
+              {% assign material_rendered = true %}
+              <input type="hidden" value="{{ option.position }}" data-tp-option-position="material">
+              {% for value in option.values %}
+                <button class="tp-choice" type="button" data-tp-product-option="material" data-option-position="{{ option.position }}" data-option-value="{{ value | escape }}">
+                  <b>{{ value }}</b><span>{{ section.settings.material_help }}</span>
+                </button>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+          {% unless material_rendered %}
+            <button class="tp-choice is-active" type="button" data-tp-property-choice="material" data-property-value="Standard Vinyl"><b>Standard Vinyl</b><span>Premium full-color vinyl</span></button>
+            <button class="tp-choice" type="button" data-tp-property-choice="material" data-property-value="Chrome"><b>Chrome</b><span>Variant required for price upgrade</span></button>
+            <button class="tp-choice" type="button" data-tp-property-choice="material" data-property-value="Holographic"><b>Holographic</b><span>Variant required for price upgrade</span></button>
+          {% endunless %}
+        </div>
+      </div>
+
+      <div class="tp-panel" data-tp-panel="colors" hidden>
+        <p class="tp-panel__kicker">02</p>
+        <h2>{{ 'configurator.colors' | t }}</h2>
+        <label class="tp-color-row">Primary <input type="color" value="{{ section.settings.primary_color }}" data-tp-color="primary"><span data-tp-color-value="primary">{{ section.settings.primary_color }}</span></label>
+        <label class="tp-color-row">Secondary <input type="color" value="{{ section.settings.secondary_color }}" data-tp-color="secondary"><span data-tp-color-value="secondary">{{ section.settings.secondary_color }}</span></label>
+        <label class="tp-color-row">Accent <input type="color" value="{{ section.settings.accent_color }}" data-tp-color="accent"><span data-tp-color-value="accent">{{ section.settings.accent_color }}</span></label>
+      </div>
+
+      <div class="tp-panel" data-tp-panel="logo" hidden>
+        <p class="tp-panel__kicker">03</p>
+        <h2>{{ 'configurator.logo' | t }}</h2>
+        <label class="tp-upload">
+          <span>＋</span>
+          <b>{{ 'configurator.upload_logo' | t }}</b>
+          <small>PNG, JPG, SVG or PDF</small>
+          <input form="{{ product_form_id }}" type="file" name="properties[Logo file]" accept=".png,.jpg,.jpeg,.svg,.pdf" data-tp-logo-input>
+        </label>
+        <label class="tp-range-row">Preview scale <input type="range" min="40" max="180" value="90" data-tp-logo-scale></label>
+        <button class="tp-text-button" type="button" data-tp-remove-logo>Remove preview</button>
+      </div>
+
+      <div class="tp-panel" data-tp-panel="text" hidden>
+        <p class="tp-panel__kicker">04</p>
+        <h2>{{ 'configurator.text' | t }}</h2>
+        <label class="tp-field">{{ 'configurator.custom_text' | t }}<input type="text" maxlength="28" placeholder="RIDER 21" data-tp-custom-text></label>
+        <label class="tp-color-row">Text color <input type="color" value="#ffffff" data-tp-text-color><span>#ffffff</span></label>
+        <label class="tp-field">Style
+          <select data-tp-text-style>
+            <option value="italic">Race italic</option>
+            <option value="normal">Technical</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="tp-panel" data-tp-panel="coverage" hidden>
+        <p class="tp-panel__kicker">05</p>
+        <h2>{{ 'configurator.coverage' | t }}</h2>
+        <div class="tp-panel__choices">
+          {% assign coverage_rendered = false %}
+          {% for option in product.options_with_values %}
+            {% assign option_name = option.name | downcase %}
+            {% if option_name contains 'coverage' or option_name contains 'abdeckung' %}
+              {% assign coverage_rendered = true %}
+              <input type="hidden" value="{{ option.position }}" data-tp-option-position="coverage">
+              {% for value in option.values %}
+                <button class="tp-choice" type="button" data-tp-product-option="coverage" data-option-position="{{ option.position }}" data-option-value="{{ value | escape }}"><b>{{ value }}</b><span>Shopify product variant</span></button>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+          {% unless coverage_rendered %}
+            <button class="tp-choice" type="button" data-tp-property-choice="coverage" data-property-value="Partial"><b>Partial</b><span>Key side panels</span></button>
+            <button class="tp-choice is-active" type="button" data-tp-property-choice="coverage" data-property-value="Full"><b>Full</b><span>Maximum visual impact</span></button>
+          {% endunless %}
+        </div>
+      </div>
+
+      <div class="tp-panel" data-tp-panel="overlay" hidden>
+        <p class="tp-panel__kicker">06</p>
+        <h2>{{ 'configurator.overlay' | t }}</h2>
+        <div class="tp-panel__choices">
+          <button class="tp-choice is-active" type="button" data-tp-overlay="none"><b>Clean</b><span>No pattern overlay</span></button>
+          <button class="tp-choice" type="button" data-tp-overlay="stripes"><b>Velocity</b><span>Angled racing lines</span></button>
+          <button class="tp-choice" type="button" data-tp-overlay="hex"><b>Hex Tech</b><span>Technical cell pattern</span></button>
+        </div>
+      </div>
+
+      <div class="tp-panel" data-tp-panel="assistant" hidden>
+        <p class="tp-panel__kicker">07</p>
+        <h2>{{ 'configurator.assistant' | t }}</h2>
+        <p class="tp-panel__text">Type a direction and the on-device design mixer builds a matching palette and overlay without sending data away.</p>
+        <label class="tp-field">Direction<input type="text" placeholder="Stealth, ocean, race, fire…" data-tp-mix-prompt></label>
+        <button class="tp-button tp-button--accent" type="button" data-tp-generate-mix>Generate mix</button>
+      </div>
+
+      <div class="tp-panel" data-tp-panel="notes" hidden>
+        <p class="tp-panel__kicker">08</p>
+        <h2>{{ 'configurator.notes' | t }}</h2>
+        <label class="tp-field">{{ 'configurator.order_notes' | t }}<textarea rows="7" placeholder="Placement, race number, special requests…" data-tp-notes></textarea></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-configurator__bottom">
+    <nav class="tp-configurator__tabs" aria-label="{{ 'configurator.studio' | t }}">
+      <button type="button" data-tp-tab="material">◈ <span>{{ 'configurator.material' | t }}</span></button>
+      <button type="button" data-tp-tab="colors">◐ <span>{{ 'configurator.colors' | t }}</span></button>
+      <button type="button" data-tp-tab="logo">▣ <span>{{ 'configurator.logo' | t }}</span></button>
+      <button type="button" data-tp-tab="text">T <span>{{ 'configurator.text' | t }}</span></button>
+      <button type="button" data-tp-tab="coverage">▦ <span>{{ 'configurator.coverage' | t }}</span></button>
+      <button type="button" data-tp-tab="overlay">⌁ <span>{{ 'configurator.overlay' | t }}</span></button>
+      <button type="button" data-tp-tab="assistant">✦ <span>{{ 'configurator.assistant' | t }}</span></button>
+      <button type="button" data-tp-tab="notes">☷ <span>{{ 'configurator.notes' | t }}</span></button>
+    </nav>
+    {% form 'product', product, id: product_form_id, class: 'tp-configurator__form', enctype: 'multipart/form-data' %}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-tp-variant-id>
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Primary color]" value="{{ section.settings.primary_color }}" data-tp-property="primary">
+      <input type="hidden" name="properties[Secondary color]" value="{{ section.settings.secondary_color }}" data-tp-property="secondary">
+      <input type="hidden" name="properties[Accent color]" value="{{ section.settings.accent_color }}" data-tp-property="accent">
+      <input type="hidden" name="properties[Material]" value="Standard Vinyl" data-tp-property="material">
+      <input type="hidden" name="properties[Coverage]" value="Full" data-tp-property="coverage">
+      <input type="hidden" name="properties[Overlay]" value="Clean" data-tp-property="overlay">
+      <input type="hidden" name="properties[Custom text]" value="" data-tp-property="customText">
+      <input type="hidden" name="properties[Text color]" value="#ffffff" data-tp-property="textColor">
+      <input type="hidden" name="properties[Order notes]" value="" data-tp-property="notes">
+      <button class="tp-configurator__submit" type="submit" {% unless current_variant.available %}disabled{% endunless %} data-tp-submit>
+        <span>{{ 'configurator.add_to_cart' | t }}</span>
+        <strong data-tp-submit-price>{{ current_variant.price | money }}</strong>
+      </button>
+    {% endform %}
+  </div>
+
+  <dialog class="tp-studio-dialog" data-tp-model-dialog>
+    <button type="button" data-tp-dialog-close aria-label="{{ 'accessibility.close' | t }}">×</button>
+    {% render 'brand-logo', class: 'tp-studio-dialog__logo', variant: 'mark' %}
+    <h2>{{ 'configurator.select_model' | t }}</h2>
+    <p>Select the Shopify product options that describe this machine.</p>
+    {% for option in product.options_with_values %}
+      {% assign option_name = option.name | downcase %}
+      {% unless option_name contains 'material' or option_name contains 'coverage' or option_name contains 'abdeckung' %}
+        <label class="tp-field">{{ option.name }}
+          <select data-tp-dialog-option data-option-position="{{ option.position }}">
+            {% for value in option.values %}<option value="{{ value | escape }}">{{ value }}</option>{% endfor %}
+          </select>
+        </label>
+      {% endunless %}
+    {% endfor %}
+    <button class="tp-button tp-button--accent" type="button" data-tp-model-continue>Continue to studio</button>
+  </dialog>
+
+  <dialog class="tp-studio-dialog tp-builds-dialog" data-tp-builds-dialog>
+    <button type="button" data-tp-dialog-close aria-label="{{ 'accessibility.close' | t }}">×</button>
+    <h2>{{ 'configurator.saved' | t }}</h2>
+    <div data-tp-build-list></div>
+  </dialog>
+
+  <dialog class="tp-studio-dialog tp-price-dialog" data-tp-price-dialog>
+    <button type="button" data-tp-dialog-close aria-label="{{ 'accessibility.close' | t }}">×</button>
+    <h2>{{ 'configurator.price_breakdown' | t }}</h2>
+    <div class="tp-price-dialog__rows">
+      <p><span>Selected variant</span><strong data-tp-breakdown-variant>{{ current_variant.title }}</strong></p>
+      <p><span>Shopify price</span><strong data-tp-breakdown-price>{{ current_variant.price | money }}</strong></p>
+      <small>Material and coverage need Shopify variants when they change the checkout price.</small>
+    </div>
+  </dialog>
+
+  <div class="tp-configurator__toast" role="status" aria-live="polite" data-tp-toast></div>
+</section>
+
+{% stylesheet %}
+  .tp-configurator { min-height: 100svh; background: #eff1ef; color: #111512; --tp-studio-line: #d9ddda; }
+  .tp-configurator__header { position: relative; z-index: 10; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 94px; padding: 0 32px; border-bottom: 1px solid var(--tp-studio-line); background: rgba(247,248,247,.92); backdrop-filter: blur(18px); }
+  .tp-configurator__header-actions { display: flex; gap: 10px; }
+  .tp-studio-pill { min-height: 44px; padding: 0 18px; border: 1px solid #c8cdca; border-radius: 999px; background: transparent; color: #18201b; font-size: 10px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+  .tp-studio-pill--dark { border-color: #0b0e0c; background: #0b0e0c; color: #fff; }
+  .tp-configurator__brand { width: 290px; }
+  .tp-configurator__brand-svg { width: 100%; }
+  .tp-configurator__header > .tp-studio-pill { justify-self: end; }
+  .tp-configurator__workspace { position: relative; display: grid; grid-template-columns: 184px 1fr; min-height: calc(100svh - 186px); }
+  .tp-configurator__presets { position: relative; z-index: 4; display: flex; flex-direction: column; gap: 8px; max-height: calc(100svh - 186px); padding: 26px 22px 120px; border-right: 1px solid var(--tp-studio-line); overflow-y: auto; }
+  .tp-configurator__title span { color: #6f7771; font-size: 9px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .tp-configurator__title h1 { margin: 5px 0 22px; font-size: 24px; line-height: 1; letter-spacing: -.04em; text-transform: uppercase; }
+  .tp-preset { display: grid; gap: 7px; padding: 8px; border: 1px solid transparent; border-radius: 12px; background: transparent; text-align: left; cursor: pointer; }
+  .tp-preset:hover, .tp-preset.is-active { border-color: #23c8b5; background: #fff; }
+  .tp-preset__swatch { display: block; aspect-ratio: 1.5; border-radius: 8px; background: linear-gradient(145deg, #e8ece8 0 35%, #111512 35% 70%, #9cff00 70%); clip-path: polygon(0 22%, 100% 0, 92% 78%, 12% 100%); }
+  .tp-preset__swatch--electric { background: linear-gradient(145deg, #28abe2 0 35%, #111827 35% 70%, #ec008c 70%); }
+  .tp-preset__swatch--midnight { background: linear-gradient(145deg, #254074 0 35%, #f5f7f5 35% 70%, #9cff00 70%); }
+  .tp-preset__swatch--glacier { background: linear-gradient(145deg, #86cdf2 0 35%, #f7f8f7 35% 70%, #111512 70%); }
+  .tp-preset__swatch--toxic { background: linear-gradient(145deg, #80c346 0 35%, #050706 35% 70%, #dfe5df 70%); }
+  .tp-preset__swatch--blaze { background: linear-gradient(145deg, #f05123 0 35%, #0a0d0b 35% 70%, #fff 70%); }
+  .tp-preset b { font-size: 9px; letter-spacing: .08em; }
+  .tp-configurator__canvas-wrap { position: relative; display: grid; min-width: 0; place-items: center; overflow: hidden; background: radial-gradient(circle at 50% 50%, #fff 0, #f2f4f2 56%, #e7eae7 100%); }
+  .tp-configurator__canvas { width: min(88%, 1200px); transition: transform .25s ease; }
+  .tp-configurator__machine { width: 100%; filter: drop-shadow(0 32px 25px rgba(22,28,24,.18)); }
+  .tp-preview-pattern { opacity: 0; transition: opacity .2s ease; }
+  .tp-configurator[data-overlay="stripes"] .tp-preview-pattern--stripes, .tp-configurator[data-overlay="hex"] .tp-preview-pattern--hex { opacity: 1; }
+  .tp-configurator[data-material="Chrome"] .tp-configurator__machine { filter: contrast(1.12) saturate(.7) drop-shadow(0 32px 25px rgba(22,28,24,.18)); }
+  .tp-configurator[data-material="Holographic"] .tp-configurator__machine { filter: hue-rotate(18deg) saturate(1.28) contrast(1.05) drop-shadow(0 32px 25px rgba(22,28,24,.18)); }
+  .tp-configurator[data-coverage="Partial"] .tp-preview-part--rear, .tp-configurator[data-coverage="Partial"] .tp-preview-accent { opacity: .18; }
+  .tp-configurator__canvas-toolbar { position: absolute; z-index: 3; top: 26px; left: 50%; display: flex; padding: 6px; border: 1px solid var(--tp-studio-line); border-radius: 999px; background: rgba(255,255,255,.85); transform: translateX(-50%); }
+  .tp-configurator__canvas-toolbar button, .tp-configurator__zoom button { display: grid; width: 38px; height: 38px; place-items: center; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
+  .tp-configurator__canvas-toolbar button:hover, .tp-configurator__zoom button:hover { background: #e5e9e6; }
+  .tp-configurator__canvas-toolbar button:disabled { opacity: .28; cursor: not-allowed; }
+  .tp-configurator__zoom { position: absolute; right: 28px; display: grid; place-items: center; border: 1px solid var(--tp-studio-line); border-radius: 999px; background: rgba(255,255,255,.9); overflow: hidden; }
+  .tp-configurator__zoom span { font-size: 10px; font-weight: 900; }
+  .tp-configurator__price { position: absolute; top: 24px; right: 28px; display: grid; width: 250px; padding: 24px; border: 1px solid var(--tp-studio-line); border-radius: 18px; background: rgba(255,255,255,.9); box-shadow: 0 15px 40px rgba(20,27,22,.08); }
+  .tp-configurator__price > span { color: #747b76; font-size: 9px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .tp-configurator__price strong { margin-top: 7px; font-size: 36px; letter-spacing: -.05em; }
+  .tp-configurator__price small { margin-top: 5px; color: #747b76; line-height: 1.4; }
+  .tp-configurator__price button { width: max-content; margin-top: 14px; padding: 0; border: 0; background: transparent; color: #087f72; font-size: 10px; font-weight: 800; cursor: pointer; }
+  .tp-configurator__panel { position: absolute; z-index: 8; top: 0; right: 0; bottom: 0; width: min(420px, 94vw); padding: 36px; border-left: 1px solid var(--tp-studio-line); background: #fff; box-shadow: -25px 0 60px rgba(20,27,22,.12); overflow-y: auto; }
+  .tp-configurator__panel-close { position: absolute; top: 16px; right: 16px; display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid var(--tp-studio-line); border-radius: 50%; background: transparent; font-size: 20px; cursor: pointer; }
+  .tp-panel__kicker { margin: 0; color: #00a895; font-size: 10px; font-weight: 900; letter-spacing: .16em; }
+  .tp-panel h2 { margin: 10px 0 28px; font-size: 42px; letter-spacing: -.055em; text-transform: uppercase; }
+  .tp-panel__text { color: #6a726c; line-height: 1.6; }
+  .tp-panel__choices { display: grid; gap: 10px; }
+  .tp-choice { display: grid; gap: 7px; padding: 18px; border: 1px solid var(--tp-studio-line); border-radius: 14px; background: #f8f9f8; text-align: left; cursor: pointer; }
+  .tp-choice:hover, .tp-choice.is-active { border-color: #08bba6; box-shadow: inset 0 0 0 1px #08bba6; }
+  .tp-choice b { font-size: 16px; }
+  .tp-choice span { color: #6f7771; font-size: 12px; }
+  .tp-color-row { display: grid; grid-template-columns: 1fr 46px 74px; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--tp-studio-line); font-size: 13px; font-weight: 800; }
+  .tp-color-row input { width: 42px; height: 42px; padding: 2px; border: 1px solid var(--tp-studio-line); border-radius: 50%; background: transparent; cursor: pointer; }
+  .tp-color-row span { color: #737a75; font-family: monospace; font-size: 11px; text-transform: uppercase; }
+  .tp-upload { display: grid; min-height: 190px; place-items: center; align-content: center; gap: 8px; border: 1px dashed #9fa7a1; border-radius: 16px; background: #f7f9f7; cursor: pointer; }
+  .tp-upload > span { font-size: 38px; font-weight: 200; }
+  .tp-upload small { color: #717973; }
+  .tp-upload input { position: absolute; opacity: 0; pointer-events: none; }
+  .tp-range-row { display: grid; gap: 10px; margin-top: 24px; font-size: 12px; font-weight: 800; }
+  .tp-range-row input { width: 100%; accent-color: #00aa96; }
+  .tp-text-button { margin-top: 18px; padding: 0; border: 0; background: transparent; color: #087f72; font-size: 11px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+  .tp-field { display: grid; gap: 9px; margin-bottom: 18px; font-size: 12px; font-weight: 800; }
+  .tp-field input, .tp-field select, .tp-field textarea { width: 100%; padding: 14px; border: 1px solid var(--tp-studio-line); border-radius: 11px; background: #f8f9f8; outline: 0; }
+  .tp-field input:focus, .tp-field select:focus, .tp-field textarea:focus { border-color: #00aa96; }
+  .tp-configurator__bottom { position: sticky; z-index: 9; bottom: 0; display: grid; grid-template-columns: 1fr 310px; align-items: center; gap: 16px; padding: 12px 20px; border-top: 1px solid var(--tp-studio-line); background: rgba(247,248,247,.94); backdrop-filter: blur(16px); }
+  .tp-configurator__tabs { display: flex; width: max-content; max-width: 100%; justify-self: center; padding: 5px; border: 1px solid var(--tp-studio-line); border-radius: 999px; background: #fff; overflow-x: auto; }
+  .tp-configurator__tabs button { display: inline-flex; min-width: max-content; align-items: center; gap: 7px; padding: 12px 15px; border: 0; border-radius: 999px; background: transparent; font-size: 10px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+  .tp-configurator__tabs button:hover, .tp-configurator__tabs button.is-active { background: #e9eeea; }
+  .tp-configurator__form { width: 100%; }
+  .tp-configurator__submit { display: flex; width: 100%; min-height: 54px; align-items: center; justify-content: space-between; gap: 12px; padding: 0 20px; border: 0; border-radius: 999px; background: #0b0e0c; color: #fff; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+  .tp-configurator__submit strong { color: var(--tp-accent); font-size: 13px; }
+  .tp-configurator__submit:disabled { opacity: .5; cursor: not-allowed; }
+  .tp-studio-dialog { width: min(560px, calc(100% - 28px)); padding: 42px; border: 0; border-radius: 22px; color: #101411; }
+  .tp-studio-dialog::backdrop { background: rgba(4,7,5,.72); backdrop-filter: blur(8px); }
+  .tp-studio-dialog > button:first-child { position: absolute; top: 16px; right: 16px; display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid var(--tp-studio-line); border-radius: 50%; background: transparent; font-size: 20px; cursor: pointer; }
+  .tp-studio-dialog__logo { width: 76px; margin: 0 auto 22px; }
+  .tp-studio-dialog h2 { margin: 0 0 10px; font-size: 38px; letter-spacing: -.05em; text-transform: uppercase; }
+  .tp-studio-dialog > p { margin: 0 0 26px; color: #69716b; line-height: 1.55; }
+  .tp-builds-dialog [data-tp-build-list] { display: grid; gap: 10px; margin-top: 24px; }
+  .tp-saved-build { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 14px; border: 1px solid var(--tp-studio-line); border-radius: 12px; }
+  .tp-saved-build b { display: block; }
+  .tp-saved-build small { color: #727a74; }
+  .tp-saved-build button { padding: 8px 10px; border: 1px solid var(--tp-studio-line); border-radius: 9px; background: #f5f7f5; cursor: pointer; }
+  .tp-price-dialog__rows p { display: flex; justify-content: space-between; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--tp-studio-line); }
+  .tp-price-dialog__rows small { display: block; margin-top: 18px; color: #6f7771; line-height: 1.55; }
+  .tp-configurator__toast { position: fixed; z-index: 60; right: 24px; bottom: 96px; max-width: 320px; padding: 14px 18px; border-radius: 12px; background: #0b0e0c; color: #fff; font-size: 12px; font-weight: 800; opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity .2s ease, transform .2s ease; }
+  .tp-configurator__toast.is-visible { opacity: 1; transform: translateY(0); }
+  @media (max-width: 980px) {
+    .tp-configurator__header { grid-template-columns: 1fr auto; padding: 0 16px; }
+    .tp-configurator__brand { display: none; }
+    .tp-configurator__workspace { grid-template-columns: 116px 1fr; }
+    .tp-configurator__presets { padding-inline: 10px; }
+    .tp-configurator__price { top: 14px; right: 14px; width: 190px; padding: 17px; }
+    .tp-configurator__price strong { font-size: 27px; }
+    .tp-configurator__zoom { right: 14px; bottom: 110px; }
+    .tp-configurator__bottom { grid-template-columns: 1fr; }
+    .tp-configurator__form { width: min(520px, 100%); justify-self: center; }
+  }
+  @media (max-width: 680px) {
+    .tp-configurator__header { min-height: 68px; }
+    .tp-configurator__header-actions .tp-studio-pill:nth-child(2), .tp-configurator__header > .tp-studio-pill { display: none; }
+    .tp-studio-pill { min-height: 38px; padding: 0 13px; }
+    .tp-configurator__workspace { display: block; min-height: 62svh; }
+    .tp-configurator__presets { position: absolute; z-index: 5; right: 0; bottom: 8px; left: 0; display: flex; max-height: none; flex-direction: row; padding: 8px 12px; border: 0; overflow-x: auto; }
+    .tp-configurator__title { display: none; }
+    .tp-preset { min-width: 74px; background: rgba(255,255,255,.84); }
+    .tp-preset b { font-size: 7px; }
+    .tp-configurator__canvas-wrap { min-height: 62svh; }
+    .tp-configurator__canvas { width: 115%; }
+    .tp-configurator__price { width: 155px; padding: 12px; }
+    .tp-configurator__price small, .tp-configurator__price button { display: none; }
+    .tp-configurator__price strong { font-size: 22px; }
+    .tp-configurator__canvas-toolbar { top: 12px; left: 16px; transform: none; }
+    .tp-configurator__zoom { bottom: 92px; }
+    .tp-configurator__bottom { padding: 8px; }
+    .tp-configurator__tabs { justify-self: stretch; border-radius: 14px; }
+    .tp-configurator__tabs button { padding: 10px 13px; }
+    .tp-configurator__tabs button span { display: none; }
+    .tp-configurator__panel { top: auto; width: 100%; max-height: 72svh; border-top: 1px solid var(--tp-studio-line); border-left: 0; border-radius: 22px 22px 0 0; }
+    .tp-configurator__submit { min-height: 48px; }
+    .tp-studio-dialog { padding: 34px 22px; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const roots = document.querySelectorAll('[data-trix-configurator]');
+    roots.forEach((root) => {
+      if (root.dataset.ready === 'true') return;
+      root.dataset.ready = 'true';
+      const variantsNode = root.querySelector('[data-tp-variants]');
+      const variants = variantsNode ? JSON.parse(variantsNode.textContent) : [];
+      const currency = root.dataset.currency || 'EUR';
+      const productHandle = root.dataset.productHandle || 'product';
+      const storageKey = `trix-builds-${productHandle}`;
+      const state = {
+        primary: root.style.getPropertyValue('--tp-preview-primary').trim() || '#e8ece8',
+        secondary: root.style.getPropertyValue('--tp-preview-secondary').trim() || '#111512',
+        accent: root.style.getPropertyValue('--tp-preview-accent').trim() || '#9cff00',
+        textColor: '#ffffff',
+        customText: '',
+        textStyle: 'italic',
+        material: 'Standard Vinyl',
+        coverage: 'Full',
+        overlay: 'none',
+        notes: '',
+        logoUrl: '',
+        logoScale: 90,
+        zoom: 1,
+        optionValues: {}
+      };
+      let history = [];
+      let future = [];
+      let toastTimer;
+      const $ = (selector) => root.querySelector(selector);
+      const $$ = (selector) => [...root.querySelectorAll(selector)];
+      const propertyInput = (key) => $(`[data-tp-property="${key}"]`);
+      const priceNodes = $$('[data-tp-price], [data-tp-submit-price], [data-tp-breakdown-price]');
+      const variantInput = $('[data-tp-variant-id]');
+      const submit = $('[data-tp-submit]');
+      const machine = $('.tp-configurator__machine');
+      const canvas = $('[data-tp-canvas]');
+      const logoLayer = $('.tp-preview-logo-layer');
+      const previewText = $('.tp-preview-text');
+      const toast = $('[data-tp-toast]');
+      const formatMoney = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'de-DE', { style: 'currency', currency }).format((Number(cents) || 0) / 100);
+      const showToast = (message) => {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2200);
+      };
+      const serializableState = () => {
+        const value = { ...state };
+        value.logoUrl = '';
+        return value;
+      };
+      const pushHistory = () => {
+        history.push(JSON.stringify(serializableState()));
+        if (history.length > 40) history.shift();
+        future = [];
+        updateHistoryButtons();
+      };
+      const updateHistoryButtons = () => {
+        const undo = $('[data-tp-undo]');
+        const redo = $('[data-tp-redo]');
+        if (undo) undo.disabled = history.length === 0;
+        if (redo) redo.disabled = future.length === 0;
+      };
+      const setProperty = (key, value) => {
+        const input = propertyInput(key);
+        if (input) input.value = value;
+      };
+      const renderLogo = () => {
+        if (!logoLayer) return;
+        logoLayer.innerHTML = '';
+        if (!state.logoUrl) return;
+        const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+        const width = state.logoScale * 2.2;
+        const height = state.logoScale;
+        image.setAttribute('href', state.logoUrl);
+        image.setAttribute('x', String(690 - width / 2));
+        image.setAttribute('y', String(330 - height / 2));
+        image.setAttribute('width', String(width));
+        image.setAttribute('height', String(height));
+        image.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        logoLayer.appendChild(image);
+      };
+      const findVariant = () => {
+        if (!variants.length) return null;
+        const selected = variants.find((variant) => variant.options.every((value, index) => {
+          const chosen = state.optionValues[index + 1];
+          return !chosen || chosen === value;
+        }));
+        return selected || variants[0];
+      };
+      const updateVariant = () => {
+        const variant = findVariant();
+        if (!variant) return;
+        if (variantInput) variantInput.value = variant.id;
+        if (submit) submit.disabled = !variant.available;
+        priceNodes.forEach((node) => { node.textContent = formatMoney(variant.price); });
+        const title = $('[data-tp-breakdown-variant]');
+        if (title) title.textContent = variant.title;
+      };
+      const applyState = () => {
+        root.style.setProperty('--tp-preview-primary', state.primary);
+        root.style.setProperty('--tp-preview-secondary', state.secondary);
+        root.style.setProperty('--tp-preview-accent', state.accent);
+        root.style.setProperty('--tp-preview-text-color', state.textColor);
+        root.style.setProperty('--tp-preview-overlay', state.accent);
+        root.dataset.overlay = state.overlay;
+        root.dataset.material = state.material;
+        root.dataset.coverage = state.coverage;
+        if (canvas) canvas.style.transform = `scale(${state.zoom})`;
+        const zoomLabel = $('[data-tp-zoom-label]');
+        if (zoomLabel) zoomLabel.textContent = `${Math.round(state.zoom * 100)}%`;
+        if (previewText) {
+          previewText.textContent = state.customText;
+          previewText.setAttribute('fill', state.textColor);
+          previewText.setAttribute('font-style', state.textStyle);
+        }
+        renderLogo();
+        ['primary', 'secondary', 'accent'].forEach((key) => {
+          const input = $(`[data-tp-color="${key}"]`);
+          const label = $(`[data-tp-color-value="${key}"]`);
+          if (input) input.value = state[key];
+          if (label) label.textContent = state[key];
+          setProperty(key, state[key]);
+        });
+        const textInput = $('[data-tp-custom-text]');
+        const textColorInput = $('[data-tp-text-color]');
+        const textStyleInput = $('[data-tp-text-style]');
+        const notesInput = $('[data-tp-notes]');
+        const logoScaleInput = $('[data-tp-logo-scale]');
+        if (textInput) textInput.value = state.customText;
+        if (textColorInput) textColorInput.value = state.textColor;
+        if (textStyleInput) textStyleInput.value = state.textStyle;
+        if (notesInput) notesInput.value = state.notes;
+        if (logoScaleInput) logoScaleInput.value = state.logoScale;
+        setProperty('material', state.material);
+        setProperty('coverage', state.coverage);
+        setProperty('overlay', state.overlay === 'none' ? 'Clean' : state.overlay);
+        setProperty('customText', state.customText);
+        setProperty('textColor', state.textColor);
+        setProperty('notes', state.notes);
+        $$('[data-tp-overlay]').forEach((button) => button.classList.toggle('is-active', button.dataset.tpOverlay === state.overlay));
+        $$('[data-tp-property-choice="material"]').forEach((button) => button.classList.toggle('is-active', button.dataset.propertyValue === state.material));
+        $$('[data-tp-property-choice="coverage"]').forEach((button) => button.classList.toggle('is-active', button.dataset.propertyValue === state.coverage));
+        $$('[data-tp-product-option]').forEach((button) => {
+          const position = Number(button.dataset.optionPosition);
+          button.classList.toggle('is-active', state.optionValues[position] === button.dataset.optionValue);
+        });
+        updateVariant();
+      };
+      const mutate = (callback) => {
+        pushHistory();
+        callback();
+        applyState();
+      };
+      variants[0]?.options.forEach((value, index) => { state.optionValues[index + 1] = value; });
+      $$('[data-tp-tab]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const panelWrap = $('[data-tp-panel-wrap]');
+          const key = button.dataset.tpTab;
+          $$('[data-tp-panel]').forEach((panel) => { panel.hidden = panel.dataset.tpPanel !== key; });
+          $$('[data-tp-tab]').forEach((item) => item.classList.toggle('is-active', item === button));
+          if (panelWrap) panelWrap.hidden = false;
+        });
+      });
+      $('[data-tp-close-panel]')?.addEventListener('click', () => {
+        const panelWrap = $('[data-tp-panel-wrap]');
+        if (panelWrap) panelWrap.hidden = true;
+        $$('[data-tp-tab]').forEach((item) => item.classList.remove('is-active'));
+      });
+      $$('[data-tp-preset]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const values = button.dataset.tpPreset.split(',');
+          mutate(() => {
+            [state.primary, state.secondary, state.accent] = values;
+          });
+          $$('[data-tp-preset]').forEach((item) => {
+            item.classList.toggle('is-active', item === button);
+            item.setAttribute('aria-pressed', String(item === button));
+          });
+        });
+      });
+      $$('[data-tp-color]').forEach((input) => {
+        input.addEventListener('change', () => mutate(() => { state[input.dataset.tpColor] = input.value; }));
+        input.addEventListener('input', () => {
+          state[input.dataset.tpColor] = input.value;
+          applyState();
+        });
+      });
+      $$('[data-tp-product-option]').forEach((button) => {
+        button.addEventListener('click', () => mutate(() => {
+          const position = Number(button.dataset.optionPosition);
+          state.optionValues[position] = button.dataset.optionValue;
+          if (button.dataset.tpProductOption === 'material') state.material = button.dataset.optionValue;
+          if (button.dataset.tpProductOption === 'coverage') state.coverage = button.dataset.optionValue;
+        }));
+      });
+      $$('[data-tp-property-choice]').forEach((button) => {
+        button.addEventListener('click', () => mutate(() => {
+          state[button.dataset.tpPropertyChoice] = button.dataset.propertyValue;
+        }));
+      });
+      $$('[data-tp-overlay]').forEach((button) => {
+        button.addEventListener('click', () => mutate(() => { state.overlay = button.dataset.tpOverlay; }));
+      });
+      $('[data-tp-custom-text]')?.addEventListener('input', (event) => {
+        state.customText = event.target.value;
+        applyState();
+      });
+      $('[data-tp-custom-text]')?.addEventListener('change', (event) => mutate(() => { state.customText = event.target.value; }));
+      $('[data-tp-text-color]')?.addEventListener('input', (event) => {
+        state.textColor = event.target.value;
+        applyState();
+      });
+      $('[data-tp-text-color]')?.addEventListener('change', (event) => mutate(() => { state.textColor = event.target.value; }));
+      $('[data-tp-text-style]')?.addEventListener('change', (event) => mutate(() => { state.textStyle = event.target.value; }));
+      $('[data-tp-notes]')?.addEventListener('input', (event) => {
+        state.notes = event.target.value;
+        setProperty('notes', state.notes);
+      });
+      $('[data-tp-logo-input]')?.addEventListener('change', (event) => {
+        const file = event.target.files?.[0];
+        if (!file || file.type === 'application/pdf') {
+          showToast(file ? 'PDF attached. Preview is available for image files.' : '');
+          return;
+        }
+        mutate(() => {
+          if (state.logoUrl) URL.revokeObjectURL(state.logoUrl);
+          state.logoUrl = URL.createObjectURL(file);
+        });
+      });
+      $('[data-tp-logo-scale]')?.addEventListener('input', (event) => {
+        state.logoScale = Number(event.target.value);
+        renderLogo();
+      });
+      $('[data-tp-logo-scale]')?.addEventListener('change', (event) => mutate(() => { state.logoScale = Number(event.target.value); }));
+      $('[data-tp-remove-logo]')?.addEventListener('click', () => mutate(() => {
+        if (state.logoUrl) URL.revokeObjectURL(state.logoUrl);
+        state.logoUrl = '';
+        const input = $('[data-tp-logo-input]');
+        if (input) input.value = '';
+      }));
+      $('[data-tp-zoom-in]')?.addEventListener('click', () => mutate(() => { state.zoom = Math.min(1.5, state.zoom + .1); }));
+      $('[data-tp-zoom-out]')?.addEventListener('click', () => mutate(() => { state.zoom = Math.max(.7, state.zoom - .1); }));
+      const mixes = {
+        stealth: ['#dfe4df', '#0b0e0c', '#9cff00', 'hex'],
+        ocean: ['#78d6f7', '#072f49', '#f1f7f8', 'stripes'],
+        race: ['#f4f5f3', '#101311', '#ff2d2d', 'stripes'],
+        fire: ['#ff5a1f', '#130b07', '#ffd23f', 'hex'],
+        luxury: ['#e7dfcf', '#151713', '#b7a369', 'none']
+      };
+      const randomMix = () => {
+        const values = Object.values(mixes);
+        return values[Math.floor(Math.random() * values.length)];
+      };
+      const applyMix = (mix) => mutate(() => {
+        [state.primary, state.secondary, state.accent, state.overlay] = mix;
+      });
+      $('[data-tp-random]')?.addEventListener('click', () => applyMix(randomMix()));
+      $('[data-tp-generate-mix]')?.addEventListener('click', () => {
+        const prompt = $('[data-tp-mix-prompt]')?.value.toLowerCase() || '';
+        const key = Object.keys(mixes).find((name) => prompt.includes(name));
+        applyMix(key ? mixes[key] : randomMix());
+        showToast('Design mix applied');
+      });
+      $('[data-tp-undo]')?.addEventListener('click', () => {
+        if (!history.length) return;
+        future.push(JSON.stringify(serializableState()));
+        Object.assign(state, JSON.parse(history.pop()));
+        updateHistoryButtons();
+        applyState();
+      });
+      $('[data-tp-redo]')?.addEventListener('click', () => {
+        if (!future.length) return;
+        history.push(JSON.stringify(serializableState()));
+        Object.assign(state, JSON.parse(future.pop()));
+        updateHistoryButtons();
+        applyState();
+      });
+      $$('[data-tp-dialog-close]').forEach((button) => button.addEventListener('click', () => button.closest('dialog')?.close()));
+      const modelDialog = $('[data-tp-model-dialog]');
+      const buildsDialog = $('[data-tp-builds-dialog]');
+      const priceDialog = $('[data-tp-price-dialog]');
+      $('[data-tp-open-model]')?.addEventListener('click', () => modelDialog?.showModal());
+      $('[data-tp-model-continue]')?.addEventListener('click', () => {
+        $$('[data-tp-dialog-option]').forEach((select) => { state.optionValues[Number(select.dataset.optionPosition)] = select.value; });
+        updateVariant();
+        modelDialog?.close();
+      });
+      $('[data-tp-price-breakdown]')?.addEventListener('click', () => priceDialog?.showModal());
+      const getBuilds = () => {
+        try { return JSON.parse(localStorage.getItem(storageKey) || '[]'); } catch { return []; }
+      };
+      const saveBuilds = (items) => localStorage.setItem(storageKey, JSON.stringify(items));
+      const renderBuilds = () => {
+        const list = $('[data-tp-build-list]');
+        if (!list) return;
+        const builds = getBuilds();
+        if (!builds.length) {
+          list.innerHTML = `<p>${root.ownerDocument.documentElement.lang.startsWith('de') ? 'Noch keine Entwürfe gespeichert' : 'No saved builds yet'}</p>`;
+          return;
+        }
+        list.innerHTML = builds.map((build, index) => `<div class="tp-saved-build"><div><b>${build.name}</b><small>${new Date(build.date).toLocaleDateString()}</small></div><button type="button" data-load="${index}">Load</button><button type="button" data-delete="${index}">×</button></div>`).join('');
+        list.querySelectorAll('[data-load]').forEach((button) => button.addEventListener('click', () => {
+          Object.assign(state, builds[Number(button.dataset.load)].state);
+          applyState();
+          buildsDialog?.close();
+        }));
+        list.querySelectorAll('[data-delete]').forEach((button) => button.addEventListener('click', () => {
+          builds.splice(Number(button.dataset.delete), 1);
+          saveBuilds(builds);
+          renderBuilds();
+        }));
+      };
+      $('[data-tp-save]')?.addEventListener('click', () => {
+        const builds = getBuilds();
+        const name = `${root.querySelector('h1')?.textContent.trim() || 'TRIX'} ${builds.length + 1}`;
+        builds.unshift({ name, date: new Date().toISOString(), state: serializableState() });
+        saveBuilds(builds.slice(0, 12));
+        showToast(root.ownerDocument.documentElement.lang.startsWith('de') ? 'Entwurf gespeichert' : 'Build saved');
+      });
+      $('[data-tp-open-builds]')?.addEventListener('click', () => {
+        renderBuilds();
+        buildsDialog?.showModal();
+      });
+      applyState();
+      updateHistoryButtons();
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Product configurator",
+  "settings": [
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Default primary color",
+      "default": "#e8ece8"
+    },
+    {
+      "type": "color",
+      "id": "secondary_color",
+      "label": "Default secondary color",
+      "default": "#111512"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Default accent color",
+      "default": "#9cff00"
+    },
+    {
+      "type": "text",
+      "id": "material_help",
+      "label": "Material option help",
+      "default": "Actual Shopify product variant"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product configurator"
+    }
+  ]
+}
+{% endschema %}
