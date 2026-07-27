@@ -31,6 +31,14 @@ const click = (selector) => document.querySelector(selector).click();
 const fire = (element,type) => element.dispatchEvent(new dom.window.Event(type,{bubbles:true}));
 const fixedBase = document.querySelector('[data-vehicle-image]').getAttribute('src');
 
+await new Promise((resolve)=>setTimeout(resolve,700));
+assert.ok(document.querySelector('[data-loader]').classList.contains('done'),'branded loader completes');
+assert.equal(document.querySelector('[data-model-gate]').open,true,'first visit opens the exact-model chooser');
+click('[data-model-gate-continue]');
+assert.equal(document.querySelector('[data-tour-layer]').hidden,false,'model chooser starts the guided tour');
+click('[data-tour-skip]');
+assert.equal(document.querySelector('[data-tour-layer]').hidden,true,'tour can be skipped');
+
 click('[data-view="template"]');
 assert.equal(document.querySelector('[data-photo-view]').hidden,true,'real photo can be hidden');
 assert.equal(document.querySelector('[data-template-view]').hidden,false,'single panel layout can be shown');
@@ -69,6 +77,11 @@ assert.match(document.querySelector('[data-coverage-label]').textContent,/ACCENT
 click('[data-coverage="full"]');
 assert.equal(document.querySelector('[data-studio]').dataset.hq,'true','full kit restores its finished render');
 assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),electricRender,'full kit restores the selected high-quality design');
+click('[data-coverage-zone="side"]');
+assert.equal(document.querySelector('[data-studio]').dataset.coverage,'custom','independent panel selection activates custom coverage');
+assert.match(document.querySelector('[data-coverage-label]').textContent,/CUSTOM/,'custom panel selection is visible in the preview');
+assert.equal(document.querySelector('[data-coverage-zone="side"]').classList.contains('active'),false,'individual side zone can be removed');
+click('[data-coverage="full"]');
 
 click('[data-products-open]');
 assert.ok(document.querySelector('[data-products-drawer]').classList.contains('open'),'product menu opens');
@@ -102,6 +115,16 @@ matsToggle.checked=true;
 fire(matsToggle,'change');
 
 click('[data-tab="personalize"]');
+click('[data-library-logo="bolt"]');
+assert.equal(document.querySelector('[data-logo-preview]').hidden,false,'element library logo is applied');
+const textColor=document.querySelector('[data-text-color]');
+textColor.value='#9cff00';
+fire(textColor,'input');
+assert.equal(document.querySelector('[data-studio]').style.getPropertyValue('--text-color'),'#9cff00','text color changes live');
+const textOutline=document.querySelector('[data-text-outline]');
+textOutline.checked=false;
+fire(textOutline,'change');
+assert.equal(document.querySelector('[data-studio]').style.getPropertyValue('--text-stroke'),'0','text outline can be disabled');
 const upload = document.querySelector('[data-logo]');
 const testLogo = new dom.window.File(['<svg xmlns="http://www.w3.org/2000/svg"/>'],'logo.svg',{type:'image/svg+xml'});
 Object.defineProperty(upload,'files',{configurable:true,value:[testLogo]});
@@ -122,6 +145,29 @@ pointer('pointermove',420,520);
 pointer('pointerup',420,520);
 assert.equal(logo.style.getPropertyValue('--logo-x'),'32%','logo drag updates horizontal position');
 assert.ok(parseFloat(logo.style.getPropertyValue('--logo-y'))>60,'logo drag updates vertical position');
+
+click('[data-tab="overlays"]');
+click('[data-overlay="checker"]');
+assert.equal(document.querySelector('[data-studio]').dataset.overlay,'checker','overlay treatment changes live');
+click('[data-tab="ai"]');
+document.querySelector('[data-ai-prompt]').value='aggressive red wave race badge';
+click('[data-ai-generate]');
+assert.equal(document.querySelector('[data-ai-result]').hidden,false,'concept assistant generates an original element');
+assert.match(document.querySelector('[data-ai-result-name]').textContent,/AGGRESSIVE RED/,'generated concept receives a useful label');
+
+click('[data-move-mode]');
+assert.equal(document.querySelector('[data-studio]').dataset.canvasMode,'move','canvas move mode activates');
+click('[data-reset-view]');
+assert.equal(document.querySelector('[data-viewer]').style.getPropertyValue('--pan-x'),'0px','canvas reset restores pan');
+
+const beforeUndo=document.querySelector('[data-studio]').dataset.colorway;
+click('[data-tab="colors"]');
+click('[data-colorway="gold"]');
+assert.equal(document.querySelector('[data-studio]').dataset.colorway,'gold','history test applies a palette');
+click('[data-undo]');
+assert.equal(document.querySelector('[data-studio]').dataset.colorway,beforeUndo,'undo restores the previous palette');
+click('[data-redo]');
+assert.equal(document.querySelector('[data-studio]').dataset.colorway,'gold','redo restores the changed palette');
 
 const configuredName=document.querySelector('[data-name]');
 configuredName.value='JEFF RACING';
