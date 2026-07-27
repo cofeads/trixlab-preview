@@ -21,7 +21,7 @@
     front:'assets/trixx-2022-front.webp',
     rear:'assets/trixx-2022-rear.webp'
   };
-  const cameraLabels = {left:'LEFT ¾',right:'RIGHT ¾',front:'FRONT',rear:'REAR + MATS',template:'1:1 PANEL MAP'};
+  const cameraLabels = {left:'LEFT ¾',right:'RIGHT ¾',front:'FRONT',rear:'REAR + MATS',template:'PANEL LAYOUT'};
   const designLabels = {
     apex:'APEX R',midnight:'NIGHTSHIFT',electric:'VOLTAGE',toxic:'TOXIC LINE',
     carbon:'CARBON ATTACK',miami:'MIAMI RUN',arctic:'ARCTIC SHIFT',camo:'RACE CAMO',
