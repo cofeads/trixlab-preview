@@ -8,27 +8,15 @@
   const finishPrices = {gloss:0,matte:4900,sparkle:7900};
   const matsPrice = 18900;
   const products = {
-    'spark-trixx-1up':{name:'Spark / Trixx 1UP',platform:'Spark / Trixx 1UP',image:'assets/apex-race-left.webp',mats:true},
-    'spark-trixx-2up':{name:'Spark / Trixx 2UP',platform:'Spark / Trixx 2UP',image:'assets/apex-race-left.webp',mats:true},
-    'spark-trixx-3up':{name:'Spark / Trixx 3UP',platform:'Spark / Trixx 3UP',image:'assets/apex-race-left.webp',mats:true}
+    'trixx-1up':{name:'Spark Trixx 1UP',platform:'Spark Trixx 1UP',image:'',mats:false,available:false},
+    'trixx-2up':{name:'Spark Trixx 2UP',platform:'Spark Trixx 2UP',image:'assets/apex-race-left.webp',mats:true,available:true},
+    'trixx-3up':{name:'Spark Trixx 3UP',platform:'Spark Trixx 3UP',image:'',mats:false,available:false}
   };
   const cameraImages = {
     left:'assets/trixx-2022-left.webp',
     right:'assets/trixx-2022-right.webp',
     front:'assets/trixx-2022-front.webp',
     rear:'assets/trixx-2022-rear.webp'
-  };
-  const hqRenderImages = {
-    left:{
-      race:'assets/apex-race-left.webp',
-      ocean:'assets/apex-ocean-left.webp',
-      toxic:'assets/apex-toxic-left.webp',
-      miami:'assets/apex-miami-left.webp',
-      ice:'assets/apex-ice-left.webp'
-    },
-    right:{race:'assets/apex-race-right.webp'},
-    front:{race:'assets/apex-race-front.webp'},
-    rear:{race:'assets/apex-race-rear.webp'}
   };
   const designRenderImages = {
     apex:'assets/apex-race-left.webp',
@@ -61,7 +49,20 @@
   const colorways = {
     race:['#ef1f2d','#101310','#f5f7f5'],ocean:['#08a9ff','#061423','#08e7e2'],
     toxic:['#9cff00','#0b0e0c','#f5f7f5'],miami:['#ff2b92','#6e3dda','#08e7e2'],
-    ice:['#dffaff','#156b9a','#101820']
+    ice:['#dffaff','#156b9a','#101820'],magma:['#ff4b16','#240805','#ffd9a8'],
+    gulf:['#5bd8e8','#ff6c32','#f4f0df'],venom:['#c8ff00','#291238','#f4f6ed'],
+    stealth:['#343a37','#070909','#a5aea8'],royal:['#315cff','#0a1030','#f5ce46'],
+    sunset:['#ff7139','#7b2cff','#ffd4b8'],military:['#78836b','#20251f','#c9d0b9'],
+    candy:['#ff4fa3','#25d9ff','#fff4fb'],copper:['#c66b31','#17110d','#e9c6a8'],
+    glacier:['#a9efff','#123d62','#f4ffff'],vapor:['#826dff','#19152e','#5ef0e6'],
+    gold:['#d9ac46','#15110a','#fff1bd'],mono:['#f4f6f4','#111311','#8c938e'],
+    lagoon:['#00c7a5','#052b39','#f1ffce'],crimson:['#a50022','#12060a','#e3e6e4']
+  };
+  const paletteLabels = {
+    race:'RACE',ocean:'OCEAN',toxic:'TOXIC',miami:'MIAMI',ice:'ICE',magma:'MAGMA',
+    gulf:'GULF',venom:'VENOM',stealth:'STEALTH',royal:'ROYAL',sunset:'SUNSET',
+    military:'MILITARY',candy:'CANDY',copper:'COPPER',glacier:'GLACIER',vapor:'VAPOR',
+    gold:'GOLD',mono:'MONO',lagoon:'LAGOON',crimson:'CRIMSON'
   };
   const labels = {
     coverage:{full:'Full Kit',side:'Side Kit',accent:'Accent Kit'},
@@ -69,7 +70,7 @@
     finish:{gloss:'High Gloss',matte:'Stealth Matte',sparkle:'Metal Flake'}
   };
   const state = {
-    product:'spark-trixx-2up',year:'2022',design:'apex',pattern:'slash',material:'standard',
+    product:'trixx-2up',year:'2022',design:'apex',pattern:'slash',material:'standard',
     coverage:'full',finish:'gloss',colorway:'race',primary:'#ef1f2d',secondary:'#101310',
     accent:'#f5f7f5',name:'RACE GRAPHICS',number:'21',notes:'',logo:'',logoSize:100,
     logoX:66,logoY:55,zoom:1,view:'left',matsEnabled:true,matPattern:'diamond',matTop:'#151917',
@@ -80,6 +81,14 @@
 
   const format = (cents) => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(cents/100);
   const price = () => basePrices[state.coverage] + materialPrices[state.material] + finishPrices[state.finish] + (state.matsEnabled ? matsPrice : 0);
+  const hexHue = (hex) => {
+    const value = parseInt(hex.slice(1),16);
+    const r=((value>>16)&255)/255,g=((value>>8)&255)/255,b=(value&255)/255;
+    const max=Math.max(r,g,b),min=Math.min(r,g,b),delta=max-min;
+    if(!delta)return 0;
+    let hue=max===r?((g-b)/delta)%6:max===g?(b-r)/delta+2:(r-g)/delta+4;
+    return Math.round((hue*60+360)%360);
+  };
   const notify = (text) => {
     const toast = document.querySelector('[data-toast]');
     toast.textContent = text;
@@ -95,6 +104,10 @@
 
   function setProduct(productId, announce = false) {
     if (!products[productId]) return;
+    if (!products[productId].available) {
+      notify(`${products[productId].name.toUpperCase()} · COMING SOON`);
+      return;
+    }
     state.product = productId;
     state.matsEnabled = products[productId].mats;
     q('[data-model]').value = productId;
@@ -106,11 +119,11 @@
 
   const render = () => {
     const product = products[state.product];
-    const usesTrixxMapping = product.platform.startsWith('Spark / Trixx');
-    const hqColorway = state.colorway;
-    const usesHqRender = usesTrixxMapping &&
-      state.view !== 'template' &&
-      Boolean(state.view === 'left' ? designRenderImages[state.design] : hqRenderImages[state.view]?.race);
+    const usesTrixxMapping = state.product === 'trixx-2up';
+    const usesHqRender = usesTrixxMapping && state.view === 'left' && Boolean(designRenderImages[state.design]);
+    const usesLiveMapping = usesTrixxMapping && ['right','front','rear'].includes(state.view);
+    const designHue = hexHue(designColors[state.design][0]);
+    const paletteHue = hexHue(state.primary);
     root.dataset.design = state.design;
     root.dataset.pattern = state.pattern;
     root.dataset.material = state.material;
@@ -119,7 +132,7 @@
     root.dataset.colorway = state.colorway;
     root.dataset.view = state.view;
     root.dataset.hq = usesHqRender ? 'true' : 'false';
-    root.dataset.hqFilter = usesHqRender && state.view !== 'left' && hqColorway ? hqColorway : 'none';
+    root.dataset.previewMode = usesHqRender ? 'render' : usesLiveMapping ? 'mapped' : 'template';
     root.dataset.mats = state.matsEnabled ? 'on' : 'off';
     root.dataset.matPattern = state.matPattern;
     root.style.setProperty('--wrap-primary',state.primary);
@@ -127,23 +140,24 @@
     root.style.setProperty('--wrap-accent',state.accent);
     root.style.setProperty('--mat-top',state.matTop);
     root.style.setProperty('--mat-bottom',state.matBottom);
+    root.style.setProperty('--livery-hue',`${(paletteHue-designHue+360)%360}deg`);
+    root.style.setProperty('--livery-sat',state.colorway==='mono'||state.colorway==='stealth' ? '.42' : '1.08');
     q('[data-viewer]').style.setProperty('--zoom',state.zoom);
     q('[data-photo-view]').hidden = state.view==='template';
     q('[data-template-view]').hidden = state.view!=='template';
-    q('[data-wrap-layer]').hidden = state.view !== 'template';
+    q('[data-wrap-layer]').hidden = !usesLiveMapping;
+    q('[data-mat-layer]').hidden = state.view !== 'rear';
     qa('[data-camera-map]').forEach((map) => map.toggleAttribute('hidden',!usesTrixxMapping || map.dataset.cameraMap!==state.view));
-    qa('[data-camera-mats]').forEach((map) => map.toggleAttribute('hidden',!usesTrixxMapping || map.dataset.cameraMats!==state.view));
-    const hqImage = usesHqRender
-      ? (state.view === 'left'
-          ? (state.design === 'apex' && hqRenderImages.left[hqColorway] ? hqRenderImages.left[hqColorway] : designRenderImages[state.design])
-          : hqRenderImages[state.view].race)
-      : '';
+    qa('[data-camera-mats]').forEach((map) => map.toggleAttribute('hidden',state.view!=='rear' || map.dataset.cameraMats!=='rear'));
+    const hqImage = usesHqRender ? designRenderImages[state.design] : '';
     q('[data-vehicle-image]').src = hqImage || (usesTrixxMapping && cameraImages[state.view] ? cameraImages[state.view] : product.image);
     q('[data-vehicle-image]').alt = `${usesHqRender ? 'TRIXLAB rendered' : 'Neutral'} 2022 Sea-Doo ${product.name} · ${cameraLabels[state.view] || 'studio view'}`;
     q('[data-zoom]').textContent = `${Math.round(state.zoom*100)}%`;
     q('[data-preview-name]').textContent = state.name || 'RACE GRAPHICS';
     q('[data-preview-number]').textContent = state.number || '21';
     q('[data-design-name]').textContent = designLabels[state.design];
+    const paletteIndex=Math.max(0,Object.keys(colorways).indexOf(state.colorway));
+    q('[data-variant-id]').textContent = `${state.colorway ? 'VARIANT' : 'CUSTOM'} ${String(Object.keys(designLabels).indexOf(state.design)*Object.keys(colorways).length+paletteIndex+1).padStart(3,'0')} / ${Object.keys(designLabels).length*Object.keys(colorways).length}`;
     q('[data-vehicle-meta]').textContent = `SEA-DOO ${product.name.toUpperCase()} · ${state.year} · ${cameraLabels[state.view]}`;
     q('[data-stage-model]').textContent = `${product.name.toUpperCase()} · ${state.year}`;
     q('[data-rail-model]').textContent = product.platform.toUpperCase();
@@ -211,8 +225,6 @@
   qa('.design-card').forEach((button) => button.addEventListener('click',() => {
     state.design = button.dataset.design;
     state.pattern = button.dataset.designPattern;
-    [state.primary,state.secondary,state.accent] = designColors[state.design];
-    state.colorway = state.design === 'apex' ? 'race' : '';
     render();
   }));
   qa('[data-material]').forEach((button) => button.addEventListener('click',() => {state.material=button.dataset.material;render();}));
@@ -223,6 +235,16 @@
     [state.primary,state.secondary,state.accent] = colorways[state.colorway];
     render();
   }));
+  q('[data-randomize]').addEventListener('click',() => {
+    const designs=Object.keys(designLabels);
+    const palettes=Object.keys(colorways);
+    state.design=designs[Math.floor(Math.random()*designs.length)];
+    state.pattern=q(`.design-card[data-design="${state.design}"]`).dataset.designPattern;
+    state.colorway=palettes[Math.floor(Math.random()*palettes.length)];
+    [state.primary,state.secondary,state.accent]=colorways[state.colorway];
+    render();
+    notify(`${designLabels[state.design]} · ${paletteLabels[state.colorway]}`);
+  });
   qa('[data-wrap-color]').forEach((input) => input.addEventListener('input',(event) => {
     state[event.target.dataset.wrapColor] = event.target.value;
     state.colorway = '';
@@ -311,6 +333,11 @@
   q('[data-add]').addEventListener('click',() => {
     document.querySelector('[data-cart] b').textContent='1';
     notify('CONFIGURED KIT ADDED TO CART');
+  });
+  document.querySelector('[data-cart]').addEventListener('click',() => {
+    const count=Number(document.querySelector('[data-cart] b').textContent||0);
+    if(!count){notify('YOUR CART IS EMPTY');return;}
+    document.querySelector('[data-price-dialog]').showModal();
   });
   const query = new URLSearchParams(location.search || sessionStorage.getItem('trixlab-studio-query') || '');
   if (query.get('product') && products[query.get('product')]) state.product = query.get('product');

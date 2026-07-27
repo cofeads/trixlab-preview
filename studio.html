@@ -25,17 +25,17 @@
     <div class="drawer-sheet">
       <div class="drawer-head"><div><small>SELECT MACHINE</small><h2>SEA-DOO PRODUCTS</h2></div><button type="button" data-products-close>×</button></div>
       <div class="product-list">
-        <button class="product-card" type="button" data-product="spark-trixx-1up"><span>SPARK PLATFORM</span><b>SPARK / TRIXX 1UP</b><small>2014–2026 · One shared panel geometry</small></button>
-        <button class="product-card active" type="button" data-product="spark-trixx-2up"><span>SPARK PLATFORM</span><b>SPARK / TRIXX 2UP</b><small>2014–2026 · Exact uploaded 2UP template</small></button>
-        <button class="product-card" type="button" data-product="spark-trixx-3up"><span>SPARK PLATFORM</span><b>SPARK / TRIXX 3UP</b><small>2014–2026 · One shared panel geometry</small></button>
+        <button class="product-card coming-soon" type="button" data-product="trixx-1up" disabled><span>SPARK TRIXX</span><b>TRIXX 1UP</b><small>Different model · COMING SOON</small></button>
+        <button class="product-card active" type="button" data-product="trixx-2up"><span>SPARK TRIXX</span><b>TRIXX 2UP</b><small>2022 · Full configurator + exact template</small></button>
+        <button class="product-card coming-soon" type="button" data-product="trixx-3up" disabled><span>SPARK TRIXX</span><b>TRIXX 3UP</b><small>Different model · COMING SOON</small></button>
       </div>
-      <p>Spark und Trixx derselben Länge teilen sich die Panel-Geometrie. Deshalb gibt es je 1UP, 2UP und 3UP nur eine korrekte Plattform statt doppelter Modellnamen.</p>
+      <p>Alle aktuell gezeigten Folien, Kameraansichten und Traction Mats gehören ausschließlich zum Sea-Doo Spark Trixx 2UP Modelljahr 2022.</p>
     </div>
   </div>
 
   <main class="studio" data-studio data-design="apex" data-pattern="slash" data-material="standard" data-coverage="full" data-finish="gloss" data-mats="on">
     <aside class="design-rail">
-      <div class="rail-head"><small>DESIGN LIBRARY</small><h1 data-rail-model>SPARK / TRIXX</h1><p>12 TRIXLAB originals</p></div>
+      <div class="rail-head"><small>DESIGN LIBRARY</small><h1 data-rail-model>SPARK TRIXX 2UP</h1><p>12 MOTIFS · 20 PALETTES · 240 VARIANTS</p></div>
       <button class="design-card active" type="button" data-design="apex" data-design-pattern="slash"><i class="apex"></i><span><b>APEX R</b><small>Race / geometric</small></span><em>01</em></button>
       <button class="design-card" type="button" data-design="midnight" data-design-pattern="hex"><i class="midnight"></i><span><b>NIGHTSHIFT</b><small>Stealth / technical</small></span><em>02</em></button>
       <button class="design-card" type="button" data-design="electric" data-design-pattern="bolt"><i class="electric"></i><span><b>VOLTAGE</b><small>Electric / contrast</small></span><em>03</em></button>
@@ -218,7 +218,7 @@
           <div class="template-legend"><b>ONE FULL DESIGN KIT</b><span><i class="legend-primary"></i>PRIMARY</span><span><i class="legend-secondary"></i>SECONDARY</span><span><i class="legend-accent"></i>ACCENT</span><em>LEFT + RIGHT CUT PANELS</em></div>
         </div>
         <div class="drag-hint" data-drag-hint hidden>LOGO ZIEHEN, UM ES ZU POSITIONIEREN</div>
-        <div class="vehicle-meta"><b data-design-name>APEX R</b><span data-vehicle-meta>SEA-DOO TRIXX 2UP · 2022</span></div>
+        <div class="vehicle-meta"><b data-design-name>APEX R</b><span data-variant-id>VARIANT 001 / 240</span><span data-vehicle-meta>SEA-DOO TRIXX 2UP · 2022</span></div>
         <div class="zoom-tools"><button type="button" data-zoom-out>−</button><span data-zoom>100%</span><button type="button" data-zoom-in>+</button></div>
       </div>
       <div class="stage-bottom">
@@ -244,10 +244,10 @@
         <section class="panel-section active" data-panel="machine">
           <p class="step">01 · SELECT THE EXACT MACHINE</p>
           <label>BRAND<select><option>Sea-Doo</option></select></label>
-          <label>PLATFORM<select data-platform><option>Spark / Trixx 1UP</option><option selected>Spark / Trixx 2UP</option><option>Spark / Trixx 3UP</option></select></label>
+          <label>PLATFORM<select data-platform><option selected>Spark Trixx 2UP</option></select></label>
           <div class="field-grid">
             <label>YEAR<select data-year><option>2014</option><option>2018</option><option selected>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></label>
-            <label>MODEL<select data-model><option value="spark-trixx-1up">Spark / Trixx 1UP</option><option value="spark-trixx-2up" selected>Spark / Trixx 2UP</option><option value="spark-trixx-3up">Spark / Trixx 3UP</option></select></label>
+            <label>MODEL<select data-model><option value="trixx-1up" disabled>Trixx 1UP · Coming soon</option><option value="trixx-2up" selected>Trixx 2UP · 2022</option><option value="trixx-3up" disabled>Trixx 3UP · Coming soon</option></select></label>
           </div>
           <button class="browse-products" type="button" data-products-open>BROWSE ALL PRODUCTS →</button>
           <div class="fit-note"><b>✓ TEMPLATE AVAILABLE</b><span>Production proof required before print.</span></div>
@@ -262,12 +262,28 @@
 
         <section class="panel-section" data-panel="colors" hidden>
           <p class="step">03 · THREE-COLOR WRAP</p>
-          <div class="preset-row">
-            <button class="preset active" type="button" data-colorway="race">RACE</button>
-            <button class="preset" type="button" data-colorway="ocean">OCEAN</button>
-            <button class="preset" type="button" data-colorway="toxic">TOXIC</button>
-            <button class="preset" type="button" data-colorway="miami">MIAMI</button>
-            <button class="preset" type="button" data-colorway="ice">ICE</button>
+          <div class="variant-tools"><b>240 LIVE COMBINATIONS</b><button type="button" data-randomize>RANDOM BUILD ↻</button></div>
+          <div class="preset-row palette-grid">
+            <button class="preset active" type="button" data-colorway="race" style="--swatch:#ef1f2d">RACE</button>
+            <button class="preset" type="button" data-colorway="ocean" style="--swatch:#08a9ff">OCEAN</button>
+            <button class="preset" type="button" data-colorway="toxic" style="--swatch:#9cff00">TOXIC</button>
+            <button class="preset" type="button" data-colorway="miami" style="--swatch:#ff2b92">MIAMI</button>
+            <button class="preset" type="button" data-colorway="ice" style="--swatch:#dffaff">ICE</button>
+            <button class="preset" type="button" data-colorway="magma" style="--swatch:#ff4b16">MAGMA</button>
+            <button class="preset" type="button" data-colorway="gulf" style="--swatch:#5bd8e8">GULF</button>
+            <button class="preset" type="button" data-colorway="venom" style="--swatch:#c8ff00">VENOM</button>
+            <button class="preset" type="button" data-colorway="stealth" style="--swatch:#343a37">STEALTH</button>
+            <button class="preset" type="button" data-colorway="royal" style="--swatch:#315cff">ROYAL</button>
+            <button class="preset" type="button" data-colorway="sunset" style="--swatch:#ff7139">SUNSET</button>
+            <button class="preset" type="button" data-colorway="military" style="--swatch:#78836b">MILITARY</button>
+            <button class="preset" type="button" data-colorway="candy" style="--swatch:#ff4fa3">CANDY</button>
+            <button class="preset" type="button" data-colorway="copper" style="--swatch:#c66b31">COPPER</button>
+            <button class="preset" type="button" data-colorway="glacier" style="--swatch:#a9efff">GLACIER</button>
+            <button class="preset" type="button" data-colorway="vapor" style="--swatch:#826dff">VAPOR</button>
+            <button class="preset" type="button" data-colorway="gold" style="--swatch:#d9ac46">GOLD</button>
+            <button class="preset" type="button" data-colorway="mono" style="--swatch:#f4f6f4">MONO</button>
+            <button class="preset" type="button" data-colorway="lagoon" style="--swatch:#00c7a5">LAGOON</button>
+            <button class="preset" type="button" data-colorway="crimson" style="--swatch:#a50022">CRIMSON</button>
           </div>
           <label>PRIMARY<input type="color" value="#ef1f2d" data-wrap-color="primary"><b data-color-value="primary">#EF1F2D</b></label>
           <label>SECONDARY<input type="color" value="#101310" data-wrap-color="secondary"><b data-color-value="secondary">#101310</b></label>

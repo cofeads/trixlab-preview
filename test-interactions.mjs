@@ -33,13 +33,14 @@ assert.equal(document.querySelector('[data-template-view]').hidden,false,'single
 click('[data-view="right"]');
 assert.equal(document.querySelector('[data-photo-view]').hidden,false,'real photo view can be restored');
 assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/right/,'right camera has its own fixed image');
+assert.equal(document.querySelector('[data-wrap-layer]').hidden,false,'right camera uses the selected live motif mapping instead of an old fixed design');
 click('[data-view="left"]');
 assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),fixedBase,'left camera returns to the same fixed base');
 
 click('[data-colorway="ocean"]');
-assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/apex-ocean-left/,'ocean preset uses its own high-quality panel render');
+assert.match(document.querySelector('[data-studio]').style.getPropertyValue('--livery-hue'),/deg/,'ocean palette recolors the selected design');
 click('[data-colorway="toxic"]');
-assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/apex-toxic-left/,'toxic preset uses its own high-quality panel render');
+assert.equal(document.querySelector('[data-studio]').dataset.colorway,'toxic','toxic palette becomes active');
 click('[data-colorway="race"]');
 assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),fixedBase,'race preset restores its exact high-quality render');
 
@@ -52,11 +53,14 @@ assert.equal(document.querySelector('[data-studio]').dataset.pattern,'bolt','des
 
 click('[data-products-open]');
 assert.ok(document.querySelector('[data-products-drawer]').classList.contains('open'),'product menu opens');
-click('[data-product="spark-trixx-1up"]');
-assert.match(document.querySelector('[data-vehicle-meta]').textContent,/1UP/,'grouped 1UP platform can be selected');
-click('[data-products-open]');
-click('[data-product="spark-trixx-2up"]');
+assert.equal(document.querySelector('[data-product="trixx-1up"]').disabled,true,'Trixx 1UP is coming soon and cannot select the wrong geometry');
+assert.equal(document.querySelector('[data-product="trixx-3up"]').disabled,true,'Trixx 3UP is coming soon and cannot select the wrong geometry');
+click('[data-product="trixx-2up"]');
 assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),electricRender,'2UP returns without changing the selected design');
+
+click('[data-tab="colors"]');
+click('[data-randomize]');
+assert.match(document.querySelector('[data-variant-id]').textContent,/\/ 240/,'random button selects one of 240 live variants');
 
 click('[data-tab="mats"]');
 click('[data-mat-pattern="hive"]');

@@ -24,11 +24,15 @@ assert.equal(await page.locator('[data-studio]').getAttribute('data-pattern'),'b
 await page.locator('[data-products-open]').first().click();
 assert.ok(await page.locator('[data-products-drawer]').evaluate((el)=>el.classList.contains('open')),'product drawer opens');
 assert.equal(await page.locator('.product-card').count(),3,'duplicate aliases are grouped into 3 platform lengths');
-await page.locator('[data-product="spark-trixx-1up"]').click();
-assert.match(await page.locator('[data-vehicle-meta]').innerText(),/1UP/,'1UP platform selection works');
-await page.locator('[data-products-open]').first().click();
-await page.locator('[data-product="spark-trixx-2up"]').click();
+assert.ok(await page.locator('[data-product="trixx-1up"]').isDisabled(),'Trixx 1UP is coming soon');
+assert.ok(await page.locator('[data-product="trixx-3up"]').isDisabled(),'Trixx 3UP is coming soon');
+await page.locator('[data-product="trixx-2up"]').click();
 assert.match(await page.locator('[data-vehicle-image]').getAttribute('src'),/design-electric-left/,'returning to 2UP preserves selected livery');
+
+await page.locator('[data-tab="colors"]').click();
+assert.equal(await page.locator('[data-colorway]').count(),20,'20 palettes render');
+await page.locator('[data-randomize]').click();
+assert.match(await page.locator('[data-variant-id]').innerText(),/\/ 240/,'random build selects from 240 variants');
 
 await page.locator('[data-tab="mats"]').click();
 await page.locator('[data-mat-pattern="hive"]').click();
