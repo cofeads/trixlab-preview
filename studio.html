@@ -57,59 +57,89 @@
     <section class="visual-stage">
       <div class="stage-top">
         <div><span class="live-dot"></span> LIVE MOCKUP · FIXED BASE</div>
-        <div class="view-switch"><button class="active" type="button">LEFT</button><button type="button" disabled>RIGHT SOON</button></div>
+        <div class="view-switch"><button class="active" type="button" data-view="photo">REAL PHOTO</button><button type="button" data-view="template">1:1 PANEL MAP</button></div>
       </div>
       <div class="vehicle-viewer" data-viewer>
         <div class="grid-floor"></div>
-        <div class="vehicle-stack">
-          <img class="vehicle-image" data-vehicle-image src="assets/trixlab-seadoo-trixx-base.webp" alt="Neutral Sea-Doo base vehicle">
-          <svg class="wrap-layer" data-wrap-layer viewBox="0 0 1536 1024" aria-label="Configurable vinyl overlay">
+        <div class="vehicle-stack" data-photo-view>
+          <img class="vehicle-image" data-vehicle-image src="assets/seadoo-spark-trixx-2up-real-base.webp" alt="Real Sea-Doo Spark Trixx 2UP studio photo">
+          <svg class="photo-wrap-layer" data-wrap-layer viewBox="0 0 1425 1150" aria-label="Panel-aligned vinyl preview">
             <defs>
-              <pattern id="wrap-slash" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)"><rect width="20" height="70" fill="var(--wrap-accent)" opacity=".72"/></pattern>
-              <pattern id="wrap-hex" width="48" height="42" patternUnits="userSpaceOnUse"><path d="M12 1h24l11 20-11 20H12L1 21z" fill="none" stroke="var(--wrap-accent)" stroke-width="3" opacity=".6"/></pattern>
-              <pattern id="wrap-bolt" width="92" height="62" patternUnits="userSpaceOnUse"><path d="M54 0 20 35h27L32 62l42-39H48z" fill="var(--wrap-accent)" opacity=".7"/></pattern>
-              <pattern id="wrap-topo" width="90" height="70" patternUnits="userSpaceOnUse"><path d="M-5 18C20-8 50 45 96 10M-4 44C28 12 57 70 98 36M0 65C30 37 58 90 95 62" fill="none" stroke="var(--wrap-accent)" stroke-width="4" opacity=".7"/></pattern>
-              <pattern id="wrap-carbon" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="28" fill="var(--wrap-accent)" opacity=".38"/></pattern>
-              <pattern id="wrap-wave" width="90" height="46" patternUnits="userSpaceOnUse"><path d="M0 24Q22 0 45 24t45 0" fill="none" stroke="var(--wrap-accent)" stroke-width="8" opacity=".7"/></pattern>
-              <pattern id="wrap-ice" width="95" height="75" patternUnits="userSpaceOnUse"><path d="M0 65 38 4l14 37 16-19 27 43z" fill="var(--wrap-accent)" opacity=".55"/></pattern>
-              <pattern id="wrap-camo" width="110" height="80" patternUnits="userSpaceOnUse"><path d="M8 8h52l16 20-30 18H4zM72 48h35v28H54z" fill="var(--wrap-accent)" opacity=".58"/></pattern>
-              <pattern id="wrap-stripes" width="74" height="74" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="13" height="74" fill="var(--wrap-accent)"/><rect x="22" width="6" height="74" fill="#fff" opacity=".8"/></pattern>
-              <pattern id="wrap-digital" width="72" height="72" patternUnits="userSpaceOnUse"><rect x="2" y="3" width="30" height="18" fill="var(--wrap-accent)"/><rect x="42" y="28" width="26" height="34" fill="var(--wrap-accent)" opacity=".55"/></pattern>
-              <pattern id="wrap-fetti" width="62" height="62" patternUnits="userSpaceOnUse"><circle cx="10" cy="14" r="7" fill="var(--wrap-accent)"/><rect x="38" y="9" width="9" height="22" fill="#fff" transform="rotate(30 42 20)"/><circle cx="26" cy="50" r="5" fill="var(--wrap-accent)" opacity=".7"/></pattern>
-              <pattern id="wrap-factory" width="82" height="82" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><rect y="23" width="82" height="17" fill="var(--wrap-accent)"/><rect y="48" width="82" height="5" fill="#fff" opacity=".85"/></pattern>
-              <clipPath id="wrap-regions">
-                <path d="M158 541 390 459 722 570 833 725 518 674 258 683 127 636Z"/>
-                <path d="M413 369 602 312 829 361 716 545 526 517 388 460Z"/>
-                <path d="M994 499 1273 451 1457 568 1316 651 1020 626 860 718 767 594Z"/>
-                <path d="M583 223 765 215 830 363 645 352Z"/>
+              <pattern id="photo-pattern" width="74" height="74" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
+                <rect width="20" height="74" fill="var(--wrap-accent)" opacity=".82"/>
+              </pattern>
+              <pattern id="photo-hex" width="52" height="46" patternUnits="userSpaceOnUse">
+                <path d="M13 2h26l12 21-12 21H13L1 23Z" fill="none" stroke="var(--wrap-accent)" stroke-width="5"/>
+              </pattern>
+              <pattern id="photo-topo" width="82" height="62" patternUnits="userSpaceOnUse">
+                <path d="M-8 16Q18-9 89 18M-8 46Q22 17 91 48" fill="none" stroke="var(--wrap-accent)" stroke-width="5"/>
+              </pattern>
+              <pattern id="photo-carbon" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <rect width="15" height="34" fill="var(--wrap-accent)"/>
+              </pattern>
+              <pattern id="photo-wave" width="70" height="42" patternUnits="userSpaceOnUse">
+                <path d="M0 23Q17 3 35 23t35 0" fill="none" stroke="var(--wrap-accent)" stroke-width="7"/>
+              </pattern>
+              <pattern id="photo-digital" width="58" height="58" patternUnits="userSpaceOnUse">
+                <path d="M3 3h23v17H14v17H3ZM34 28h21v27H34Z" fill="var(--wrap-accent)"/>
+              </pattern>
+              <clipPath id="photo-panels">
+                <path d="M245 607 408 580 658 610 807 650 779 680 523 662 312 642Z"/>
+                <path d="M681 483 784 452 899 487 992 520 929 557 787 552 705 525Z"/>
+                <path d="M900 475 1015 493 1110 527 1260 546 1370 586 1340 620 1195 610 1060 578 970 550Z"/>
+                <path d="M999 593 1185 599 1340 615 1300 693 1178 711 1060 672Z"/>
+                <path d="M172 604 318 572 420 592 380 644 224 676 170 656Z"/>
+                <path d="M730 454 875 413 1005 435 1088 486 1025 505 900 478 800 491Z"/>
               </clipPath>
             </defs>
-            <g clip-path="url(#wrap-regions)" class="wrap-regions">
-              <rect width="1536" height="1024" class="wrap-primary"/>
-              <path class="wrap-secondary" d="M50 690 620 315 810 385 440 747zM735 760l405-356 372 190-70 121z"/>
-              <rect width="1536" height="1024" class="wrap-pattern" fill="url(#wrap-slash)"/>
-              <path class="wrap-accent-line" d="M128 618 516 480l246 149M394 405l234-95 175 75M808 693l268-177 368 95" fill="none" stroke-width="18"/>
+            <g class="photo-color-map" clip-path="url(#photo-panels)">
+              <rect width="1425" height="1150" class="photo-primary"/>
+              <path class="photo-secondary" d="M151 665 431 565 807 654 1110 590 1373 632 1297 699 1066 673 806 687 527 651 277 683ZM675 480 878 420 1085 484 1008 518 873 475 735 514Z"/>
+              <path class="photo-accent" d="M173 631 393 590 590 620 815 646 1015 600 1268 619 1201 643 1037 626 808 670 575 639 376 610ZM757 463 873 427 1019 454 1059 482 1012 495 888 457 792 486Z"/>
+              <rect width="1425" height="1150" class="photo-pattern photo-pattern-stripe" fill="url(#photo-pattern)"/>
+              <rect width="1425" height="1150" class="photo-pattern photo-pattern-hex" fill="url(#photo-hex)"/>
+              <rect width="1425" height="1150" class="photo-pattern photo-pattern-topo" fill="url(#photo-topo)"/>
+              <rect width="1425" height="1150" class="photo-pattern photo-pattern-carbon" fill="url(#photo-carbon)"/>
+              <rect width="1425" height="1150" class="photo-pattern photo-pattern-wave" fill="url(#photo-wave)"/>
+              <rect width="1425" height="1150" class="photo-pattern photo-pattern-digital" fill="url(#photo-digital)"/>
+            </g>
+            <g class="photo-panel-seams" fill="none">
+              <path d="M245 607 408 580 658 610 807 650 779 680 523 662 312 642Z"/>
+              <path d="M681 483 784 452 899 487 992 520 929 557 787 552 705 525Z"/>
+              <path d="M900 475 1015 493 1110 527 1260 546 1370 586 1340 620 1195 610 1060 578 970 550Z"/>
+              <path d="M999 593 1185 599 1340 615 1300 693 1178 711 1060 672Z"/>
+              <path d="M172 604 318 572 420 592 380 644 224 676 170 656Z"/>
             </g>
           </svg>
-          <svg class="mat-layer" data-mat-layer viewBox="0 0 1536 1024" aria-label="Configurable traction mats">
+          <svg class="photo-mat-layer" data-mat-layer viewBox="0 0 1425 1150" aria-label="Traction mat preview">
             <defs>
-              <pattern id="mat-diamond" width="30" height="30" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect x="4" y="4" width="20" height="20" rx="3" fill="none" stroke="var(--mat-bottom)" stroke-width="5"/></pattern>
-              <pattern id="mat-hive" width="42" height="36" patternUnits="userSpaceOnUse"><path d="M10 1h22l9 17-9 17H10L1 18z" fill="none" stroke="var(--mat-bottom)" stroke-width="5"/></pattern>
-              <pattern id="mat-razor" width="42" height="42" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)"><rect x="5" width="10" height="42" fill="var(--mat-bottom)"/></pattern>
-              <pattern id="mat-spark" width="54" height="54" patternUnits="userSpaceOnUse"><path d="m27 0 6 18 18 9-18 7-6 20-7-20-20-7 20-9z" fill="var(--mat-bottom)"/></pattern>
-              <pattern id="mat-topo" width="65" height="55" patternUnits="userSpaceOnUse"><path d="M-4 15Q20-5 68 18M-5 42Q25 17 70 45" fill="none" stroke="var(--mat-bottom)" stroke-width="6"/></pattern>
-              <pattern id="mat-wave" width="66" height="42" patternUnits="userSpaceOnUse"><path d="M0 22Q16 2 33 22t33 0" fill="none" stroke="var(--mat-bottom)" stroke-width="7"/></pattern>
+              <pattern id="photo-mat-diamond" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect x="4" y="4" width="15" height="15" rx="2" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
+              <pattern id="photo-mat-hive" width="30" height="26" patternUnits="userSpaceOnUse"><path d="M8 1h14l7 12-7 12H8L1 13z" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
+              <pattern id="photo-mat-razor" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="9" height="34" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="photo-mat-spark" width="34" height="34" patternUnits="userSpaceOnUse"><path d="m17 1 4 11 12 5-12 4-4 12-5-12-11-4 11-5z" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="photo-mat-topo" width="42" height="34" patternUnits="userSpaceOnUse"><path d="M-4 10Q12-3 45 12M-4 28Q14 13 46 29" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
+              <pattern id="photo-mat-wave" width="42" height="28" patternUnits="userSpaceOnUse"><path d="M0 15Q10 2 21 15t21 0" fill="none" stroke="var(--mat-bottom)" stroke-width="5"/></pattern>
             </defs>
-            <g class="mat-shape">
-              <path d="M548 576 768 610 887 716 717 729 516 664z"/>
-              <path d="M905 597 1249 492 1404 579 1286 650 1000 659 856 722z"/>
-            </g>
-            <g class="mat-text" aria-hidden="true"><text x="620" y="664" transform="rotate(8 620 664)" data-mat-preview>TRIXLAB</text></g>
+            <path class="photo-mat" d="M286 584 410 557 603 586 697 607 649 627 445 592Z"/>
+            <path class="photo-mat" d="M690 602 822 579 1005 579 1147 599 1054 621 840 616Z"/>
+            <path class="photo-mat-routing" d="M286 584 410 557 603 586 697 607 649 627 445 592ZM690 602 822 579 1005 579 1147 599 1054 621 840 616Z"/>
+            <text x="434" y="590" transform="rotate(7 434 590)" data-mat-preview>TRIXLAB</text>
           </svg>
           <div class="coverage-mask"></div>
           <div class="brand-stamp"><b>TRIXLAB</b><span data-preview-name>RACE GRAPHICS</span></div>
           <div class="race-number" data-preview-number>21</div>
           <img class="custom-logo" data-logo-preview alt="Uploaded custom logo" draggable="false" hidden>
+        </div>
+        <div class="template-board" data-template-view hidden>
+          <div class="template-art">
+            <div class="template-layer template-red"></div>
+            <div class="template-layer template-black"></div>
+            <div class="template-layer template-white"></div>
+            <div class="template-layer template-grey"></div>
+            <div class="template-layer template-pattern"></div>
+            <img class="template-outline" src="assets/trixx-2up-template-outline.webp" alt="Exact 1:1 Sea-Doo Spark Trixx 2UP plotter panel outlines">
+          </div>
+          <div class="template-legend"><b>USER 1:1 PDF</b><span><i class="legend-primary"></i>PRIMARY</span><span><i class="legend-secondary"></i>SECONDARY</span><span><i class="legend-accent"></i>ACCENT</span><em>2018–2023 · 2UP · exact panel geometry</em></div>
         </div>
         <div class="drag-hint" data-drag-hint hidden>LOGO ZIEHEN, UM ES ZU POSITIONIEREN</div>
         <div class="vehicle-meta"><b data-design-name>APEX R</b><span data-vehicle-meta>SEA-DOO TRIXX 2UP · 2022</span></div>

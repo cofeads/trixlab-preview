@@ -5,10 +5,14 @@ const html=fs.readFileSync('studio.html','utf8');
 const css=fs.readFileSync('studio.css','utf8');
 const js=fs.readFileSync('studio.js','utf8');
 const landing=fs.readFileSync('index.html','utf8');
-const image='assets/trixlab-seadoo-trixx-base.webp';
+const image='assets/seadoo-spark-trixx-2up-real-base.webp';
 
 assert.ok(fs.existsSync(image),'vehicle render exists');
-assert.ok(fs.statSync(image).size>30_000,'vehicle render is a real high-resolution asset');
+assert.ok(fs.statSync(image).size>20_000,'vehicle render is a real high-resolution asset');
+for(const layer of ['outline','white','black','red','grey']){
+  const template=`assets/trixx-2up-template-${layer}.webp`;
+  assert.ok(fs.existsSync(template),`real PDF template layer ${layer} exists`);
+}
 assert.match(landing,/href="studio\.html"/,'landing links to standalone studio');
 assert.doesNotMatch(landing,/data-studio/,'studio is no longer embedded in landing');
 for(const selector of ['data-studio','data-design','data-material','data-colorway','data-name','data-number','data-logo','data-coverage','data-finish','data-save','data-add','data-mat-pattern','data-mats-enabled','data-products-drawer']){
@@ -24,9 +28,11 @@ assert.equal((html.match(/class="design-card/g)||[]).length,12,'studio offers 12
 assert.equal((html.match(/class="product-card/g)||[]).length,6,'product drawer offers 6 Sea-Doo products');
 assert.equal((html.match(/data-mat-pattern="/g)||[]).length,6,'traction mats offer 6 routed patterns');
 assert.equal((html.match(/data-tab="/g)||[]).length,8,'studio has 8 configuration steps');
-assert.match(html,/class="wrap-layer"/,'wrap is a separate vector layer');
-assert.match(html,/class="mat-layer"/,'traction mat is a separate vector layer');
-assert.match(html,/data-vehicle-image src="assets\/trixlab-seadoo-trixx-base\.webp"/,'fixed neutral base is used');
+assert.match(html,/class="photo-wrap-layer"/,'wrap is a separate panel-aligned vector layer');
+assert.match(html,/class="photo-mat-layer"/,'traction mat is a separate vector layer');
+assert.match(html,/data-template-view/,'exact 1:1 panel map is available');
+assert.match(html,/trixx-2up-template-outline\.webp/,'user PDF panel outline is used');
+assert.match(html,/data-vehicle-image src="assets\/seadoo-spark-trixx-2up-real-base\.webp"/,'real fixed neutral base is used');
 assert.doesNotMatch(css,/\.vehicle-image\{[^}]*filter:/,'base vehicle is never recolored by CSS filters');
 assert.match(js,/q\('\[data-vehicle-image\]'\)\.src = product\.image/,'base image only follows product selection');
 assert.match(js,/state\.design = button\.dataset\.design/,'design selection changes overlay state');
