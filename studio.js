@@ -69,6 +69,9 @@
     material:{standard:'Standard Marine Vinyl',chrome:'Chrome Base',holographic:'Holographic Base'},
     finish:{gloss:'High Gloss',matte:'Stealth Matte',sparkle:'Metal Flake'}
   };
+  const matPatternLabels = {
+    diamond:'DIAMOND',hive:'HIVE',razor:'RAZOR',spark:'SPARK',topo:'TOPO',wave:'WAVE'
+  };
   const state = {
     product:'trixx-2up',year:'2022',design:'digital',pattern:'digital',material:'standard',
     coverage:'full',finish:'gloss',colorway:'vapor',primary:'#826dff',secondary:'#19152e',
@@ -101,6 +104,141 @@
   };
   const snapshot = () => ({...state,logo:''});
   const setActive = (selector,key,value) => document.querySelectorAll(selector).forEach((button) => button.classList.toggle('active',button.dataset[key]===value));
+  const escapeXml = (value) => String(value ?? '').replace(/[<>&"']/g,(character) => ({
+    '<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'
+  })[character]);
+  const assetAsDataUrl = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Unable to load ${url}`);
+    const blob = await response.blob();
+    return await new Promise((resolve,reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+  const patternDefinition = () => {
+    const primary=state.primary,secondary=state.secondary,accent=state.accent;
+    const definitions = {
+      slash:`<pattern id="production-pattern" width="180" height="110" patternUnits="userSpaceOnUse" patternTransform="skewX(-18)"><path d="M-25 105 55-15h30L5 105Zm78 0L128-15h18L75 105Zm75 0 52-78v46l-21 32Z" fill="${accent}"/><path d="m25 105 90-120h20L50 105Zm112 0 55-84v31l-35 53Z" fill="${secondary}" opacity=".88"/><path d="M0 88h180v8H0Z" fill="${primary}"/></pattern>`,
+      hex:`<pattern id="production-pattern" width="72" height="62" patternUnits="userSpaceOnUse"><path d="M18 3h36l16 28-16 28H18L2 31Z" fill="none" stroke="${accent}" stroke-width="5"/><path d="M18 31h36" stroke="${primary}" stroke-width="3"/></pattern>`,
+      bolt:`<pattern id="production-pattern" width="150" height="105" patternUnits="userSpaceOnUse"><path d="M-10 88 58-10h34L61 42h53L38 114l22-55H16Z" fill="${accent}"/><path d="m95 105 39-59h22l-30 59Z" fill="${secondary}"/></pattern>`,
+      topo:`<pattern id="production-pattern" width="110" height="82" patternUnits="userSpaceOnUse"><path d="M-15 16Q22-15 126 20M-12 44Q26 10 125 48M-8 76Q32 37 129 79" fill="none" stroke="${accent}" stroke-width="5"/><path d="M12 29Q45 3 96 28t83 0" fill="none" stroke="${secondary}" stroke-width="2.5"/></pattern>`,
+      carbon:`<pattern id="production-pattern" width="48" height="48" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="20" height="48" fill="${accent}"/><rect x="24" width="9" height="48" fill="${primary}" opacity=".74"/></pattern>`,
+      wave:`<pattern id="production-pattern" width="100" height="60" patternUnits="userSpaceOnUse"><path d="M-8 39Q18 4 44 39t52 0t52 0" fill="none" stroke="${accent}" stroke-width="8"/><path d="M-8 52Q18 17 44 52t52 0t52 0" fill="none" stroke="${secondary}" stroke-width="3"/></pattern>`,
+      ice:`<pattern id="production-pattern" width="116" height="94" patternUnits="userSpaceOnUse"><path d="m7 81 29-73 20 41L82 7l28 74-48-23Z" fill="${accent}"/><path d="m30 81 29-29 24 29Z" fill="${secondary}" opacity=".74"/></pattern>`,
+      camo:`<pattern id="production-pattern" width="148" height="106" patternUnits="userSpaceOnUse"><path d="M-13 24 29 2l44 19-12 32-50 9Zm84 39 31-29 53 8 14 42-47 24-56-16Z" fill="${accent}"/><path d="m37 87 29-35 34 19-13 34Z" fill="${secondary}"/></pattern>`,
+      stripes:`<pattern id="production-pattern" width="190" height="94" patternUnits="userSpaceOnUse" patternTransform="skewX(-20)"><rect width="70" height="94" fill="${accent}"/><rect x="82" width="21" height="94" fill="${secondary}"/><rect x="114" width="12" height="94" fill="${primary}"/></pattern>`,
+      digital:`<pattern id="production-pattern" width="78" height="78" patternUnits="userSpaceOnUse"><path d="M3 3h31v19H20v21H3Zm39 29h33v42H42ZM14 53h20v21H14Z" fill="${accent}"/><path d="M43 5h18v16H43Z" fill="${secondary}"/></pattern>`,
+      fetti:`<pattern id="production-pattern" width="110" height="94" patternUnits="userSpaceOnUse"><path d="m13 11 13 26-23 8Zm45-6 21 13-14 19-18-15Zm21 48 26 10-11 23-24-13ZM24 66l21-11 10 26-24 8Z" fill="${accent}"/><circle cx="92" cy="24" r="10" fill="${secondary}"/></pattern>`,
+      factory:`<pattern id="production-pattern" width="190" height="92" patternUnits="userSpaceOnUse" patternTransform="skewX(-16)"><rect width="92" height="92" fill="${accent}"/><path d="M102 0h24v92h-24z" fill="${primary}"/><path d="M138 0h12v92h-12z" fill="${secondary}"/></pattern>`
+    };
+    return definitions[state.pattern] || definitions.slash;
+  };
+  const downloadBlob = (blob,filename) => {
+    const url=URL.createObjectURL(blob);
+    const anchor=document.createElement('a');
+    anchor.href=url;
+    anchor.download=filename;
+    document.body.append(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+  };
+  const exportProductionSvg = async () => {
+    if (state.product !== 'trixx-2up') {
+      notify('1:1 EXPORT IS CURRENTLY AVAILABLE FOR TRIXX 2UP');
+      return;
+    }
+    const button=q('[data-export-svg]');
+    button.disabled=true;
+    button.textContent='BUILDING FILE…';
+    try{
+      const [redMask,blackMask,whiteMask,greyMask,allMask,outline,brand]=await Promise.all([
+        'assets/trixx-2up-template-red.webp','assets/trixx-2up-template-black.webp',
+        'assets/trixx-2up-template-white.webp','assets/trixx-2up-template-grey.webp',
+        'assets/trixx-2up-template-all.webp','assets/trixx-2up-template-outline.webp',
+        'assets/trixlab-race-mark.svg'
+      ].map(assetAsDataUrl));
+      const coverageOpacity={full:1,side:.72,accent:.48}[state.coverage];
+      const safeName=escapeXml(state.name || 'RACE GRAPHICS');
+      const safeNumber=escapeXml(state.number || '21');
+      const safeMatText=escapeXml(state.matText || 'TRIXLAB');
+      const safeLogo=state.logo ? escapeXml(state.logo) : '';
+      const logoWidth=Math.max(180,Math.min(620,state.logoSize*4));
+      const materialOverlay=state.material==='chrome'
+        ? `<rect width="3000" height="3000" fill="url(#chrome)" mask="url(#mask-all)" opacity=".42"/>`
+        : state.material==='holographic'
+          ? `<rect width="3000" height="3000" fill="url(#holo)" mask="url(#mask-all)" opacity=".5"/>`
+          : '';
+      const finishOverlay=state.finish==='sparkle'
+        ? `<rect width="3000" height="3000" fill="url(#sparkle)" mask="url(#mask-all)" opacity=".68"/>`
+        : '';
+      const metadata=escapeXml(JSON.stringify({
+        format:'TRIXLAB TRIXX 2UP production artwork',canvas:'4000mm x 4000mm',scale:'1:1',
+        model:products[state.product].name,year:state.year,design:designLabels[state.design],
+        palette:state.colorway ? paletteLabels[state.colorway] : 'CUSTOM',
+        colors:{primary:state.primary,secondary:state.secondary,accent:state.accent},
+        material:labels.material[state.material],finish:labels.finish[state.finish],
+        coverage:labels.coverage[state.coverage],name:state.name,number:state.number,
+        mats:state.matsEnabled ? {pattern:matPatternLabels[state.matPattern],top:state.matTop,bottom:state.matBottom,text:state.matText} : false,
+        notes:state.notes
+      }));
+      const svg=`<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="4000mm" height="4000mm" viewBox="0 0 3000 3000">
+  <title>TRIXLAB ${escapeXml(designLabels[state.design])} — Sea-Doo Spark Trixx 2UP 1:1</title>
+  <metadata>${metadata}</metadata>
+  <defs>
+    <mask id="mask-red"><image href="${redMask}" width="3000" height="3000"/></mask>
+    <mask id="mask-black"><image href="${blackMask}" width="3000" height="3000"/></mask>
+    <mask id="mask-white"><image href="${whiteMask}" width="3000" height="3000"/></mask>
+    <mask id="mask-grey"><image href="${greyMask}" width="3000" height="3000"/></mask>
+    <mask id="mask-all"><image href="${allMask}" width="3000" height="3000"/></mask>
+    ${patternDefinition()}
+    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".22" stop-color="#616a66"/><stop offset=".5" stop-color="#f8ffff"/><stop offset=".74" stop-color="#7f8783"/><stop offset="1" stop-color="#fff"/></linearGradient>
+    <linearGradient id="holo" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff4da6"/><stop offset=".25" stop-color="#7d5cff"/><stop offset=".5" stop-color="#37e7ff"/><stop offset=".75" stop-color="#d7ff42"/><stop offset="1" stop-color="#ff7b45"/></linearGradient>
+    <pattern id="sparkle" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="5" cy="7" r="2.2" fill="#fff"/><circle cx="22" cy="20" r="1.5" fill="#fff"/><circle cx="13" cy="28" r="1" fill="#fff"/></pattern>
+  </defs>
+  <g id="CONFIGURED_ARTWORK" opacity="${coverageOpacity}">
+    <rect width="3000" height="3000" fill="${state.primary}" mask="url(#mask-red)"/>
+    <rect width="3000" height="3000" fill="${state.secondary}" mask="url(#mask-black)"/>
+    <rect width="3000" height="3000" fill="${state.accent}" mask="url(#mask-white)"/>
+    <rect width="3000" height="3000" fill="${state.secondary}" opacity=".52" mask="url(#mask-grey)"/>
+    <rect width="3000" height="3000" fill="url(#production-pattern)" opacity=".66" mask="url(#mask-all)"/>
+    ${materialOverlay}
+    ${finishOverlay}
+  </g>
+  <g id="PERSONALIZATION" font-family="Arial,Helvetica,sans-serif" font-weight="900" fill="#fff" stroke="#090b0a" paint-order="stroke" stroke-width="5">
+    <image href="${brand}" x="660" y="1460" width="450" height="130" transform="rotate(61 885 1525)"/>
+    <image href="${brand}" x="1890" y="1460" width="450" height="130" transform="rotate(-61 2115 1525)"/>
+    <text x="735" y="1665" font-size="42" letter-spacing="4" transform="rotate(61 735 1665)">${safeName}</text>
+    <text x="2265" y="1665" font-size="42" letter-spacing="4" text-anchor="end" transform="rotate(-61 2265 1665)">${safeName}</text>
+    <text x="820" y="1880" font-size="104" font-style="italic" transform="rotate(61 820 1880)">${safeNumber}</text>
+    <text x="2180" y="1880" font-size="104" font-style="italic" text-anchor="end" transform="rotate(-61 2180 1880)">${safeNumber}</text>
+    ${safeLogo ? `<image href="${safeLogo}" x="${720-logoWidth/2}" y="1260" width="${logoWidth}" height="${logoWidth*.45}" preserveAspectRatio="xMidYMid meet" transform="rotate(61 720 1350)"/><image href="${safeLogo}" x="${2280-logoWidth/2}" y="1260" width="${logoWidth}" height="${logoWidth*.45}" preserveAspectRatio="xMidYMid meet" transform="rotate(-61 2280 1350)"/>` : ''}
+  </g>
+  <g id="CUT_REFERENCE" opacity=".28"><image href="${outline}" width="3000" height="3000"/></g>
+  <g id="JOB_TICKET" font-family="Arial,Helvetica,sans-serif">
+    <rect x="45" y="45" width="720" height="${state.matsEnabled ? 250 : 205}" rx="24" fill="#fff" stroke="#111" stroke-width="4"/>
+    <text x="80" y="100" font-size="25" font-weight="900" fill="#008d70">TRIXLAB · TRIXX 2UP · 1:1 / 4000 × 4000 MM</text>
+    <text x="80" y="146" font-size="36" font-weight="900" fill="#111">${escapeXml(designLabels[state.design])} / ${escapeXml(state.colorway ? paletteLabels[state.colorway] : 'CUSTOM')}</text>
+    <text x="80" y="185" font-size="23" font-weight="700" fill="#555">${escapeXml(labels.coverage[state.coverage])} · ${escapeXml(labels.material[state.material])} · ${escapeXml(labels.finish[state.finish])}</text>
+    ${state.matsEnabled ? `<text x="80" y="226" font-size="23" font-weight="700" fill="#555">MATS: ${escapeXml(matPatternLabels[state.matPattern])} · ${escapeXml(state.matTop)} / ${escapeXml(state.matBottom)} · ${safeMatText}</text>` : ''}
+  </g>
+</svg>`;
+      const palette=state.colorway ? paletteLabels[state.colorway] : 'CUSTOM';
+      const filename=`TRIXLAB_TRIXX_2UP_${designLabels[state.design]}_${palette}_1TO1.svg`.replace(/[^a-z0-9_.-]+/gi,'_');
+      downloadBlob(new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),filename);
+      notify('1:1 SVG READY — USE WITH THE VECTOR CUT MASTER');
+    }catch(error){
+      console.error(error);
+      notify('EXPORT FAILED — PLEASE TRY AGAIN');
+    }finally{
+      button.disabled=false;
+      button.textContent='EXPORT 1:1 SVG';
+    }
+  };
 
   function setProduct(productId, announce = false) {
     if (!products[productId]) return;
@@ -174,6 +312,14 @@
     q('[data-mat-color="top"]').value = state.matTop;
     q('[data-mat-color="bottom"]').value = state.matBottom;
     q('.mat-controls').hidden = !state.matsEnabled;
+    qa('[data-template-name]').forEach((element) => element.textContent=state.name || 'RACE GRAPHICS');
+    qa('[data-template-number]').forEach((element) => element.textContent=state.number || '21');
+    q('[data-template-design]').textContent=designLabels[state.design];
+    q('[data-template-palette]').textContent=state.colorway ? paletteLabels[state.colorway] : 'CUSTOM';
+    q('[data-template-material]').textContent=`${labels.material[state.material]} · ${labels.finish[state.finish]} · ${labels.coverage[state.coverage]}`.toUpperCase();
+    q('[data-template-mat]').textContent=state.matsEnabled
+      ? `${matPatternLabels[state.matPattern]} MATS · ${state.matTop.toUpperCase()} / ${state.matBottom.toUpperCase()} · ${state.matText || 'TRIXLAB'}`
+      : 'TRACTION MATS NOT SELECTED';
     document.querySelectorAll('[data-product]').forEach((button) => button.classList.toggle('active',button.dataset.product===state.product));
     qa('[data-wrap-color]').forEach((input) => {
       input.value = state[input.dataset.wrapColor];
@@ -184,6 +330,10 @@
     logo.style.width = `${state.logoSize*1.3}px`;
     logo.style.setProperty('--logo-x',`${state.logoX}%`);
     logo.style.setProperty('--logo-y',`${state.logoY}%`);
+    qa('[data-template-logo]').forEach((templateLogo) => {
+      if(state.logo){templateLogo.src=state.logo;templateLogo.hidden=false;}else{templateLogo.removeAttribute('src');templateLogo.hidden=true;}
+      templateLogo.style.width=`${Math.max(7,Math.min(18,state.logoSize/8))}%`;
+    });
     q('[data-drag-hint]').hidden = !state.logo || state.view==='template';
     const total = format(price());
     q('[data-price]').textContent = total;
@@ -226,6 +376,13 @@
     state.pattern = button.dataset.designPattern;
     render();
   }));
+  qa('.design-card').forEach((button) => {
+    const label=designLabels[button.dataset.design];
+    button.querySelector('b').textContent=label;
+    button.setAttribute('aria-label',`${label} design for Sea-Doo Spark Trixx 2UP`);
+    button.querySelector('i').setAttribute('role','img');
+    button.querySelector('i').setAttribute('aria-label',`${label} rendered graphics preview`);
+  });
   qa('[data-material]').forEach((button) => button.addEventListener('click',() => {state.material=button.dataset.material;render();}));
   qa('[data-coverage]').forEach((button) => button.addEventListener('click',() => {state.coverage=button.dataset.coverage;render();}));
   qa('[data-finish]').forEach((button) => button.addEventListener('click',() => {state.finish=button.dataset.finish;render();}));
@@ -305,6 +462,7 @@
   q('[data-zoom-in]').addEventListener('click',() => {state.zoom=Math.min(1.25,state.zoom+.05);render();});
   q('[data-zoom-out]').addEventListener('click',() => {state.zoom=Math.max(.8,state.zoom-.05);render();});
   q('[data-price-info]').addEventListener('click',() => document.querySelector('[data-price-dialog]').showModal());
+  q('[data-export-svg]').addEventListener('click',exportProductionSvg);
   q('[data-save]').addEventListener('click',() => {
     const builds=getBuilds();
     builds.unshift({id:Date.now(),name:`${designLabels[state.design]} · ${state.year} ${products[state.product].name}`,date:new Date().toISOString(),state:snapshot()});
