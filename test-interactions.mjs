@@ -29,7 +29,7 @@ const fixedBase = document.querySelector('[data-vehicle-image]').getAttribute('s
 
 click('[data-view="template"]');
 assert.equal(document.querySelector('[data-photo-view]').hidden,true,'real photo can be hidden');
-assert.equal(document.querySelector('[data-template-view]').hidden,false,'1:1 PDF panel map can be shown');
+assert.equal(document.querySelector('[data-template-view]').hidden,false,'single panel layout can be shown');
 click('[data-view="right"]');
 assert.equal(document.querySelector('[data-photo-view]').hidden,false,'real photo view can be restored');
 assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/right/,'right camera has its own fixed image');
