@@ -147,7 +147,7 @@
   const root = document.querySelector('[data-studio]');
   if (!root) return;
   const $ = (selector) => root.querySelector(selector);
-  const $ = (selector) => [...root.querySelectorAll(selector)];
+  const all = (selector) => [...root.querySelectorAll(selector)];
   const state = {primary:'#f4f6f4',secondary:'#121512',accent:'#9cff00',material:'Standard Vinyl',coverage:'Full',overlay:'none',text:'',textColor:'#ffffff',notes:'',zoom:1,logo:'',logoScale:90};
   let history = [];
   let future = [];
@@ -178,30 +178,30 @@
     const total=format(price());
     $('[data-price]').textContent=total;$('[data-add-price]').textContent=total;$('[data-breakdown-price]').textContent=total;
     $('[data-breakdown-material]').textContent=state.material;$('[data-breakdown-coverage]').textContent=state.coverage;
-    $('[data-material]').forEach((button)=>button.classList.toggle('active',button.dataset.material===state.material));
-    $('[data-coverage]').forEach((button)=>button.classList.toggle('active',button.dataset.coverage===state.coverage));
-    $('[data-overlay]').forEach((button)=>button.classList.toggle('active',button.dataset.overlay===state.overlay));
+    all('[data-material]').forEach((button)=>button.classList.toggle('active',button.dataset.material===state.material));
+    all('[data-coverage]').forEach((button)=>button.classList.toggle('active',button.dataset.coverage===state.coverage));
+    all('[data-overlay]').forEach((button)=>button.classList.toggle('active',button.dataset.overlay===state.overlay));
   };
   const mutate = (fn) => { push();fn();render(); };
-  $('[data-tab]').forEach((button)=>button.addEventListener('click',()=>{
+  all('[data-tab]').forEach((button)=>button.addEventListener('click',()=>{
     const key=button.dataset.tab;
-    $('[data-panel]').forEach((panel)=>{panel.hidden=panel.dataset.panel!==key;});
+    all('[data-panel]').forEach((panel)=>{panel.hidden=panel.dataset.panel!==key;});
     $('[data-panel-wrap]').hidden=false;
-    $('[data-tab]').forEach((item)=>item.classList.toggle('active',item===button));
+    all('[data-tab]').forEach((item)=>item.classList.toggle('active',item===button));
   }));
-  $('[data-panel-close]').addEventListener('click',()=>{ $('[data-panel-wrap]').hidden=true;$('[data-tab]').forEach((item)=>item.classList.remove('active')); });
-  $('[data-preset]').forEach((button)=>button.addEventListener('click',()=>{
+  $('[data-panel-close]').addEventListener('click',()=>{ $('[data-panel-wrap]').hidden=true;all('[data-tab]').forEach((item)=>item.classList.remove('active')); });
+  all('[data-preset]').forEach((button)=>button.addEventListener('click',()=>{
     const values=button.dataset.preset.split(',');
     mutate(()=>{[state.primary,state.secondary,state.accent]=values;});
-    $('[data-preset]').forEach((item)=>item.classList.toggle('active',item===button));
+    all('[data-preset]').forEach((item)=>item.classList.toggle('active',item===button));
   }));
-  $('[data-color]').forEach((input)=>{
+  all('[data-color]').forEach((input)=>{
     input.addEventListener('input',()=>{state[input.dataset.color]=input.value;render();});
     input.addEventListener('change',()=>mutate(()=>{state[input.dataset.color]=input.value;}));
   });
-  $('[data-material]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.material=button.dataset.material;})));
-  $('[data-coverage]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.coverage=button.dataset.coverage;})));
-  $('[data-overlay]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.overlay=button.dataset.overlay;})));
+  all('[data-material]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.material=button.dataset.material;})));
+  all('[data-coverage]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.coverage=button.dataset.coverage;})));
+  all('[data-overlay]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.overlay=button.dataset.overlay;})));
   $('[data-text]').addEventListener('input',(event)=>{state.text=event.target.value;render();});
   $('[data-text-color]').addEventListener('input',(event)=>{state.textColor=event.target.value;render();event.target.parentElement.querySelector('b').textContent=event.target.value;});
   $('[data-notes]').addEventListener('input',(event)=>{state.notes=event.target.value;});
@@ -217,8 +217,8 @@
   $('[data-generate]').addEventListener('click',()=>{const prompt=$('[data-mix-prompt]').value.toLowerCase();const key=Object.keys(mixes).find((name)=>prompt.includes(name));useMix(key?mixes[key]:randomMix());notify('DESIGN MIX APPLIED');});
   $('[data-undo]').addEventListener('click',()=>{if(!history.length)return;future.push(snapshot());Object.assign(state,JSON.parse(history.pop()));historyButtons();render();});
   $('[data-redo]').addEventListener('click',()=>{if(!future.length)return;history.push(snapshot());Object.assign(state,JSON.parse(future.pop()));historyButtons();render();});
-  const dialogs=$('dialog');
-  $('[data-dialog-close]').forEach((button)=>button.addEventListener('click',()=>button.closest('dialog').close()));
+  const dialogs=all('dialog');
+  all('[data-dialog-close]').forEach((button)=>button.addEventListener('click',()=>button.closest('dialog').close()));
   $('[data-model]').addEventListener('click',()=> $('[data-model-dialog]').showModal());
   $('[data-model-continue]').addEventListener('click',()=>{ $('[data-model-dialog]').close();notify(`${$('[data-year]').value} · ${$('[data-model-select]').value} SELECTED`);});
   $('[data-price-info]').addEventListener('click',()=> $('[data-price-dialog]').showModal());
