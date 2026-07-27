@@ -19,6 +19,10 @@ const dom = new JSDOM(markup,{
     window.Element.prototype.setPointerCapture = function(){};
     window.Element.prototype.releasePointerCapture = function(){};
     window.Element.prototype.hasPointerCapture = function(){return true;};
+    window.fetch = async () => ({ok:true,blob:async()=>new window.Blob(['asset'],{type:'image/webp'})});
+    window.URL.createObjectURL = () => 'blob:https://trixlab.test/production-export';
+    window.URL.revokeObjectURL = () => {};
+    window.HTMLAnchorElement.prototype.click = function(){this.dataset.testClicked='true';};
   }
 });
 await new Promise((resolve) => dom.window.addEventListener('load',()=>setTimeout(resolve,50),{once:true}));
@@ -47,6 +51,7 @@ assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),
 click('.design-card[data-design="electric"]');
 const electricRender = document.querySelector('[data-vehicle-image]').getAttribute('src');
 assert.match(electricRender,/design-electric-left/,'electric selects its finished panel-aligned render');
+assert.equal(document.querySelector('[data-template-design]').textContent,'VOLTAGE','panel-layout ticket follows the selected motif name');
 assert.equal(document.querySelector('[data-studio]').dataset.hq,'true','all customer photo views use a finished render');
 assert.equal(document.querySelector('[data-wrap-layer]').hidden,true,'crude vector polygons never stack over the customer photo');
 assert.equal(document.querySelector('[data-studio]').dataset.pattern,'bolt','design changes vector pattern');
@@ -81,6 +86,7 @@ fire(upload,'change');
 await new Promise((resolve)=>setTimeout(resolve,50));
 const logo = document.querySelector('[data-logo-preview]');
 assert.equal(logo.hidden,false,'uploaded logo becomes visible');
+assert.equal(document.querySelector('[data-template-logo]').hidden,false,'uploaded logo is also visible in the production panel layout');
 const stack = document.querySelector('.vehicle-stack');
 stack.getBoundingClientRect = () => ({left:100,top:100,width:1000,height:667,right:1100,bottom:767});
 const pointer = (type,x,y) => {
@@ -93,6 +99,20 @@ pointer('pointermove',420,520);
 pointer('pointerup',420,520);
 assert.equal(logo.style.getPropertyValue('--logo-x'),'32%','logo drag updates horizontal position');
 assert.ok(parseFloat(logo.style.getPropertyValue('--logo-y'))>60,'logo drag updates vertical position');
+
+const configuredName=document.querySelector('[data-name]');
+configuredName.value='JEFF RACING';
+fire(configuredName,'input');
+const configuredNumber=document.querySelector('[data-number]');
+configuredNumber.value='77';
+fire(configuredNumber,'input');
+assert.equal(document.querySelector('[data-template-name]').textContent,'JEFF RACING','panel layout follows the configured name');
+assert.equal(document.querySelector('[data-template-number]').textContent,'77','panel layout follows the configured race number');
+click('[data-view="template"]');
+click('[data-export-svg]');
+await new Promise((resolve)=>setTimeout(resolve,100));
+assert.equal(document.querySelector('[data-export-svg]').disabled,false,'1:1 production export completes');
+assert.match(document.querySelector('[data-toast]').textContent,/1:1 SVG READY/,'production export reports a ready 1:1 file');
 
 click('[data-save]');
 assert.equal(document.querySelector('[data-build-count]').textContent,'1','build saves locally');
