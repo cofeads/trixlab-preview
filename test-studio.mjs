@@ -65,7 +65,16 @@ assert.match(html,/data-vehicle-image src="assets\/design-digital-left\.webp"/,'
 assert.equal((html.match(/data-camera-map="/g)||[]).length,4,'four separately mapped camera angles exist');
 assert.match(html,/coverage-side/,'mapped camera panels contain dedicated side-kit zones');
 assert.match(html,/coverage-accent/,'mapped camera panels contain dedicated accent-kit zones');
-assert.equal((html.match(/data-view="/g)||[]).length,5,'four camera angles plus panel layout are selectable');
+assert.equal((html.match(/data-view="/g)||[]).length,6,'four camera angles plus vinyl and traction-mat production layouts are selectable');
+assert.match(html,/data-view="mat-template"/,'dedicated traction mat layout view is selectable');
+assert.match(html,/data-mat-template-view/,'traction mats have their own production board');
+assert.equal((html.match(/data-mat-cut-piece="/g)||[]).length,8,'traction mat production layout contains eight separate cut pieces');
+assert.equal((html.match(/data-mat-colorway="/g)||[]).length,6,'traction mats offer six color preset controls');
+assert.match(html,/data-mat-profile/,'traction mats offer 6 mm dual and 9 mm triple-layer profiles');
+assert.match(html,/data-mat-badge/,'rear-mat CK, TRIXLAB, custom and no-badge choices are available');
+assert.match(html,/data-export-mats-svg/,'separate 1:1 traction mat SVG export is available');
+assert.match(html,/data-add-mats/,'traction mats can be added to cart without a graphics kit');
+assert.match(js,/1200mm" height="700mm"/,'traction mat proof exports on an explicit 1:1 millimeter canvas');
 assert.doesNotMatch(html,/fit-points|mapping-status|P[1-9]/,'internal mapping points are never exposed in the customer UI');
 assert.match(html,/data-camera-mats="rear"/,'traction mats have a dedicated rear-view mapping');
 assert.match(css,/data-hq-filter=ocean/,'pre-rendered alternate camera angles use a scoped colorway filter');
