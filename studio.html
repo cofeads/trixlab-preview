@@ -25,14 +25,11 @@
     <div class="drawer-sheet">
       <div class="drawer-head"><div><small>SELECT MACHINE</small><h2>SEA-DOO PRODUCTS</h2></div><button type="button" data-products-close>×</button></div>
       <div class="product-list">
-        <button class="product-card active" type="button" data-product="trixx-2up"><span>SPARK SERIES</span><b>TRIXX 2UP</b><small>2014–2026 · Graphics + Mats</small></button>
-        <button class="product-card" type="button" data-product="trixx-3up"><span>SPARK SERIES</span><b>TRIXX 3UP</b><small>2014–2026 · Graphics + Mats</small></button>
-        <button class="product-card" type="button" data-product="spark-2up"><span>SPARK SERIES</span><b>SPARK 2UP</b><small>2014–2026 · Graphics + Mats</small></button>
-        <button class="product-card" type="button" data-product="spark-3up"><span>SPARK SERIES</span><b>SPARK 3UP</b><small>2014–2026 · Graphics + Mats</small></button>
-        <button class="product-card" type="button" data-product="gti"><span>TOURING</span><b>GTI / GTI SE</b><small>2020–2026 · Graphics</small></button>
-        <button class="product-card" type="button" data-product="rxp-x"><span>PERFORMANCE</span><b>RXP-X 325</b><small>2021–2026 · Graphics</small></button>
+        <button class="product-card" type="button" data-product="spark-trixx-1up"><span>SPARK PLATFORM</span><b>SPARK / TRIXX 1UP</b><small>2014–2026 · One shared panel geometry</small></button>
+        <button class="product-card active" type="button" data-product="spark-trixx-2up"><span>SPARK PLATFORM</span><b>SPARK / TRIXX 2UP</b><small>2014–2026 · Exact uploaded 2UP template</small></button>
+        <button class="product-card" type="button" data-product="spark-trixx-3up"><span>SPARK PLATFORM</span><b>SPARK / TRIXX 3UP</b><small>2014–2026 · One shared panel geometry</small></button>
       </div>
-      <p>Das Fahrzeugbild bleibt innerhalb des gewählten Modells immer identisch. Nur Folie, Farben, Text und Matten werden darüber verändert.</p>
+      <p>Spark und Trixx derselben Länge teilen sich die Panel-Geometrie. Deshalb gibt es je 1UP, 2UP und 3UP nur eine korrekte Plattform statt doppelter Modellnamen.</p>
     </div>
   </div>
 
@@ -56,7 +53,7 @@
 
     <section class="visual-stage">
       <div class="stage-top">
-        <div><span class="live-dot"></span> LIVE DESIGN PREVIEW · SAME 2022 TRIXX 2UP</div>
+        <div><span class="live-dot"></span> LIVE DESIGN PREVIEW · <span data-stage-model>SPARK / TRIXX 2UP</span></div>
         <div class="view-switch">
           <button class="active" type="button" data-view="left">LEFT ¾</button>
           <button type="button" data-view="right">RIGHT ¾</button>
@@ -68,7 +65,7 @@
       <div class="vehicle-viewer" data-viewer>
         <div class="grid-floor"></div>
         <div class="vehicle-stack" data-photo-view>
-          <img class="vehicle-image" data-vehicle-image src="assets/trixx-2022-left.webp" alt="Real 2022 Sea-Doo Spark Trixx 2UP studio photo">
+          <img class="vehicle-image" data-vehicle-image src="assets/apex-race-left.webp" alt="TRIXLAB rendered 2022 Sea-Doo Spark / Trixx 2UP">
           <svg class="photo-wrap-layer" data-wrap-layer viewBox="0 0 800 600" aria-label="Vinyl design preview">
             <defs>
               <pattern id="photo-apex" width="150" height="90" patternUnits="userSpaceOnUse" patternTransform="skewX(-18)">
@@ -247,10 +244,10 @@
         <section class="panel-section active" data-panel="machine">
           <p class="step">01 · SELECT THE EXACT MACHINE</p>
           <label>BRAND<select><option>Sea-Doo</option></select></label>
-          <label>PLATFORM<select data-platform><option>Spark / Trixx</option><option>Touring</option><option>Performance</option></select></label>
+          <label>PLATFORM<select data-platform><option>Spark / Trixx 1UP</option><option selected>Spark / Trixx 2UP</option><option>Spark / Trixx 3UP</option></select></label>
           <div class="field-grid">
             <label>YEAR<select data-year><option>2014</option><option>2018</option><option selected>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></label>
-            <label>MODEL<select data-model><option value="trixx-2up">Trixx 2UP</option><option value="trixx-3up">Trixx 3UP</option><option value="spark-2up">Spark 2UP</option><option value="spark-3up">Spark 3UP</option><option value="gti">GTI / GTI SE</option><option value="rxp-x">RXP-X 325</option></select></label>
+            <label>MODEL<select data-model><option value="spark-trixx-1up">Spark / Trixx 1UP</option><option value="spark-trixx-2up" selected>Spark / Trixx 2UP</option><option value="spark-trixx-3up">Spark / Trixx 3UP</option></select></label>
           </div>
           <button class="browse-products" type="button" data-products-open>BROWSE ALL PRODUCTS →</button>
           <div class="fit-note"><b>✓ TEMPLATE AVAILABLE</b><span>Production proof required before print.</span></div>

@@ -8,12 +8,9 @@
   const finishPrices = {gloss:0,matte:4900,sparkle:7900};
   const matsPrice = 18900;
   const products = {
-    'trixx-2up':{name:'Trixx 2UP',platform:'Spark / Trixx',image:'assets/trixx-2022-left.webp',mats:true},
-    'trixx-3up':{name:'Trixx 3UP',platform:'Spark / Trixx',image:'assets/trixx-2022-left.webp',mats:true},
-    'spark-2up':{name:'Spark 2UP',platform:'Spark / Trixx',image:'assets/trixx-2022-left.webp',mats:true},
-    'spark-3up':{name:'Spark 3UP',platform:'Spark / Trixx',image:'assets/trixx-2022-left.webp',mats:true},
-    'gti':{name:'GTI / GTI SE',platform:'Touring',image:'assets/trixlab-seadoo-performance.webp',mats:false},
-    'rxp-x':{name:'RXP-X 325',platform:'Performance',image:'assets/trixlab-seadoo-performance.webp',mats:false}
+    'spark-trixx-1up':{name:'Spark / Trixx 1UP',platform:'Spark / Trixx 1UP',image:'assets/apex-race-left.webp',mats:true},
+    'spark-trixx-2up':{name:'Spark / Trixx 2UP',platform:'Spark / Trixx 2UP',image:'assets/apex-race-left.webp',mats:true},
+    'spark-trixx-3up':{name:'Spark / Trixx 3UP',platform:'Spark / Trixx 3UP',image:'assets/apex-race-left.webp',mats:true}
   };
   const cameraImages = {
     left:'assets/trixx-2022-left.webp',
@@ -32,6 +29,20 @@
     right:{race:'assets/apex-race-right.webp'},
     front:{race:'assets/apex-race-front.webp'},
     rear:{race:'assets/apex-race-rear.webp'}
+  };
+  const designRenderImages = {
+    apex:'assets/apex-race-left.webp',
+    midnight:'assets/design-midnight-left.webp',
+    electric:'assets/design-electric-left.webp',
+    toxic:'assets/apex-toxic-left.webp',
+    carbon:'assets/design-carbon-left.webp',
+    miami:'assets/apex-miami-left.webp',
+    arctic:'assets/apex-ice-left.webp',
+    camo:'assets/design-camo-left.webp',
+    heritage:'assets/design-heritage-left.webp',
+    digital:'assets/design-digital-left.webp',
+    fetti:'assets/design-fetti-left.webp',
+    factory:'assets/design-factory-left.webp'
   };
   const cameraLabels = {left:'LEFT ¾',right:'RIGHT ¾',front:'FRONT',rear:'REAR + MATS',template:'PANEL LAYOUT'};
   const designLabels = {
@@ -58,7 +69,7 @@
     finish:{gloss:'High Gloss',matte:'Stealth Matte',sparkle:'Metal Flake'}
   };
   const state = {
-    product:'trixx-2up',year:'2022',design:'apex',pattern:'slash',material:'standard',
+    product:'spark-trixx-2up',year:'2022',design:'apex',pattern:'slash',material:'standard',
     coverage:'full',finish:'gloss',colorway:'race',primary:'#ef1f2d',secondary:'#101310',
     accent:'#f5f7f5',name:'RACE GRAPHICS',number:'21',notes:'',logo:'',logoSize:100,
     logoX:66,logoY:55,zoom:1,view:'left',matsEnabled:true,matPattern:'diamond',matTop:'#151917',
@@ -95,16 +106,11 @@
 
   const render = () => {
     const product = products[state.product];
-    const usesTrixxMapping = product.platform === 'Spark / Trixx';
+    const usesTrixxMapping = product.platform.startsWith('Spark / Trixx');
     const hqColorway = state.colorway;
-    const usesHqRender = state.product === 'trixx-2up' &&
-      state.design === 'apex' &&
-      state.coverage === 'full' &&
-      state.material === 'standard' &&
-      state.finish === 'gloss' &&
-      Boolean(hqRenderImages.left[hqColorway]) &&
+    const usesHqRender = usesTrixxMapping &&
       state.view !== 'template' &&
-      Boolean(hqRenderImages[state.view]?.race);
+      Boolean(state.view === 'left' ? designRenderImages[state.design] : hqRenderImages[state.view]?.race);
     root.dataset.design = state.design;
     root.dataset.pattern = state.pattern;
     root.dataset.material = state.material;
@@ -113,7 +119,7 @@
     root.dataset.colorway = state.colorway;
     root.dataset.view = state.view;
     root.dataset.hq = usesHqRender ? 'true' : 'false';
-    root.dataset.hqFilter = usesHqRender && state.view !== 'left' ? hqColorway : 'none';
+    root.dataset.hqFilter = usesHqRender && state.view !== 'left' && hqColorway ? hqColorway : 'none';
     root.dataset.mats = state.matsEnabled ? 'on' : 'off';
     root.dataset.matPattern = state.matPattern;
     root.style.setProperty('--wrap-primary',state.primary);
@@ -124,11 +130,13 @@
     q('[data-viewer]').style.setProperty('--zoom',state.zoom);
     q('[data-photo-view]').hidden = state.view==='template';
     q('[data-template-view]').hidden = state.view!=='template';
-    q('[data-wrap-layer]').hidden = usesHqRender;
+    q('[data-wrap-layer]').hidden = state.view !== 'template';
     qa('[data-camera-map]').forEach((map) => map.toggleAttribute('hidden',!usesTrixxMapping || map.dataset.cameraMap!==state.view));
     qa('[data-camera-mats]').forEach((map) => map.toggleAttribute('hidden',!usesTrixxMapping || map.dataset.cameraMats!==state.view));
     const hqImage = usesHqRender
-      ? hqRenderImages[state.view][state.view === 'left' ? hqColorway : 'race']
+      ? (state.view === 'left'
+          ? (state.design === 'apex' && hqRenderImages.left[hqColorway] ? hqRenderImages.left[hqColorway] : designRenderImages[state.design])
+          : hqRenderImages[state.view].race)
       : '';
     q('[data-vehicle-image]').src = hqImage || (usesTrixxMapping && cameraImages[state.view] ? cameraImages[state.view] : product.image);
     q('[data-vehicle-image]').alt = `${usesHqRender ? 'TRIXLAB rendered' : 'Neutral'} 2022 Sea-Doo ${product.name} · ${cameraLabels[state.view] || 'studio view'}`;
@@ -137,6 +145,7 @@
     q('[data-preview-number]').textContent = state.number || '21';
     q('[data-design-name]').textContent = designLabels[state.design];
     q('[data-vehicle-meta]').textContent = `SEA-DOO ${product.name.toUpperCase()} · ${state.year} · ${cameraLabels[state.view]}`;
+    q('[data-stage-model]').textContent = `${product.name.toUpperCase()} · ${state.year}`;
     q('[data-rail-model]').textContent = product.platform.toUpperCase();
     q('[data-year]').value = state.year;
     q('[data-model]').value = state.product;

@@ -15,6 +15,11 @@ for(const render of ['race-left','ocean-left','toxic-left','miami-left','ice-lef
   assert.ok(fs.existsSync(image),`high-quality APEX ${render} render exists`);
   assert.ok(fs.statSync(image).size>30_000,`${render} render contains a finished panel-aligned livery`);
 }
+for(const design of ['midnight','electric','carbon','camo','heritage','digital','fetti','factory']){
+  const image=`assets/design-${design}-left.webp`;
+  assert.ok(fs.existsSync(image),`high-quality ${design} design render exists`);
+  assert.ok(fs.statSync(image).size>30_000,`${design} render contains a finished panel-aligned livery`);
+}
 for(const layer of ['white','black','red','grey']){
   const template=`assets/trixx-2up-template-${layer}.webp`;
   assert.ok(fs.existsSync(template),`real PDF template layer ${layer} exists`);
@@ -32,14 +37,14 @@ for(const responsive of ['@media(max-width:900px)','@media(max-width:560px)']){
   assert.ok(css.includes(responsive),`studio CSS includes ${responsive}`);
 }
 assert.equal((html.match(/class="design-card/g)||[]).length,12,'studio offers 12 graphics designs');
-assert.equal((html.match(/class="product-card/g)||[]).length,6,'product drawer offers 6 Sea-Doo products');
+assert.equal((html.match(/class="product-card/g)||[]).length,3,'product drawer groups Sea-Doo Spark/Trixx aliases into 1UP, 2UP and 3UP geometries');
 assert.equal((html.match(/data-mat-pattern="/g)||[]).length,6,'traction mats offer 6 routed patterns');
 assert.equal((html.match(/data-tab="/g)||[]).length,8,'studio has 8 configuration steps');
 assert.match(html,/class="photo-wrap-layer"/,'wrap is a separate panel-aligned vector layer');
 assert.match(html,/class="photo-mat-layer"/,'traction mat is a separate vector layer');
 assert.match(html,/data-template-view/,'single panel layout is available');
 assert.doesNotMatch(html,/trixx-2up-template-outline\.webp/,'duplicate source-template overlay is not rendered');
-assert.match(html,/data-vehicle-image src="assets\/trixx-2022-left\.webp"/,'real fixed 2022 base is used');
+assert.match(html,/data-vehicle-image src="assets\/apex-race-left\.webp"/,'high-quality panel render is the initial customer view');
 assert.equal((html.match(/data-camera-map="/g)||[]).length,4,'four separately mapped camera angles exist');
 assert.equal((html.match(/data-view="/g)||[]).length,5,'four camera angles plus panel layout are selectable');
 assert.doesNotMatch(html,/fit-points|mapping-status|P[1-9]/,'internal mapping points are never exposed in the customer UI');
@@ -48,6 +53,8 @@ assert.match(css,/data-hq-filter=ocean/,'pre-rendered alternate camera angles us
 assert.doesNotMatch(css,/^\.vehicle-image\{[^}]*filter:/m,'neutral base vehicle has no global recolor filter');
 assert.match(js,/const cameraImages =/,'camera-specific fixed base images are registered');
 assert.match(js,/const hqRenderImages =/,'high-quality colorway and camera renders are registered');
+assert.match(js,/const designRenderImages =/,'every design selects a finished panel-aligned render');
+assert.doesNotMatch(html,/data-product="(?:trixx|spark)-[123]up"/,'duplicate Spark and Trixx abbreviation cards are removed');
 assert.match(js,/state\.design = button\.dataset\.design/,'design selection changes overlay state');
 assert.ok(!js.includes('const $$'),'avoids double-dollar upload mangling');
-console.log('TRIXLAB standalone studio: 48 structure and interaction checks passed.');
+console.log('TRIXLAB standalone studio: structure, grouped models and HQ render checks passed.');

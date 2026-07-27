@@ -44,18 +44,19 @@ click('[data-colorway="race"]');
 assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),fixedBase,'race preset restores its exact high-quality render');
 
 click('.design-card[data-design="electric"]');
-const neutralBase = document.querySelector('[data-vehicle-image]').getAttribute('src');
-assert.match(neutralBase,/trixx-2022-left/,'other editable motifs use the fixed neutral Trixx base');
-assert.equal(document.querySelector('[data-studio]').dataset.hq,'false','editable vector motif does not stack over a finished render');
+const electricRender = document.querySelector('[data-vehicle-image]').getAttribute('src');
+assert.match(electricRender,/design-electric-left/,'electric selects its finished panel-aligned render');
+assert.equal(document.querySelector('[data-studio]').dataset.hq,'true','all customer photo views use a finished render');
+assert.equal(document.querySelector('[data-wrap-layer]').hidden,true,'crude vector polygons never stack over the customer photo');
 assert.equal(document.querySelector('[data-studio]').dataset.pattern,'bolt','design changes vector pattern');
 
 click('[data-products-open]');
 assert.ok(document.querySelector('[data-products-drawer]').classList.contains('open'),'product menu opens');
-click('[data-product="gti"]');
-assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/performance/,'product can be changed');
+click('[data-product="spark-trixx-1up"]');
+assert.match(document.querySelector('[data-vehicle-meta]').textContent,/1UP/,'grouped 1UP platform can be selected');
 click('[data-products-open]');
-click('[data-product="trixx-2up"]');
-assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),neutralBase,'fixed neutral Trixx base returns for editable motif');
+click('[data-product="spark-trixx-2up"]');
+assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),electricRender,'2UP returns without changing the selected design');
 
 click('[data-tab="mats"]');
 click('[data-mat-pattern="hive"]');
