@@ -3,234 +3,110 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>TRIXLAB — Shopify Theme Preview</title>
-  <style>:root{--bg:#0b0d0c;--surface:#131614;--text:#f5f7f5;--muted:#a4aaa6;--line:#2a2f2b;--lime:#9cff00;--primary:#f4f6f4;--secondary:#121512;--accent:#9cff00;font-family:Arial,Helvetica,sans-serif;color-scheme:dark}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button,a{color:inherit}a{text-decoration:none}img,svg{display:block;max-width:100%}.announcement{display:grid;min-height:38px;place-items:center;border-bottom:1px solid #2a2f2b;background:#090b0a;font-size:10px;font-weight:900;letter-spacing:.15em}.site-header{position:sticky;z-index:30;top:0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:82px;padding:0 34px;border-bottom:1px solid var(--line);background:#0b0d0eed;backdrop-filter:blur(18px)}.site-header>img{width:290px;filter:invert(1)}.menu-button,.site-header nav button{border:0;background:transparent;cursor:pointer}.menu-button span,.site-header nav{font-size:10px;font-weight:900;letter-spacing:.1em}.site-header nav{display:flex;justify-content:flex-end;gap:24px}.site-header nav button b{display:inline-grid;min-width:22px;height:22px;place-items:center;border-radius:50%;background:var(--lime);color:#0a0d0b}.menu-drawer{position:fixed;z-index:29;top:120px;right:0;left:0;padding:44px 7vw;background:#0b0d0c}.menu-drawer a{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);font-size:clamp(30px,5vw,70px);font-weight:900;letter-spacing:-.05em}.hero{position:relative;min-height:calc(100svh - 120px);overflow:hidden}.hero>img{position:absolute;width:100%;height:100%;object-fit:cover}.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,#080a09f5 0,#080a09bf 35%,#080a0915 72%)}.hero-copy{position:relative;z-index:2;width:min(1480px,calc(100% - 56px));margin:auto;padding:12vh 0 18vh}.kicker{margin:0 0 18px;color:var(--lime);font-size:11px;font-weight:900;letter-spacing:.18em}.hero h1{margin:0;font-size:clamp(64px,9vw,140px);line-height:.82;letter-spacing:-.08em}.hero-copy>p:not(.kicker){max-width:600px;color:#c5cbc7;font-size:17px;line-height:1.65}.hero-copy>div{display:flex;gap:12px;margin-top:34px}.button{display:inline-flex;min-height:52px;align-items:center;padding:0 25px;border:1px solid #fff;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.08em}.button.accent{border-color:var(--lime);background:var(--lime);color:#090b0a}.button.outline{background:#090b0a99}.ticker{position:absolute;right:0;bottom:0;left:0;display:flex;justify-content:space-around;gap:22px;padding:17px;background:var(--lime);color:#080a09;font-size:10px;font-weight:900;letter-spacing:.14em;white-space:nowrap}.stats{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line)}.stats div{display:grid;gap:8px;padding:34px;border-right:1px solid var(--line);text-align:center}.stats b{font-size:clamp(24px,3vw,44px);letter-spacing:-.05em}.stats span{color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.1em}.section{padding:100px max(28px,calc((100vw - 1480px)/2))}.section-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:45px}.section-head h2{max-width:900px;margin:0;font-size:clamp(44px,6vw,86px);line-height:.9;letter-spacing:-.07em}.section-head>p{max-width:490px;color:var(--muted);line-height:1.6}.categories{background:#eef1ee;color:#0b0d0c}.categories .kicker{color:#587c00}.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.category-grid article{padding-bottom:22px;border:1px solid #d2d7d3;border-radius:18px;background:#fff;overflow:hidden}.category-art{display:grid;min-height:280px;place-items:center;margin-bottom:20px;background:radial-gradient(circle,#3a453d,#101411 68%);color:#fff;font-size:58px;font-style:italic;font-weight:900}.category-art:before{position:absolute;width:180px;height:90px;border:14px solid var(--lime);border-radius:60% 30%;content:"";transform:rotate(-12deg)}.category-art.alt:before{border-radius:24px 80px}.category-art.third:before{width:150px;height:140px}.category-art.fourth:before{border-radius:16px}.category-grid small,.category-grid h3,.category-grid>a,.category-grid article>a{margin-inline:20px}.category-grid small{color:#687069;font-weight:900;letter-spacing:.12em}.category-grid h3{margin-block:8px 22px;font-size:22px}.category-grid article>a{display:flex;justify-content:space-between;font-size:11px;font-weight:900}.process-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.process-grid article{min-height:310px;padding:30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.process-grid span{color:var(--lime);font-size:11px;font-weight:900}.process-grid h3{margin:100px 0 12px;font-size:27px;letter-spacing:-.04em}.process-grid p{color:var(--muted);line-height:1.6}.studio{background:#eff1ef;color:#111512}.studio-header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:88px;padding:0 28px;border-bottom:1px solid #d6dad7;background:#fafbfa}.studio-header>img{width:270px}.studio-header>div{display:flex;gap:8px}.studio-header button{min-height:42px;padding:0 16px;border:1px solid #c7cdc8;border-radius:999px;background:transparent;font-size:9px;font-weight:900;letter-spacing:.1em;cursor:pointer}.studio-header>button{justify-self:end;background:#0b0e0c;color:#fff}.studio-workspace{position:relative;display:grid;grid-template-columns:178px 1fr;min-height:calc(100svh - 176px)}.presets{display:flex;max-height:calc(100svh - 176px);flex-direction:column;gap:8px;padding:24px 18px;border-right:1px solid #d6dad7;overflow-y:auto}.presets h2{margin:0;font-size:24px}.presets p{margin:0 0 15px;color:#6c746f;font-size:9px;font-weight:900}.preset{display:grid;gap:7px;padding:8px;border:1px solid transparent;border-radius:10px;background:transparent;text-align:left;font-size:8px;font-weight:900;cursor:pointer}.preset.active,.preset:hover{border-color:#00bdaa;background:#fff}.preset i{height:65px;border-radius:8px;background:linear-gradient(145deg,#f4f6f4 0 35%,#121512 35% 70%,#9cff00 70%);clip-path:polygon(0 22%,100% 0,92% 78%,12% 100%)}.preset i.electric{background:linear-gradient(145deg,#28abe2 0 35%,#111827 35% 70%,#ec008c 70%)}.preset i.midnight{background:linear-gradient(145deg,#254074 0 35%,#f5f7f5 35% 70%,#9cff00 70%)}.preset i.glacier{background:linear-gradient(145deg,#86cdf2 0 35%,#f7f8f7 35% 70%,#111512 70%)}.preset i.toxic{background:linear-gradient(145deg,#80c346 0 35%,#050706 35% 70%,#dfe5df 70%)}.canvas-wrap{position:relative;display:grid;min-width:0;place-items:center;overflow:hidden;background:radial-gradient(circle,#fff,#e7ebe8)}.canvas{position:relative;width:min(88%,1200px);transition:transform .2s}.canvas svg{filter:drop-shadow(0 30px 24px #1115)}.primary{fill:var(--primary)}.secondary{fill:var(--secondary)}.accent-zone{fill:var(--accent)}.pattern{opacity:0}.studio[data-overlay=stripes] .pattern.stripes,.studio[data-overlay=hex] .pattern.hex{opacity:1}.studio[data-material=Chrome] .canvas svg{filter:contrast(1.2) saturate(.6) drop-shadow(0 30px 24px #1115)}.studio[data-material=Holographic] .canvas svg{filter:hue-rotate(22deg) saturate(1.5) drop-shadow(0 30px 24px #1115)}.studio[data-coverage=Partial] .accent-zone{opacity:.16}.custom-text{fill:#fff;font-size:34px;font-style:italic;font-weight:900}.logo-preview{position:absolute;top:49%;left:61%;width:140px;max-height:90px;object-fit:contain;transform:translate(-50%,-50%)}.canvas-tools{position:absolute;z-index:3;top:22px;left:50%;display:flex;padding:5px;border:1px solid #d6dad7;border-radius:999px;background:#fff;transform:translateX(-50%)}.canvas-tools button,.zoom button{width:38px;height:38px;border:0;border-radius:50%;background:transparent;color:#111;cursor:pointer}.canvas-tools button:disabled{opacity:.25}.price-card{position:absolute;z-index:2;top:22px;right:24px;display:grid;width:230px;padding:22px;border:1px solid #d6dad7;border-radius:16px;background:#fffd;box-shadow:0 14px 35px #1111}.price-card small{color:#6d756f;font-size:9px;font-weight:900;letter-spacing:.12em}.price-card strong{font-size:34px;letter-spacing:-.05em}.price-card span{color:#737b75;font-size:10px}.price-card button{width:max-content;margin-top:12px;padding:0;border:0;background:transparent;color:#008c7c;font-size:10px;font-weight:900;cursor:pointer}.zoom{position:absolute;right:24px;bottom:30%;display:grid;place-items:center;border:1px solid #d6dad7;border-radius:999px;background:#fff}.zoom span{font-size:9px;font-weight:900}.panel{position:absolute;z-index:8;top:0;right:0;bottom:0;width:min(420px,94vw);padding:36px;border-left:1px solid #d6dad7;background:#fff;box-shadow:-20px 0 50px #1112;overflow-y:auto}.panel-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border:1px solid #d6dad7;border-radius:50%;background:transparent;color:#111;font-size:20px;cursor:pointer}.panel small{color:#00a895;font-weight:900}.panel h2{margin:8px 0 28px;font-size:42px;letter-spacing:-.06em}.choice{display:grid;width:100%;gap:6px;margin:0 0 10px;padding:18px;border:1px solid #d6dad7;border-radius:13px;background:#f8f9f8;color:#111;text-align:left;font-weight:900;cursor:pointer}.choice span{color:#6d756f;font-size:11px;font-weight:400}.choice.active,.choice:hover{border-color:#00af9b;box-shadow:inset 0 0 0 1px #00af9b}.panel label:not(.upload):not(.field):not(.range){display:grid;grid-template-columns:1fr 45px 76px;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #d6dad7;font-size:11px;font-weight:900}.panel input[type=color]{width:42px;height:42px;border:0;background:transparent}.panel label b{font-family:monospace;color:#6c746f}.upload{display:grid;min-height:180px;place-items:center;align-content:center;gap:7px;border:1px dashed #9da69f;border-radius:14px;background:#f8faf8;font-size:32px;cursor:pointer}.upload b{font-family:Arial!important;color:#111!important;font-size:12px}.upload span{color:#747b76;font-size:10px}.upload input{position:absolute;opacity:0}.range,.field{display:grid;gap:9px;margin-top:20px;font-size:11px;font-weight:900}.range input{width:100%}.field input,.field textarea{padding:13px;border:1px solid #d6dad7;border-radius:10px;background:#f7f9f7;color:#111}.text-button{margin-top:18px;border:0;background:transparent;color:#008c7c;font-size:10px;font-weight:900;cursor:pointer}.generate{width:100%;min-height:50px;margin-top:18px;border:0;border-radius:999px;background:#9cff00;color:#0b0e0c;font-size:10px;font-weight:900;cursor:pointer}.studio-bottom{position:sticky;z-index:9;bottom:0;display:grid;grid-template-columns:1fr 300px;align-items:center;gap:14px;padding:10px 18px;border-top:1px solid #d6dad7;background:#fafbfadd;backdrop-filter:blur(14px)}.studio-bottom nav{display:flex;width:max-content;max-width:100%;justify-self:center;padding:5px;border:1px solid #d6dad7;border-radius:999px;background:#fff;overflow-x:auto}.studio-bottom nav button{display:flex;min-width:max-content;align-items:center;gap:6px;padding:11px 13px;border:0;border-radius:999px;background:transparent;color:#111;font-size:9px;font-weight:900;cursor:pointer}.studio-bottom nav button.active,.studio-bottom nav button:hover{background:#e7ece8}.add{display:flex;min-height:52px;align-items:center;justify-content:space-between;padding:0 18px;border:0;border-radius:999px;background:#0b0e0c;color:#fff;font-size:9px;font-weight:900;cursor:pointer}.add b{color:#9cff00;font-size:13px}dialog{width:min(530px,calc(100% - 28px));padding:38px;border:0;border-radius:20px;background:#fff;color:#111}dialog::backdrop{background:#060906c9;backdrop-filter:blur(7px)}dialog>button:first-child{position:absolute;top:14px;right:14px;width:36px;height:36px;border:1px solid #d6dad7;border-radius:50%;background:transparent;color:#111;font-size:20px}dialog>img{width:200px;margin:0 auto 25px}dialog h2{font-size:36px;letter-spacing:-.05em}dialog label{display:grid;gap:8px;margin:15px 0;font-size:11px;font-weight:900}dialog select{padding:13px;border:1px solid #d6dad7;border-radius:10px;background:#f5f7f5;color:#111}dialog p{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #d6dad7}.saved{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:12px;border-bottom:1px solid #d6dad7}.saved button{padding:8px;border:1px solid #d6dad7;border-radius:8px;background:#f5f7f5;color:#111}.toast{position:fixed;z-index:60;right:22px;bottom:90px;padding:14px 18px;border-radius:12px;background:#0b0e0c;color:#fff;font-size:11px;font-weight:900;opacity:0;transform:translateY(10px);transition:.2s}.toast.show{opacity:1;transform:none}.faq details{max-width:980px;margin-left:auto;border-top:1px solid var(--line)}.faq summary{display:flex;justify-content:space-between;padding:24px 0;font-size:18px;font-weight:900;cursor:pointer}.faq details p{color:var(--muted);line-height:1.6}.footer{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:80px max(28px,calc((100vw - 1480px)/2));border-top:1px solid var(--line)}.footer>img{width:430px;filter:invert(1)}.footer p{font-size:clamp(28px,4vw,60px);font-weight:900;line-height:.95;letter-spacing:-.05em}.footer form{display:flex;border-bottom:1px solid #fff}.footer input{flex:1;padding:15px 0;border:0;background:transparent}.footer button{border:0;background:transparent;color:var(--lime);font-size:10px;font-weight:900}@media(max-width:1000px){.category-grid{grid-template-columns:repeat(2,1fr)}.process-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(3,1fr)}.studio-header{grid-template-columns:1fr auto}.studio-header>img{display:none}.studio-bottom{grid-template-columns:1fr}.add{width:min(520px,100%);justify-self:center}.footer{grid-template-columns:1fr}}@media(max-width:680px){.site-header{min-height:68px;padding:0 14px}.site-header>img{width:190px}.menu-button span,.site-header nav a{display:none}.hero-copy{width:calc(100% - 28px);padding-top:8vh}.hero h1{font-size:58px}.ticker{justify-content:flex-start;overflow:hidden}.stats{grid-template-columns:repeat(2,1fr)}.stats div{padding:24px 12px}.section{padding:70px 14px}.section-head{display:grid}.category-grid,.process-grid{grid-template-columns:1fr}.studio-header{min-height:66px;padding:0 12px}.studio-header>button{display:none}.studio-workspace{display:block;min-height:64svh}.presets{position:absolute;z-index:4;right:0;bottom:4px;left:0;display:flex;max-height:none;flex-direction:row;padding:8px 10px;border:0;overflow-x:auto}.presets h2,.presets p{display:none}.preset{min-width:70px;background:#fff9}.preset i{height:40px}.canvas-wrap{min-height:64svh}.canvas{width:118%}.price-card{top:10px;right:10px;width:145px;padding:12px}.price-card strong{font-size:21px}.price-card span,.price-card button{display:none}.canvas-tools{top:10px;left:12px;transform:none}.zoom{right:10px;bottom:85px}.studio-bottom{padding:7px}.studio-bottom nav{width:100%;border-radius:13px}.studio-bottom nav button span{display:none}.panel{top:auto;width:100%;max-height:72svh;border-top:1px solid #d6dad7;border-left:0;border-radius:20px 20px 0 0}.add{min-height:46px}.footer{padding:60px 20px}.footer>img{width:100%}}
-</style>
+  <meta name="description" content="TRIXLAB Race Graphics & Performance Parts – individuelle Sea-Doo Spark Trixx Wraps im Live Studio konfigurieren.">
+  <title>TRIXLAB — Race Graphics & Performance Parts</title>
+  <link rel="stylesheet" href="trix-preview/style.css">
+  <link rel="stylesheet" href="landing.css">
 </head>
 <body>
-  <div class="announcement">LIVE WRAP CUSTOMIZER · PREMIUM VINYL · PRECISION CUT</div>
+  <div class="announcement">LIVE WRAP STUDIO · PREMIUM MARINE VINYL · PRECISION CUT</div>
   <header class="site-header">
     <button class="menu-button" type="button" data-menu>☰ <span>START HERE</span></button>
-    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NjAgMTEyIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUiPgogIDx0aXRsZSBpZD0idGl0bGUiPlRSSVhMQUIg4oCUIFJhY2UgR3JhcGhpY3MgYW5kIFBlcmZvcm1hbmNlIFBhcnRzPC90aXRsZT4KICA8ZyBmaWxsPSIjMDgwYTA5Ij4KICAgIDxwYXRoIGQ9Ik00IDEyaDg0TDcyIDMwSDM4bC05IDloNDBMMzkgNzNIMTVsMTktMjFIMGwxNS0xN0gyeiIvPgogICAgPHBhdGggZD0iTTEyMCAxNmg5M2wtMTQgMThoLTMybC0zMCAzOWgtMjVsMzAtMzloLTM2eiIvPgogICAgPHBhdGggZD0iTTIwOCAxNmg3NmMxNyAwIDIzIDEwIDE0IDIzLTYgOS0xNiAxNC0yOSAxNmwxNyAxOGgtMzBsLTIyLTI0aDMwYzYgMCAxMC0yIDEzLTcgMy00IDEtNy01LTdoLTQ3bC0yOSAzOGgtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzEwIDE2aDI1bC00NCA1N2gtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzUxIDE2aDI5bDE0IDE4IDQyLTE4aDMxbC02MSAyNyAyMyAzMGgtMzBsLTE0LTIwLTQ1IDIwaC0zMWw2NC0yOXoiLz4KICA8L2c+CiAgPHBhdGggZmlsbD0iIzljZmYwMCIgZD0iTTE4IDc0IDQwIDUwbC02IDI0eiIvPgogIDx0ZXh0IHg9IjQ3MiIgeT0iNzMiIGZpbGw9IiMwODBhMDkiIGZvbnQtZmFtaWx5PSJBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3NiIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iOTAwIiBsZXR0ZXItc3BhY2luZz0iLTYiPkxBQjwvdGV4dD4KICA8dGV4dCB4PSIxMjIiIHk9IjEwNCIgZmlsbD0iIzA4MGEwOSIgZm9udC1mYW1pbHk9IkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXN0eWxlPSJpdGFsaWMiIGZvbnQtd2VpZ2h0PSI4MDAiIGxldHRlci1zcGFjaW5nPSIzLjIiPlJBQ0UgR1JBUEhJQ1MgJmFtcDsgUEVSRk9STUFOQ0UgUEFSVFM8L3RleHQ+Cjwvc3ZnPgo=" alt="TRIXLAB">
-    <nav><a href="#shop">SHOP</a><a href="#studio">STUDIO</a><button type="button" data-cart>CART <b>0</b></button></nav>
+    <a class="brand-link" href="index.html" aria-label="TRIXLAB Startseite">
+      <img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB">
+    </a>
+    <nav>
+      <a href="#shop">SHOP</a>
+      <a href="studio.html">STUDIO</a>
+      <button type="button" data-cart>CART <b>0</b></button>
+    </nav>
   </header>
   <div class="menu-drawer" data-menu-drawer hidden>
-    <a href="#shop">JET SKI WRAPS <span>↗</span></a>
-    <a href="#studio">LIVE DESIGN STUDIO <span>↗</span></a>
+    <a href="#shop">SEA-DOO WRAPS <span>↗</span></a>
+    <a href="studio.html">LIVE DESIGN STUDIO <span>↗</span></a>
     <a href="#process">HOW IT WORKS <span>↗</span></a>
   </div>
 
   <main>
     <section class="hero">
-      <img src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaGVyby1wd2MiIHZpZXdCb3g9IjAgMCAxMjAwIDY5MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJUUklYTEFCIFNlYS1Eb28gd3JhcCBwcmV2aWV3IgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJoZXJvLWh1bGwiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMjQyODI0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iLjU1IiBzdG9wLWNvbG9yPSIjMDcwOTA4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzMwMzUzMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGVyby1nbGFzcyIgeDE9IjAiIHkxPSIwIiB4Mj0iLjgiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZDdlOGU1Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iLjMiIHN0b3AtY29sb3I9IiM1YzZiNjkiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMTUxYTE5Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPHBhdHRlcm4gaWQ9Imhlcm8tc3RyaXBlcyIgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBwYXR0ZXJuVHJhbnNmb3JtPSJyb3RhdGUoMjQpIj4KICAgICAgPHJlY3Qgd2lkdGg9IjE4IiBoZWlnaHQ9IjQyIiBmaWxsPSJ2YXIoLS10cC1wcmV2aWV3LW92ZXJsYXksIHRyYW5zcGFyZW50KSIvPgogICAgPC9wYXR0ZXJuPgogICAgPHBhdHRlcm4gaWQ9Imhlcm8taGV4IiB3aWR0aD0iNDQiIGhlaWdodD0iMzgiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8cGF0aCBkPSJNMTEgMWgyMmwxMCAxOC0xMCAxOEgxMUwxIDE5eiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ2YXIoLS10cC1wcmV2aWV3LW92ZXJsYXksIHRyYW5zcGFyZW50KSIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgICA8L3BhdHRlcm4+CiAgICA8ZmlsdGVyIGlkPSJoZXJvLXNoYWRvdyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE0MCUiIGhlaWdodD0iMTYwJSI+CiAgICAgIDxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjE4Ii8+CiAgICA8L2ZpbHRlcj4KICAgIDxjbGlwUGF0aCBpZD0iaGVyby1ib2R5LWNsaXAiPgogICAgICA8cGF0aCBkPSJNMTIxIDQxMWM1OC01NyAxNTEtODggMjU4LTEwNWwxOTItMzEgMTM3LTEwOSAxODMgMjAgMTA1IDk2IDExNiA2MC00MCAxMzUtMTQ3IDU0LTU3MCA3LTIyMi01OHoiLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgogIDxlbGxpcHNlIGN4PSI2MjAiIGN5PSI1NzAiIHJ4PSI0NDAiIHJ5PSI0NCIgZmlsbD0iIzAwMCIgb3BhY2l0eT0iLjI0IiBmaWx0ZXI9InVybCgjaGVyby1zaGFkb3cpIi8+CiAgPGcgY2xhc3M9InRwLXByZXZpZXctcGFydCB0cC1wcmV2aWV3LXBhcnQtLXJlYXIiPgogICAgPHBhdGggZD0iTTc1MiAyMjAgOTAxIDE5NWw3NCA3Mi0xMzcgMzZ6IiBmaWxsPSJ1cmwoI2hlcm8taHVsbCkiIHN0cm9rZT0iIzQ1NGI0OCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgICA8cGF0aCBkPSJNODEwIDIwNSA4NzEgOTZsNDQgOCA4IDEwN3oiIGZpbGw9InVybCgjaGVyby1nbGFzcykiIHN0cm9rZT0iIzM5NDEzZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgICA8cGF0aCBkPSJtODQ2IDEwMiAzNy00NCA5NCAyLTcgMjQtNjEgNy0yNSAzMnoiIGZpbGw9IiMxNTE4MTciLz4KICAgIDxwYXRoIGQ9Im04NzIgOTEtMTQtNDAgMjQtNiAxOSA0NXoiIGZpbGw9IiMxNTE4MTciLz4KICA8L2c+CiAgPHBhdGggZD0iTTEyMSA0MTFjNTgtNTcgMTUxLTg4IDI1OC0xMDVsMTkyLTMxIDEzNy0xMDkgMTgzIDIwIDEwNSA5NiAxMTYgNjAtNDAgMTM1LTE0NyA1NC01NzAgNy0yMjItNTh6IiBmaWxsPSJ1cmwoI2hlcm8taHVsbCkiIHN0cm9rZT0iIzI3MmIyOSIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2hlcm8tYm9keS1jbGlwKSI+CiAgICA8cGF0aCBjbGFzcz0idHAtcHJldmlldy1wcmltYXJ5IiBkPSJtNzYgMzY1IDMxNi0xMDMgMjM4IDUtMjIyIDk1LTExMCAxMjQtMjM4LTh6IiBmaWxsPSJ2YXIoLS10cC1wcmV2aWV3LXByaW1hcnksICNkOWRjZDkpIi8+CiAgICA8cGF0aCBjbGFzcz0idHAtcHJldmlldy1zZWNvbmRhcnkiIGQ9Im00NTIgMjkyIDI0NS0xNTAgMTk4IDM2LTIwMiAxMDktMTA1IDE1Ni0xODggNTV6IiBmaWxsPSJ2YXIoLS10cC1wcmV2aWV3LXNlY29uZGFyeSwgIzljZmYwMCkiLz4KICAgIDxwYXRoIGNsYXNzPSJ0cC1wcmV2aWV3LWFjY2VudCIgZD0ibTcwMiAyNjIgMjE5LTQyIDIwMyAxMzAtMjYyIDI1LTE4NCAxMTUtMTA4LTMzeiIgZmlsbD0idmFyKC0tdHAtcHJldmlldy1hY2NlbnQsICNmZmZmZmYpIi8+CiAgICA8cGF0aCBkPSJtNDUgNDU2IDM1Mi05OCAyMDQgOC0xMjkgNTAtMTUxIDEyNC0yNzctMTl6IiBmaWxsPSJ1cmwoI2hlcm8tc3RyaXBlcykiIGNsYXNzPSJ0cC1wcmV2aWV3LXBhdHRlcm4gdHAtcHJldmlldy1wYXR0ZXJuLS1zdHJpcGVzIi8+CiAgICA8cGF0aCBkPSJtMzMyIDI2NSA0ODYtMTM0IDMzNCAxMjktMTMwIDIzMS00NTIgMzYtMjY3LTEwOHoiIGZpbGw9InVybCgjaGVyby1oZXgpIiBjbGFzcz0idHAtcHJldmlldy1wYXR0ZXJuIHRwLXByZXZpZXctcGF0dGVybi0taGV4Ii8+CiAgICA8cGF0aCBkPSJtMTY4IDQwMyAyNDItNzMtOTIgODYgMjAyLTQ3LTEwOCA5MSAyOTYtODQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA4MGEwOSIgc3Ryb2tlLXdpZHRoPSIxOCIgb3BhY2l0eT0iLjcyIi8+CiAgICA8cGF0aCBkPSJtNTUwIDMxOCAxMzAtOTUgMTQxIDgtOTYgNjN6IiBmaWxsPSIjMDkwYjBhIiBvcGFjaXR5PSIuNyIvPgogIDwvZz4KICA8cGF0aCBkPSJNMTE5IDQ1M2MxNzAgMjEgMzczIDQzIDYxMyAzOCAxNzUtMyAyOTQtMjUgMzc0LTU4bC0zNCA0NC0xNDcgNTQtNTcwIDctMjIyLTU4eiIgZmlsbD0iIzA4MGEwOSIvPgogIDxwYXRoIGQ9Ik0yNDggNTEwYzIwNiAyMiA1MTQgMzAgNzQwLTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNlNDU0MSIgc3Ryb2tlLXdpZHRoPSI4IiBvcGFjaXR5PSIuNjUiLz4KICA8cGF0aCBkPSJtNTcyIDI3NSAxMjMtMTA2IDE5NiAxNyA1NSA1NC0yMTEgMjN6IiBmaWxsPSIjMTIxNTEzIiBzdHJva2U9IiMzNDM5MzYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Im01OTAgMjU5IDExMi02OCAxNjIgMTAtMjMgNDl6IiBmaWxsPSIjMmQzMjJmIi8+CiAgPHBhdGggZD0ibTQyMSAzMDggMTYyLTMyLTg3IDc2LTEyNiAzMXoiIGZpbGw9IiMxMTE0MTIiLz4KICA8cGF0aCBkPSJNNDY5IDI4NGM0MS04NCA4OC0xMTkgMTUxLTExOCA2MCAxIDExOSAxMiAxODQgMjhsLTc2IDU5LTEyOCAxOHoiIGZpbGw9IiMyMDI1MjIiIHN0cm9rZT0iIzNhNDAzZCIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTUwMCAyNjdjMzQtNTggNzQtODEgMTIxLTgxIDQyIDAgODggNyAxMzkgMTlsLTUwIDI5LTExNiAyMnoiIGZpbGw9IiMxMDEzMTEiLz4KICA8cGF0aCBkPSJtNzIwIDE1OCA1Ny02MyAyMiAxMS0yMyA3MHoiIGZpbGw9IiMxNzFhMTgiLz4KICA8cGF0aCBkPSJtNzY5IDEwNCA0Ni00NyAxMzQgOS0yIDE4LTEwOSA1LTM5IDI4eiIgZmlsbD0iIzE4MWIxOSIvPgogIDxjaXJjbGUgY3g9IjMzOSIgY3k9IjQwNCIgcj0iMTIiIGZpbGw9IiNlOGVmZWMiLz4KICA8Y2lyY2xlIGN4PSI5NzYiIGN5PSIzNjMiIHI9IjExIiBmaWxsPSIjZThlZmVjIi8+CiAgPGcgY2xhc3M9InRwLXByZXZpZXctbG9nby1sYXllciI+PC9nPgogIDx0ZXh0IGNsYXNzPSJ0cC1wcmV2aWV3LXRleHQiIHg9IjY3MCIgeT0iNDA2IiBmaWxsPSJ2YXIoLS10cC1wcmV2aWV3LXRleHQtY29sb3IsICNmZmZmZmYpIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj48L3RleHQ+Cjwvc3ZnPg==" alt="TRIXLAB wrapped personal watercraft">
+      <img src="assets/trixlab-hero.webp" alt="TRIXLAB Sea-Doo Race Wrap">
       <div class="hero-shade"></div>
       <div class="hero-copy">
         <p class="kicker">RACE GRAPHICS &amp; PERFORMANCE PARTS</p>
         <h1>EVERYTHING YOUR SEA-DOO<br>NEEDS TO STAND OUT.</h1>
-        <p>Custom graphics, premium vinyl and performance parts.</p>
-        <div><a class="button accent" href="#studio">BUILD YOUR WRAP</a><a class="button outline" href="#process">HOW IT WORKS</a></div>
+        <p>Custom graphics, premium marine vinyl and performance parts — designed for riders who refuse to look stock.</p>
+        <div>
+          <a class="button accent" href="studio.html">OPEN DESIGN STUDIO</a>
+          <a class="button outline" href="#process">HOW IT WORKS</a>
+        </div>
       </div>
       <div class="ticker"><span>CUSTOM WRAPS</span><i>✦</i><span>PRECISION CUT</span><i>✦</i><span>PREMIUM VINYL</span><i>✦</i><span>RIDE DIFFERENT</span></div>
     </section>
 
     <section class="stats">
       <div><b>2,500+</b><span>VEHICLE TEMPLATES</span></div>
-      <div><b>4.9/5</b><span>RIDER RATING</span></div>
+      <div><b>LIVE</b><span>REAL-TIME PREVIEW</span></div>
       <div><b>5+ YEARS</b><span>OUTDOOR DURABILITY</span></div>
       <div><b>100%</b><span>PRECISION CUT</span></div>
       <div><b>EU</b><span>PRODUCTION READY</span></div>
     </section>
 
     <section class="section categories" id="shop">
-      <header class="section-head"><div><p class="kicker">CHOOSE YOUR PLATFORM</p><h2>WRAPS FOR THE MACHINES YOU ACTUALLY RIDE.</h2></div><p>Premium materials, exact templates and a clean approval process from first click to final production.</p></header>
+      <header class="section-head">
+        <div><p class="kicker">CHOOSE YOUR PLATFORM</p><h2>GRAPHICS FOR THE MACHINES YOU ACTUALLY RIDE.</h2></div>
+        <p>Exact templates, premium materials and a clean approval process from your first click to final production.</p>
+      </header>
       <div class="category-grid">
-        <article><div class="category-art">PWC</div><small>WATERCRAFT</small><h3>JET SKI WRAPS</h3><a href="#studio">CONFIGURE <span>→</span></a></article>
-        <article><div class="category-art alt">MX</div><small>MOTOCROSS</small><h3>DIRT BIKE KITS</h3><a href="#studio">CONFIGURE <span>→</span></a></article>
-        <article><div class="category-art third">SNW</div><small>WINTER</small><h3>SNOWMOBILE WRAPS</h3><a href="#studio">CONFIGURE <span>→</span></a></article>
-        <article><div class="category-art fourth">UTV</div><small>OFFROAD</small><h3>SIDE-BY-SIDE WRAPS</h3><a href="#studio">CONFIGURE <span>→</span></a></article>
+        <article><span>2UP</span><small>SPARK SERIES</small><h3>SEA-DOO TRIXX 2UP</h3><a href="studio.html?product=trixx-2up">CONFIGURE →</a></article>
+        <article><span>3UP</span><small>SPARK SERIES</small><h3>SEA-DOO TRIXX 3UP</h3><a href="studio.html?product=trixx-3up">CONFIGURE →</a></article>
+        <article><span>EVA</span><small>CUSTOM TRACTION</small><h3>TRACTION MAT KITS</h3><a href="studio.html?tab=mats">DESIGN MATS →</a></article>
+        <article><span>325</span><small>PERFORMANCE</small><h3>SEA-DOO RXP-X</h3><a href="studio.html?product=rxp-x">CONFIGURE →</a></article>
       </div>
+    </section>
+
+    <section class="section studio-teaser">
+      <div class="studio-teaser-copy">
+        <p class="kicker">TRIXLAB DESIGN 001 · APEX R</p>
+        <h2>YOUR TRIXX.<br>YOUR COLORS.</h2>
+        <p>Start with our original APEX R kit for the 2014–2026 Spark/Trixx platform. Change the look, material, coverage, number and rider name directly in the studio.</p>
+        <ul>
+          <li>2022 Spark Trixx 2UP mockup</li>
+          <li>Full, side or accent coverage</li>
+          <li>Gloss, matte, chrome and holographic</li>
+          <li>Custom two-layer traction mats</li>
+          <li>Saved builds and live price calculation</li>
+        </ul>
+        <a class="button accent" href="studio.html">CUSTOMIZE APEX R</a>
+      </div>
+      <a class="studio-teaser-image" href="studio.html" aria-label="APEX R im Studio anpassen">
+        <img src="assets/trixlab-seadoo-trixx-2up.webp" alt="Sea-Doo Spark Trixx 2UP mit TRIXLAB APEX R Wrap">
+        <span>OPEN LIVE STUDIO ↗</span>
+      </a>
     </section>
 
     <section class="section process" id="process">
       <header class="section-head"><div><p class="kicker">SIMPLE PROCESS</p><h2>FROM STOCK TO YOURS IN FOUR STEPS.</h2></div></header>
       <div class="process-grid">
-        <article><span>01</span><h3>PICK YOUR MACHINE</h3><p>Choose the exact year, brand and model.</p></article>
-        <article><span>02</span><h3>MAKE IT YOURS</h3><p>Change colors, material, coverage, text and logo.</p></article>
-        <article><span>03</span><h3>APPROVE THE BUILD</h3><p>Save versions and submit the exact configuration.</p></article>
-        <article><span>04</span><h3>INSTALL + RIDE</h3><p>Receive a precision-cut kit for clean installation.</p></article>
+        <article><b>01</b><h3>PICK YOUR MACHINE</h3><p>Choose model, year and exact platform.</p></article>
+        <article><b>02</b><h3>MAKE IT YOURS</h3><p>Adjust design, color, material, text and coverage.</p></article>
+        <article><b>03</b><h3>APPROVE THE MOCKUP</h3><p>Save your build and receive a final production proof.</p></article>
+        <article><b>04</b><h3>INSTALL + RIDE</h3><p>Receive a precision-cut kit with installation map.</p></article>
       </div>
-    </section>
-
-    <section class="studio" id="studio" data-studio data-overlay="none" data-material="Standard Vinyl" data-coverage="Full">
-      <header class="studio-header">
-        <div><button type="button" data-builds>MY BUILDS</button><button type="button" data-save>SAVE</button></div>
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NjAgMTEyIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUiPgogIDx0aXRsZSBpZD0idGl0bGUiPlRSSVhMQUIg4oCUIFJhY2UgR3JhcGhpY3MgYW5kIFBlcmZvcm1hbmNlIFBhcnRzPC90aXRsZT4KICA8ZyBmaWxsPSIjMDgwYTA5Ij4KICAgIDxwYXRoIGQ9Ik00IDEyaDg0TDcyIDMwSDM4bC05IDloNDBMMzkgNzNIMTVsMTktMjFIMGwxNS0xN0gyeiIvPgogICAgPHBhdGggZD0iTTEyMCAxNmg5M2wtMTQgMThoLTMybC0zMCAzOWgtMjVsMzAtMzloLTM2eiIvPgogICAgPHBhdGggZD0iTTIwOCAxNmg3NmMxNyAwIDIzIDEwIDE0IDIzLTYgOS0xNiAxNC0yOSAxNmwxNyAxOGgtMzBsLTIyLTI0aDMwYzYgMCAxMC0yIDEzLTcgMy00IDEtNy01LTdoLTQ3bC0yOSAzOGgtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzEwIDE2aDI1bC00NCA1N2gtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzUxIDE2aDI5bDE0IDE4IDQyLTE4aDMxbC02MSAyNyAyMyAzMGgtMzBsLTE0LTIwLTQ1IDIwaC0zMWw2NC0yOXoiLz4KICA8L2c+CiAgPHBhdGggZmlsbD0iIzljZmYwMCIgZD0iTTE4IDc0IDQwIDUwbC02IDI0eiIvPgogIDx0ZXh0IHg9IjQ3MiIgeT0iNzMiIGZpbGw9IiMwODBhMDkiIGZvbnQtZmFtaWx5PSJBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3NiIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iOTAwIiBsZXR0ZXItc3BhY2luZz0iLTYiPkxBQjwvdGV4dD4KICA8dGV4dCB4PSIxMjIiIHk9IjEwNCIgZmlsbD0iIzA4MGEwOSIgZm9udC1mYW1pbHk9IkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXN0eWxlPSJpdGFsaWMiIGZvbnQtd2VpZ2h0PSI4MDAiIGxldHRlci1zcGFjaW5nPSIzLjIiPlJBQ0UgR1JBUEhJQ1MgJmFtcDsgUEVSRk9STUFOQ0UgUEFSVFM8L3RleHQ+Cjwvc3ZnPgo=" alt="TRIXLAB">
-        <button type="button" data-model>SELECT MODEL →</button>
-      </header>
-      <div class="studio-workspace">
-        <aside class="presets">
-          <h2>VOLTAGE</h2><p>GENERIC PWC</p>
-          <button class="preset active" type="button" data-preset="#f4f6f4,#121512,#9cff00"><i class="stealth"></i>STEALTH</button>
-          <button class="preset" type="button" data-preset="#28abe2,#111827,#ec008c"><i class="electric"></i>ELECTRIC</button>
-          <button class="preset" type="button" data-preset="#254074,#f5f7f5,#9cff00"><i class="midnight"></i>MIDNIGHT</button>
-          <button class="preset" type="button" data-preset="#86cdf2,#f7f8f7,#111512"><i class="glacier"></i>GLACIER</button>
-          <button class="preset" type="button" data-preset="#80c346,#050706,#dfe5df"><i class="toxic"></i>TOXIC</button>
-        </aside>
-        <div class="canvas-wrap">
-          <div class="canvas-tools"><button type="button" data-undo disabled>↶</button><button type="button" data-redo disabled>↷</button><button type="button" data-random>✦</button></div>
-          <div class="price-card"><small>CURRENT BUILD</small><strong data-price>€595,00</strong><span>Price updates by variant</span><button type="button" data-price-info>Price breakdown</button></div>
-          <div class="canvas" data-canvas>
-            <svg viewBox="0 0 1200 650" role="img" aria-label="Live wrap preview">
-              <defs>
-                <linearGradient id="hull" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#303631"/><stop offset=".5" stop-color="#070908"/><stop offset="1" stop-color="#3a413b"/></linearGradient>
-                <pattern id="stripes" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(24)"><rect width="16" height="46" fill="var(--accent)"/></pattern>
-                <pattern id="hex" width="48" height="42" patternUnits="userSpaceOnUse"><path d="M12 2h24l11 19-11 19H12L1 21z" fill="none" stroke="var(--accent)" stroke-width="4"/></pattern>
-                <clipPath id="body"><path d="M100 410c72-68 177-102 312-122l173-25 128-115 185 17 108 102 122 65-35 132-166 61-585 8-229-58z"/></clipPath>
-              </defs>
-              <ellipse cx="630" cy="570" rx="470" ry="34" fill="#000" opacity=".2"/>
-              <path d="M100 410c72-68 177-102 312-122l173-25 128-115 185 17 108 102 122 65-35 132-166 61-585 8-229-58z" fill="url(#hull)" stroke="#303631" stroke-width="8"/>
-              <g clip-path="url(#body)">
-                <path class="primary" d="m44 353 392-104 231 15-249 119-106 117-286-28z"/>
-                <path class="secondary" d="m439 272 264-147 218 36-209 128-125 144-197 59z"/>
-                <path class="accent-zone" d="m689 252 226-44 231 132-280 46-178 110-112-41z"/>
-                <path class="pattern stripes" d="M28 382h1130v160H28z" fill="url(#stripes)"/>
-                <path class="pattern hex" d="M260 220h850v290H260z" fill="url(#hex)"/>
-                <path d="m104 406 334-80-119 88 236-49-137 97 326-99" fill="none" stroke="#080a09" stroke-width="20" opacity=".72"/>
-              </g>
-              <path d="M107 445c256 58 743 77 1005-23l-19 42-166 61-585 8-229-58z" fill="#080a09"/>
-              <path d="m555 268 146-124 197 21 72 67-226 20z" fill="#151916" stroke="#343b36" stroke-width="6"/>
-              <path d="M450 291c38-91 93-126 163-126 69 0 130 16 202 36l-97 54-146 29z" fill="#242925"/>
-              <path d="m768 145 56-76 27 10-21 87z" fill="#151916"/>
-              <path d="m812 80 55-41 140 8-4 22-119 3-41 35z" fill="#171b18"/>
-              <text class="custom-text" x="720" y="408" text-anchor="middle"></text>
-            </svg>
-            <img class="logo-preview" data-logo-preview alt="" hidden>
-          </div>
-          <div class="zoom"><button type="button" data-zoom-in>+</button><span data-zoom>100%</span><button type="button" data-zoom-out>−</button></div>
-        </div>
-        <aside class="panel" data-panel-wrap hidden>
-          <button class="panel-close" type="button" data-panel-close>×</button>
-          <div data-panel="material"><small>01</small><h2>MATERIAL</h2><button class="choice active" type="button" data-material="Standard Vinyl">Standard Vinyl<span>Included · €595</span></button><button class="choice" type="button" data-material="Chrome">Chrome<span>Premium finish · €895</span></button><button class="choice" type="button" data-material="Holographic">Holographic<span>Premium finish · €895</span></button></div>
-          <div data-panel="colors" hidden><small>02</small><h2>COLORS</h2><label>PRIMARY<input type="color" value="#f4f6f4" data-color="primary"><b>#f4f6f4</b></label><label>SECONDARY<input type="color" value="#121512" data-color="secondary"><b>#121512</b></label><label>ACCENT<input type="color" value="#9cff00" data-color="accent"><b>#9cff00</b></label></div>
-          <div data-panel="logo" hidden><small>03</small><h2>LOGO</h2><label class="upload">＋<b>UPLOAD YOUR LOGO</b><span>PNG, JPG or SVG</span><input type="file" accept=".png,.jpg,.jpeg,.svg" data-logo></label><label class="range">SCALE<input type="range" min="50" max="180" value="90" data-logo-scale></label><button class="text-button" type="button" data-logo-remove>REMOVE</button></div>
-          <div data-panel="text" hidden><small>04</small><h2>TEXT</h2><label class="field">CUSTOM TEXT<input type="text" maxlength="28" placeholder="RIDER 21" data-text></label><label>TEXT COLOR<input type="color" value="#ffffff" data-text-color><b>#ffffff</b></label></div>
-          <div data-panel="coverage" hidden><small>05</small><h2>COVERAGE</h2><button class="choice" type="button" data-coverage="Partial">Partial<span>Side panels · €395</span></button><button class="choice active" type="button" data-coverage="Full">Full<span>Maximum coverage · €595</span></button></div>
-          <div data-panel="overlay" hidden><small>06</small><h2>OVERLAY</h2><button class="choice active" type="button" data-overlay="none">Clean<span>No pattern overlay</span></button><button class="choice" type="button" data-overlay="stripes">Velocity<span>Angled racing lines</span></button><button class="choice" type="button" data-overlay="hex">Hex Tech<span>Technical cell pattern</span></button></div>
-          <div data-panel="mix" hidden><small>07</small><h2>DESIGN MIX</h2><p>Enter a direction and the local mixer builds a matching palette.</p><label class="field">DIRECTION<input type="text" placeholder="Stealth, ocean, race, fire…" data-mix-prompt></label><button class="generate" type="button" data-generate>GENERATE MIX</button></div>
-          <div data-panel="notes" hidden><small>08</small><h2>NOTES</h2><label class="field">ORDER NOTES<textarea rows="7" placeholder="Placement, race number, special requests…" data-notes></textarea></label></div>
-        </aside>
-      </div>
-      <footer class="studio-bottom">
-        <nav><button type="button" data-tab="material">◈ <span>MATERIAL</span></button><button type="button" data-tab="colors">◐ <span>COLORS</span></button><button type="button" data-tab="logo">▣ <span>LOGO</span></button><button type="button" data-tab="text">T <span>TEXT</span></button><button type="button" data-tab="coverage">▦ <span>COVERAGE</span></button><button type="button" data-tab="overlay">⌁ <span>OVERLAY</span></button><button type="button" data-tab="mix">✦ <span>DESIGN MIX</span></button><button type="button" data-tab="notes">☷ <span>NOTES</span></button></nav>
-        <button class="add" type="button" data-add><span>ADD CONFIGURED WRAP</span><b data-add-price>€595,00</b></button>
-      </footer>
-      <dialog data-model-dialog><button type="button" data-dialog-close>×</button><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NjAgMTEyIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUiPgogIDx0aXRsZSBpZD0idGl0bGUiPlRSSVhMQUIg4oCUIFJhY2UgR3JhcGhpY3MgYW5kIFBlcmZvcm1hbmNlIFBhcnRzPC90aXRsZT4KICA8ZyBmaWxsPSIjMDgwYTA5Ij4KICAgIDxwYXRoIGQ9Ik00IDEyaDg0TDcyIDMwSDM4bC05IDloNDBMMzkgNzNIMTVsMTktMjFIMGwxNS0xN0gyeiIvPgogICAgPHBhdGggZD0iTTEyMCAxNmg5M2wtMTQgMThoLTMybC0zMCAzOWgtMjVsMzAtMzloLTM2eiIvPgogICAgPHBhdGggZD0iTTIwOCAxNmg3NmMxNyAwIDIzIDEwIDE0IDIzLTYgOS0xNiAxNC0yOSAxNmwxNyAxOGgtMzBsLTIyLTI0aDMwYzYgMCAxMC0yIDEzLTcgMy00IDEtNy01LTdoLTQ3bC0yOSAzOGgtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzEwIDE2aDI1bC00NCA1N2gtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzUxIDE2aDI5bDE0IDE4IDQyLTE4aDMxbC02MSAyNyAyMyAzMGgtMzBsLTE0LTIwLTQ1IDIwaC0zMWw2NC0yOXoiLz4KICA8L2c+CiAgPHBhdGggZmlsbD0iIzljZmYwMCIgZD0iTTE4IDc0IDQwIDUwbC02IDI0eiIvPgogIDx0ZXh0IHg9IjQ3MiIgeT0iNzMiIGZpbGw9IiMwODBhMDkiIGZvbnQtZmFtaWx5PSJBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3NiIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iOTAwIiBsZXR0ZXItc3BhY2luZz0iLTYiPkxBQjwvdGV4dD4KICA8dGV4dCB4PSIxMjIiIHk9IjEwNCIgZmlsbD0iIzA4MGEwOSIgZm9udC1mYW1pbHk9IkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXN0eWxlPSJpdGFsaWMiIGZvbnQtd2VpZ2h0PSI4MDAiIGxldHRlci1zcGFjaW5nPSIzLjIiPlJBQ0UgR1JBUEhJQ1MgJmFtcDsgUEVSRk9STUFOQ0UgUEFSVFM8L3RleHQ+Cjwvc3ZnPgo=" alt=""><h2>SELECT YOUR VEHICLE</h2><label>YEAR<select data-year><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></label><label>MODEL<select data-model-select><option>2UP</option><option>3UP</option><option>Performance</option></select></label><button class="generate" type="button" data-model-continue>CONTINUE TO STUDIO</button></dialog>
-      <dialog data-builds-dialog><button type="button" data-dialog-close>×</button><h2>MY SAVED BUILDS</h2><div data-build-list></div></dialog>
-      <dialog data-price-dialog><button type="button" data-dialog-close>×</button><h2>PRICE BREAKDOWN</h2><p><span>Material</span><b data-breakdown-material>Standard Vinyl</b></p><p><span>Coverage</span><b data-breakdown-coverage>Full</b></p><p><span>Total</span><b data-breakdown-price>€595,00</b></p></dialog>
-      <div class="toast" data-toast></div>
     </section>
 
     <section class="section faq">
       <header class="section-head"><div><p class="kicker">SUPPORT</p><h2>BEFORE YOU START.</h2></div></header>
-      <details><summary>Can I change every color?<span>+</span></summary><p>Yes. Primary, secondary and accent colors update live and are saved with the build.</p></details>
-      <details><summary>Can I upload my own logo?<span>+</span></summary><p>Yes. PNG, JPG and SVG files appear directly on the preview.</p></details>
-      <details><summary>Does the price update?<span>+</span></summary><p>Yes. Material and coverage update the displayed variant price.</p></details>
+      <details><summary>Does the studio use my exact Sea-Doo model?<span>+</span></summary><p>Select your year and Spark configuration. The production file is confirmed again before printing.</p></details>
+      <details><summary>Can I upload my own logo?<span>+</span></summary><p>Yes. PNG, JPG and SVG files can be placed on the live preview.</p></details>
+      <details><summary>Does the price update automatically?<span>+</span></summary><p>Yes. Coverage, vinyl material and finish update the displayed price immediately.</p></details>
+      <details><summary>Can I customize traction mats too?<span>+</span></summary><p>Yes. Choose the routed pattern, top and reveal colors, and your own short text in the MATS step.</p></details>
     </section>
   </main>
 
-  <footer class="footer"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NjAgMTEyIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUiPgogIDx0aXRsZSBpZD0idGl0bGUiPlRSSVhMQUIg4oCUIFJhY2UgR3JhcGhpY3MgYW5kIFBlcmZvcm1hbmNlIFBhcnRzPC90aXRsZT4KICA8ZyBmaWxsPSIjMDgwYTA5Ij4KICAgIDxwYXRoIGQ9Ik00IDEyaDg0TDcyIDMwSDM4bC05IDloNDBMMzkgNzNIMTVsMTktMjFIMGwxNS0xN0gyeiIvPgogICAgPHBhdGggZD0iTTEyMCAxNmg5M2wtMTQgMThoLTMybC0zMCAzOWgtMjVsMzAtMzloLTM2eiIvPgogICAgPHBhdGggZD0iTTIwOCAxNmg3NmMxNyAwIDIzIDEwIDE0IDIzLTYgOS0xNiAxNC0yOSAxNmwxNyAxOGgtMzBsLTIyLTI0aDMwYzYgMCAxMC0yIDEzLTcgMy00IDEtNy01LTdoLTQ3bC0yOSAzOGgtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzEwIDE2aDI1bC00NCA1N2gtMjV6Ii8+CiAgICA8cGF0aCBkPSJNMzUxIDE2aDI5bDE0IDE4IDQyLTE4aDMxbC02MSAyNyAyMyAzMGgtMzBsLTE0LTIwLTQ1IDIwaC0zMWw2NC0yOXoiLz4KICA8L2c+CiAgPHBhdGggZmlsbD0iIzljZmYwMCIgZD0iTTE4IDc0IDQwIDUwbC02IDI0eiIvPgogIDx0ZXh0IHg9IjQ3MiIgeT0iNzMiIGZpbGw9IiMwODBhMDkiIGZvbnQtZmFtaWx5PSJBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3NiIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iOTAwIiBsZXR0ZXItc3BhY2luZz0iLTYiPkxBQjwvdGV4dD4KICA8dGV4dCB4PSIxMjIiIHk9IjEwNCIgZmlsbD0iIzA4MGEwOSIgZm9udC1mYW1pbHk9IkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXN0eWxlPSJpdGFsaWMiIGZvbnQtd2VpZ2h0PSI4MDAiIGxldHRlci1zcGFjaW5nPSIzLjIiPlJBQ0UgR1JBUEhJQ1MgJmFtcDsgUEVSRk9STUFOQ0UgUEFSVFM8L3RleHQ+Cjwvc3ZnPgo=" alt="TRIXLAB"><div><p>RACE GRAPHICS &amp; PERFORMANCE PARTS</p><form><input type="email" placeholder="EMAIL ADDRESS"><button>JOIN NOW →</button></form></div></footer>
-  <script>(() => {
-  const menu = document.querySelector('[data-menu]');
-  const drawer = document.querySelector('[data-menu-drawer]');
-  menu?.addEventListener('click', () => { drawer.hidden = !drawer.hidden; });
-  drawer?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { drawer.hidden = true; }));
-  const root = document.querySelector('[data-studio]');
-  if (!root) return;
-  const $ = (selector) => root.querySelector(selector);
-  const all = (selector) => [...root.querySelectorAll(selector)];
-  const state = {primary:'#f4f6f4',secondary:'#121512',accent:'#9cff00',material:'Standard Vinyl',coverage:'Full',overlay:'none',text:'',textColor:'#ffffff',notes:'',zoom:1,logo:'',logoScale:90};
-  let history = [];
-  let future = [];
-  let toastTimer;
-  const prices = {'Partial|Standard Vinyl':39500,'Full|Standard Vinyl':59500,'Partial|Chrome':69500,'Full|Chrome':89500,'Partial|Holographic':69500,'Full|Holographic':89500};
-  const format = (cents) => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(cents/100);
-  const snapshot = () => JSON.stringify({...state,logo:''});
-  const historyButtons = () => { $('[data-undo]').disabled=!history.length;$('[data-redo]').disabled=!future.length; };
-  const push = () => { history.push(snapshot());if(history.length>40)history.shift();future=[];historyButtons(); };
-  const notify = (text) => { const toast=$('[data-toast]');toast.textContent=text;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),1800); };
-  const price = () => prices[`${state.coverage}|${state.material}`] || 59500;
-  const render = () => {
-    root.style.setProperty('--primary',state.primary);
-    root.style.setProperty('--secondary',state.secondary);
-    root.style.setProperty('--accent',state.accent);
-    root.dataset.overlay=state.overlay;
-    root.dataset.material=state.material;
-    root.dataset.coverage=state.coverage;
-    $('[data-canvas]').style.transform=`scale(${state.zoom})`;
-    $('[data-zoom]').textContent=`${Math.round(state.zoom*100)}%`;
-    $('.custom-text').textContent=state.text;
-    $('.custom-text').style.fill=state.textColor;
-    const logo=$('[data-logo-preview]');
-    logo.src=state.logo;
-    logo.hidden=!state.logo;
-    logo.style.width=`${state.logoScale*1.55}px`;
-    ['primary','secondary','accent'].forEach((key)=>{const input=$(`[data-color="${key}"]`);if(input)input.value=state[key];const label=input?.parentElement.querySelector('b');if(label)label.textContent=state[key];});
-    const total=format(price());
-    $('[data-price]').textContent=total;$('[data-add-price]').textContent=total;$('[data-breakdown-price]').textContent=total;
-    $('[data-breakdown-material]').textContent=state.material;$('[data-breakdown-coverage]').textContent=state.coverage;
-    all('[data-material]').forEach((button)=>button.classList.toggle('active',button.dataset.material===state.material));
-    all('[data-coverage]').forEach((button)=>button.classList.toggle('active',button.dataset.coverage===state.coverage));
-    all('[data-overlay]').forEach((button)=>button.classList.toggle('active',button.dataset.overlay===state.overlay));
-  };
-  const mutate = (fn) => { push();fn();render(); };
-  all('[data-tab]').forEach((button)=>button.addEventListener('click',()=>{
-    const key=button.dataset.tab;
-    all('[data-panel]').forEach((panel)=>{panel.hidden=panel.dataset.panel!==key;});
-    $('[data-panel-wrap]').hidden=false;
-    all('[data-tab]').forEach((item)=>item.classList.toggle('active',item===button));
-  }));
-  $('[data-panel-close]').addEventListener('click',()=>{ $('[data-panel-wrap]').hidden=true;all('[data-tab]').forEach((item)=>item.classList.remove('active')); });
-  all('[data-preset]').forEach((button)=>button.addEventListener('click',()=>{
-    const values=button.dataset.preset.split(',');
-    mutate(()=>{[state.primary,state.secondary,state.accent]=values;});
-    all('[data-preset]').forEach((item)=>item.classList.toggle('active',item===button));
-  }));
-  all('[data-color]').forEach((input)=>{
-    input.addEventListener('input',()=>{state[input.dataset.color]=input.value;render();});
-    input.addEventListener('change',()=>mutate(()=>{state[input.dataset.color]=input.value;}));
-  });
-  all('[data-material]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.material=button.dataset.material;})));
-  all('[data-coverage]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.coverage=button.dataset.coverage;})));
-  all('[data-overlay]').forEach((button)=>button.addEventListener('click',()=>mutate(()=>{state.overlay=button.dataset.overlay;})));
-  $('[data-text]').addEventListener('input',(event)=>{state.text=event.target.value;render();});
-  $('[data-text-color]').addEventListener('input',(event)=>{state.textColor=event.target.value;render();event.target.parentElement.querySelector('b').textContent=event.target.value;});
-  $('[data-notes]').addEventListener('input',(event)=>{state.notes=event.target.value;});
-  $('[data-logo]').addEventListener('change',(event)=>{const file=event.target.files?.[0];if(!file)return;mutate(()=>{state.logo=URL.createObjectURL(file);});});
-  $('[data-logo-scale]').addEventListener('input',(event)=>{state.logoScale=Number(event.target.value);render();});
-  $('[data-logo-remove]').addEventListener('click',()=>mutate(()=>{if(state.logo)URL.revokeObjectURL(state.logo);state.logo='';$('[data-logo]').value='';}));
-  $('[data-zoom-in]').addEventListener('click',()=>mutate(()=>{state.zoom=Math.min(1.5,state.zoom+.1);}));
-  $('[data-zoom-out]').addEventListener('click',()=>mutate(()=>{state.zoom=Math.max(.7,state.zoom-.1);}));
-  const mixes={stealth:['#e6eae6','#0b0e0c','#9cff00','hex'],ocean:['#78d6f7','#072f49','#f1f7f8','stripes'],race:['#f4f5f3','#101311','#ff2d2d','stripes'],fire:['#ff5a1f','#130b07','#ffd23f','hex'],luxury:['#e7dfcf','#151713','#b7a369','none']};
-  const randomMix=()=>Object.values(mixes)[Math.floor(Math.random()*Object.values(mixes).length)];
-  const useMix=(mix)=>mutate(()=>{[state.primary,state.secondary,state.accent,state.overlay]=mix;});
-  $('[data-random]').addEventListener('click',()=>useMix(randomMix()));
-  $('[data-generate]').addEventListener('click',()=>{const prompt=$('[data-mix-prompt]').value.toLowerCase();const key=Object.keys(mixes).find((name)=>prompt.includes(name));useMix(key?mixes[key]:randomMix());notify('DESIGN MIX APPLIED');});
-  $('[data-undo]').addEventListener('click',()=>{if(!history.length)return;future.push(snapshot());Object.assign(state,JSON.parse(history.pop()));historyButtons();render();});
-  $('[data-redo]').addEventListener('click',()=>{if(!future.length)return;history.push(snapshot());Object.assign(state,JSON.parse(future.pop()));historyButtons();render();});
-  const dialogs=all('dialog');
-  all('[data-dialog-close]').forEach((button)=>button.addEventListener('click',()=>button.closest('dialog').close()));
-  $('[data-model]').addEventListener('click',()=> $('[data-model-dialog]').showModal());
-  $('[data-model-continue]').addEventListener('click',()=>{ $('[data-model-dialog]').close();notify(`${$('[data-year]').value} · ${$('[data-model-select]').value} SELECTED`);});
-  $('[data-price-info]').addEventListener('click',()=> $('[data-price-dialog]').showModal());
-  const storage='trix-preview-builds';
-  const getBuilds=()=>{try{return JSON.parse(localStorage.getItem(storage)||'[]');}catch{return[];}};
-  const renderBuilds=()=>{const list=$('[data-build-list]');const builds=getBuilds();if(!builds.length){list.innerHTML='<p>NO SAVED BUILDS YET</p>';return;}list.innerHTML=builds.map((build,index)=>`<div class="saved"><div><b>${build.name}</b><small>${new Date(build.date).toLocaleDateString()}</small></div><button data-load="${index}">LOAD</button><button data-delete="${index}">×</button></div>`).join('');list.querySelectorAll('[data-load]').forEach((button)=>button.addEventListener('click',()=>{Object.assign(state,builds[Number(button.dataset.load)].state);render();$('[data-builds-dialog]').close();}));list.querySelectorAll('[data-delete]').forEach((button)=>button.addEventListener('click',()=>{builds.splice(Number(button.dataset.delete),1);localStorage.setItem(storage,JSON.stringify(builds));renderBuilds();}));};
-  $('[data-save]').addEventListener('click',()=>{const builds=getBuilds();builds.unshift({name:`VOLTAGE ${builds.length+1}`,date:new Date().toISOString(),state:JSON.parse(snapshot())});localStorage.setItem(storage,JSON.stringify(builds.slice(0,10)));notify('BUILD SAVED');});
-  $('[data-builds]').addEventListener('click',()=>{renderBuilds();$('[data-builds-dialog]').showModal();});
-  $('[data-add]').addEventListener('click',()=>{document.querySelector('[data-cart] b').textContent='1';notify('CONFIGURED WRAP ADDED TO CART');});
-  dialogs.forEach((dialog)=>dialog.addEventListener('click',(event)=>{if(event.target===dialog)dialog.close();}));
-  render();historyButtons();
-})();
-</script>
+  <footer class="footer">
+    <img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB">
+    <div><p>RACE GRAPHICS &amp; PERFORMANCE PARTS</p><form><input type="email" placeholder="EMAIL ADDRESS"><button type="button">JOIN NOW →</button></form></div>
+  </footer>
+  <script src="landing.js"></script>
 </body>
 </html>

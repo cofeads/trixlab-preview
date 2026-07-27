@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="TRIXLAB Live Studio – Sea-Doo Graphics und Traction Mats online konfigurieren.">
+  <title>TRIXLAB Studio — Sea-Doo Configurator</title>
+  <link rel="stylesheet" href="studio.css">
+</head>
+<body>
+  <header class="studio-header">
+    <div class="header-left">
+      <a class="back" href="index.html">← <span>SHOP</span></a>
+      <button class="products-trigger" type="button" data-products-open>☰ PRODUCTS</button>
+    </div>
+    <a class="studio-logo" href="index.html"><img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB"></a>
+    <div class="header-actions">
+      <button type="button" data-builds>MY BUILDS <b data-build-count>0</b></button>
+      <button type="button" data-cart>CART <b>0</b></button>
+    </div>
+  </header>
+
+  <div class="product-drawer" data-products-drawer aria-hidden="true">
+    <button class="drawer-backdrop" type="button" data-products-close aria-label="Close products"></button>
+    <div class="drawer-sheet">
+      <div class="drawer-head"><div><small>SELECT MACHINE</small><h2>SEA-DOO PRODUCTS</h2></div><button type="button" data-products-close>×</button></div>
+      <div class="product-list">
+        <button class="product-card active" type="button" data-product="trixx-2up"><span>SPARK SERIES</span><b>TRIXX 2UP</b><small>2014–2026 · Graphics + Mats</small></button>
+        <button class="product-card" type="button" data-product="trixx-3up"><span>SPARK SERIES</span><b>TRIXX 3UP</b><small>2014–2026 · Graphics + Mats</small></button>
+        <button class="product-card" type="button" data-product="spark-2up"><span>SPARK SERIES</span><b>SPARK 2UP</b><small>2014–2026 · Graphics + Mats</small></button>
+        <button class="product-card" type="button" data-product="spark-3up"><span>SPARK SERIES</span><b>SPARK 3UP</b><small>2014–2026 · Graphics + Mats</small></button>
+        <button class="product-card" type="button" data-product="gti"><span>TOURING</span><b>GTI / GTI SE</b><small>2020–2026 · Graphics</small></button>
+        <button class="product-card" type="button" data-product="rxp-x"><span>PERFORMANCE</span><b>RXP-X 325</b><small>2021–2026 · Graphics</small></button>
+      </div>
+      <p>Das Fahrzeugbild bleibt innerhalb des gewählten Modells immer identisch. Nur Folie, Farben, Text und Matten werden darüber verändert.</p>
+    </div>
+  </div>
+
+  <main class="studio" data-studio data-design="apex" data-pattern="slash" data-material="standard" data-coverage="full" data-finish="gloss" data-mats="on">
+    <aside class="design-rail">
+      <div class="rail-head"><small>DESIGN LIBRARY</small><h1 data-rail-model>SPARK / TRIXX</h1><p>12 TRIXLAB originals</p></div>
+      <button class="design-card active" type="button" data-design="apex" data-design-pattern="slash"><i class="apex"></i><span><b>APEX R</b><small>Race / geometric</small></span><em>01</em></button>
+      <button class="design-card" type="button" data-design="midnight" data-design-pattern="hex"><i class="midnight"></i><span><b>NIGHTSHIFT</b><small>Stealth / technical</small></span><em>02</em></button>
+      <button class="design-card" type="button" data-design="electric" data-design-pattern="bolt"><i class="electric"></i><span><b>VOLTAGE</b><small>Electric / contrast</small></span><em>03</em></button>
+      <button class="design-card" type="button" data-design="toxic" data-design-pattern="topo"><i class="toxic"></i><span><b>TOXIC LINE</b><small>Acid / race</small></span><em>04</em></button>
+      <button class="design-card" type="button" data-design="carbon" data-design-pattern="carbon"><i class="carbon"></i><span><b>CARBON ATTACK</b><small>Dark / forged</small></span><em>05</em></button>
+      <button class="design-card" type="button" data-design="miami" data-design-pattern="wave"><i class="miami"></i><span><b>MIAMI RUN</b><small>Sunset / wave</small></span><em>06</em></button>
+      <button class="design-card" type="button" data-design="arctic" data-design-pattern="ice"><i class="arctic"></i><span><b>ARCTIC SHIFT</b><small>Ice / sharp</small></span><em>07</em></button>
+      <button class="design-card" type="button" data-design="camo" data-design-pattern="camo"><i class="camo"></i><span><b>RACE CAMO</b><small>Urban / broken</small></span><em>08</em></button>
+      <button class="design-card" type="button" data-design="heritage" data-design-pattern="stripes"><i class="heritage"></i><span><b>HERITAGE 96</b><small>Retro / factory</small></span><em>09</em></button>
+      <button class="design-card" type="button" data-design="digital" data-design-pattern="digital"><i class="digital"></i><span><b>DIGITAL VOID</b><small>Pixel / stealth</small></span><em>10</em></button>
+      <button class="design-card" type="button" data-design="fetti" data-design-pattern="fetti"><i class="fetti"></i><span><b>FETTI</b><small>Confetti / loud</small></span><em>11</em></button>
+      <button class="design-card" type="button" data-design="factory" data-design-pattern="factory"><i class="factory"></i><span><b>FACTORY R</b><small>OEM+ / clean</small></span><em>12</em></button>
+      <div class="rail-note"><b>TRIXLAB ORIGINAL</b><p>Final panel alignment is confirmed in the production proof before print.</p></div>
+    </aside>
+
+    <section class="visual-stage">
+      <div class="stage-top">
+        <div><span class="live-dot"></span> LIVE MOCKUP · FIXED BASE</div>
+        <div class="view-switch"><button class="active" type="button">LEFT</button><button type="button" disabled>RIGHT SOON</button></div>
+      </div>
+      <div class="vehicle-viewer" data-viewer>
+        <div class="grid-floor"></div>
+        <div class="vehicle-stack">
+          <img class="vehicle-image" data-vehicle-image src="assets/trixlab-seadoo-trixx-base.webp" alt="Neutral Sea-Doo base vehicle">
+          <svg class="wrap-layer" data-wrap-layer viewBox="0 0 1536 1024" aria-label="Configurable vinyl overlay">
+            <defs>
+              <pattern id="wrap-slash" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)"><rect width="20" height="70" fill="var(--wrap-accent)" opacity=".72"/></pattern>
+              <pattern id="wrap-hex" width="48" height="42" patternUnits="userSpaceOnUse"><path d="M12 1h24l11 20-11 20H12L1 21z" fill="none" stroke="var(--wrap-accent)" stroke-width="3" opacity=".6"/></pattern>
+              <pattern id="wrap-bolt" width="92" height="62" patternUnits="userSpaceOnUse"><path d="M54 0 20 35h27L32 62l42-39H48z" fill="var(--wrap-accent)" opacity=".7"/></pattern>
+              <pattern id="wrap-topo" width="90" height="70" patternUnits="userSpaceOnUse"><path d="M-5 18C20-8 50 45 96 10M-4 44C28 12 57 70 98 36M0 65C30 37 58 90 95 62" fill="none" stroke="var(--wrap-accent)" stroke-width="4" opacity=".7"/></pattern>
+              <pattern id="wrap-carbon" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="28" fill="var(--wrap-accent)" opacity=".38"/></pattern>
+              <pattern id="wrap-wave" width="90" height="46" patternUnits="userSpaceOnUse"><path d="M0 24Q22 0 45 24t45 0" fill="none" stroke="var(--wrap-accent)" stroke-width="8" opacity=".7"/></pattern>
+              <pattern id="wrap-ice" width="95" height="75" patternUnits="userSpaceOnUse"><path d="M0 65 38 4l14 37 16-19 27 43z" fill="var(--wrap-accent)" opacity=".55"/></pattern>
+              <pattern id="wrap-camo" width="110" height="80" patternUnits="userSpaceOnUse"><path d="M8 8h52l16 20-30 18H4zM72 48h35v28H54z" fill="var(--wrap-accent)" opacity=".58"/></pattern>
+              <pattern id="wrap-stripes" width="74" height="74" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="13" height="74" fill="var(--wrap-accent)"/><rect x="22" width="6" height="74" fill="#fff" opacity=".8"/></pattern>
+              <pattern id="wrap-digital" width="72" height="72" patternUnits="userSpaceOnUse"><rect x="2" y="3" width="30" height="18" fill="var(--wrap-accent)"/><rect x="42" y="28" width="26" height="34" fill="var(--wrap-accent)" opacity=".55"/></pattern>
+              <pattern id="wrap-fetti" width="62" height="62" patternUnits="userSpaceOnUse"><circle cx="10" cy="14" r="7" fill="var(--wrap-accent)"/><rect x="38" y="9" width="9" height="22" fill="#fff" transform="rotate(30 42 20)"/><circle cx="26" cy="50" r="5" fill="var(--wrap-accent)" opacity=".7"/></pattern>
+              <pattern id="wrap-factory" width="82" height="82" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><rect y="23" width="82" height="17" fill="var(--wrap-accent)"/><rect y="48" width="82" height="5" fill="#fff" opacity=".85"/></pattern>
+              <clipPath id="wrap-regions">
+                <path d="M158 541 390 459 722 570 833 725 518 674 258 683 127 636Z"/>
+                <path d="M413 369 602 312 829 361 716 545 526 517 388 460Z"/>
+                <path d="M994 499 1273 451 1457 568 1316 651 1020 626 860 718 767 594Z"/>
+                <path d="M583 223 765 215 830 363 645 352Z"/>
+              </clipPath>
+            </defs>
+            <g clip-path="url(#wrap-regions)" class="wrap-regions">
+              <rect width="1536" height="1024" class="wrap-primary"/>
+              <path class="wrap-secondary" d="M50 690 620 315 810 385 440 747zM735 760l405-356 372 190-70 121z"/>
+              <rect width="1536" height="1024" class="wrap-pattern" fill="url(#wrap-slash)"/>
+              <path class="wrap-accent-line" d="M128 618 516 480l246 149M394 405l234-95 175 75M808 693l268-177 368 95" fill="none" stroke-width="18"/>
+            </g>
+          </svg>
+          <svg class="mat-layer" data-mat-layer viewBox="0 0 1536 1024" aria-label="Configurable traction mats">
+            <defs>
+              <pattern id="mat-diamond" width="30" height="30" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect x="4" y="4" width="20" height="20" rx="3" fill="none" stroke="var(--mat-bottom)" stroke-width="5"/></pattern>
+              <pattern id="mat-hive" width="42" height="36" patternUnits="userSpaceOnUse"><path d="M10 1h22l9 17-9 17H10L1 18z" fill="none" stroke="var(--mat-bottom)" stroke-width="5"/></pattern>
+              <pattern id="mat-razor" width="42" height="42" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)"><rect x="5" width="10" height="42" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="mat-spark" width="54" height="54" patternUnits="userSpaceOnUse"><path d="m27 0 6 18 18 9-18 7-6 20-7-20-20-7 20-9z" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="mat-topo" width="65" height="55" patternUnits="userSpaceOnUse"><path d="M-4 15Q20-5 68 18M-5 42Q25 17 70 45" fill="none" stroke="var(--mat-bottom)" stroke-width="6"/></pattern>
+              <pattern id="mat-wave" width="66" height="42" patternUnits="userSpaceOnUse"><path d="M0 22Q16 2 33 22t33 0" fill="none" stroke="var(--mat-bottom)" stroke-width="7"/></pattern>
+            </defs>
+            <g class="mat-shape">
+              <path d="M548 576 768 610 887 716 717 729 516 664z"/>
+              <path d="M905 597 1249 492 1404 579 1286 650 1000 659 856 722z"/>
+            </g>
+            <g class="mat-text" aria-hidden="true"><text x="620" y="664" transform="rotate(8 620 664)" data-mat-preview>TRIXLAB</text></g>
+          </svg>
+          <div class="coverage-mask"></div>
+          <div class="brand-stamp"><b>TRIXLAB</b><span data-preview-name>RACE GRAPHICS</span></div>
+          <div class="race-number" data-preview-number>21</div>
+          <img class="custom-logo" data-logo-preview alt="Uploaded custom logo" draggable="false" hidden>
+        </div>
+        <div class="drag-hint" data-drag-hint hidden>LOGO ZIEHEN, UM ES ZU POSITIONIEREN</div>
+        <div class="vehicle-meta"><b data-design-name>APEX R</b><span data-vehicle-meta>SEA-DOO TRIXX 2UP · 2022</span></div>
+        <div class="zoom-tools"><button type="button" data-zoom-out>−</button><span data-zoom>100%</span><button type="button" data-zoom-in>+</button></div>
+      </div>
+      <div class="stage-bottom">
+        <div><small>LIVE PRICE</small><strong data-price>788,00 €</strong><span>inkl. MwSt. · shipping calculated later</span></div>
+        <button type="button" data-price-info>VIEW BREAKDOWN</button>
+      </div>
+    </section>
+
+    <aside class="control-panel">
+      <div class="control-head"><div><small>CONFIGURATION</small><h2>BUILD YOUR KIT</h2></div><span data-progress>01 / 08</span></div>
+      <nav class="control-tabs" aria-label="Customizer sections">
+        <button class="active" type="button" data-tab="machine">MACHINE</button>
+        <button type="button" data-tab="material">MATERIAL</button>
+        <button type="button" data-tab="colors">COLORS</button>
+        <button type="button" data-tab="personalize">TEXT + LOGO</button>
+        <button type="button" data-tab="mats">MATS</button>
+        <button type="button" data-tab="coverage">COVERAGE</button>
+        <button type="button" data-tab="finish">FINISH</button>
+        <button type="button" data-tab="notes">NOTES</button>
+      </nav>
+
+      <div class="panel-body">
+        <section class="panel-section active" data-panel="machine">
+          <p class="step">01 · SELECT THE EXACT MACHINE</p>
+          <label>BRAND<select><option>Sea-Doo</option></select></label>
+          <label>PLATFORM<select data-platform><option>Spark / Trixx</option><option>Touring</option><option>Performance</option></select></label>
+          <div class="field-grid">
+            <label>YEAR<select data-year><option>2014</option><option>2018</option><option selected>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></label>
+            <label>MODEL<select data-model><option value="trixx-2up">Trixx 2UP</option><option value="trixx-3up">Trixx 3UP</option><option value="spark-2up">Spark 2UP</option><option value="spark-3up">Spark 3UP</option><option value="gti">GTI / GTI SE</option><option value="rxp-x">RXP-X 325</option></select></label>
+          </div>
+          <button class="browse-products" type="button" data-products-open>BROWSE ALL PRODUCTS →</button>
+          <div class="fit-note"><b>✓ TEMPLATE AVAILABLE</b><span>Production proof required before print.</span></div>
+        </section>
+
+        <section class="panel-section" data-panel="material" hidden>
+          <p class="step">02 · CHOOSE BASE VINYL</p>
+          <button class="option active" type="button" data-material="standard"><span><b>STANDARD MARINE VINYL</b><small>Conformable cast film</small></span><em>INCLUDED</em></button>
+          <button class="option" type="button" data-material="chrome"><span><b>CHROME BASE</b><small>Reflective premium base</small></span><em>+300 €</em></button>
+          <button class="option" type="button" data-material="holographic"><span><b>HOLOGRAPHIC BASE</b><small>Color-shifting premium base</small></span><em>+300 €</em></button>
+        </section>
+
+        <section class="panel-section" data-panel="colors" hidden>
+          <p class="step">03 · THREE-COLOR WRAP</p>
+          <div class="preset-row">
+            <button class="preset active" type="button" data-colorway="race">RACE</button>
+            <button class="preset" type="button" data-colorway="ocean">OCEAN</button>
+            <button class="preset" type="button" data-colorway="toxic">TOXIC</button>
+            <button class="preset" type="button" data-colorway="miami">MIAMI</button>
+            <button class="preset" type="button" data-colorway="ice">ICE</button>
+          </div>
+          <label>PRIMARY<input type="color" value="#ef1f2d" data-wrap-color="primary"><b data-color-value="primary">#EF1F2D</b></label>
+          <label>SECONDARY<input type="color" value="#101310" data-wrap-color="secondary"><b data-color-value="secondary">#101310</b></label>
+          <label>ACCENT<input type="color" value="#f5f7f5" data-wrap-color="accent"><b data-color-value="accent">#F5F7F5</b></label>
+          <div class="color-note">Only the vector wrap changes. The base vehicle image remains untouched.</div>
+        </section>
+
+        <section class="panel-section" data-panel="personalize" hidden>
+          <p class="step">04 · ADD RIDER DETAILS</p>
+          <label>RIDER / BRAND NAME<input type="text" value="RACE GRAPHICS" maxlength="22" data-name></label>
+          <label>RACE NUMBER<input type="text" value="21" maxlength="3" data-number></label>
+          <label class="upload">UPLOAD YOUR LOGO<input type="file" accept=".png,.jpg,.jpeg,.webp,.svg" data-logo><span>PNG, JPG, WEBP OR SVG · MAX 5 MB</span></label>
+          <label>LOGO SIZE<input type="range" min="50" max="180" value="100" data-logo-size></label>
+          <div class="logo-actions"><button type="button" data-logo-center>CENTER LOGO</button><button type="button" data-logo-remove>REMOVE</button></div>
+          <div class="fit-note"><b>DRAG & DROP</b><span>Upload the logo, then drag it directly across the watercraft with mouse or touch.</span></div>
+        </section>
+
+        <section class="panel-section" data-panel="mats" hidden>
+          <p class="step">05 · CUSTOM TRACTION MATS</p>
+          <label class="toggle-row"><span><b>ADD TRACTION MAT KIT</b><small>UV-resistant marine EVA · preview</small></span><input type="checkbox" checked data-mats-enabled></label>
+          <div class="mat-controls">
+            <p>ROUTED PATTERN</p>
+            <div class="pattern-grid">
+              <button class="pattern active" type="button" data-mat-pattern="diamond"><i></i>DIAMOND</button>
+              <button class="pattern" type="button" data-mat-pattern="hive"><i></i>HIVE</button>
+              <button class="pattern" type="button" data-mat-pattern="razor"><i></i>RAZOR</button>
+              <button class="pattern" type="button" data-mat-pattern="spark"><i></i>SPARK</button>
+              <button class="pattern" type="button" data-mat-pattern="topo"><i></i>TOPO</button>
+              <button class="pattern" type="button" data-mat-pattern="wave"><i></i>WAVE</button>
+            </div>
+            <div class="field-grid">
+              <label>TOP COLOR<input type="color" value="#151917" data-mat-color="top"></label>
+              <label>REVEAL COLOR<input type="color" value="#9cff00" data-mat-color="bottom"></label>
+            </div>
+            <label>ROUTED TEXT<input type="text" value="TRIXLAB" maxlength="12" data-mat-text></label>
+            <div class="fit-note"><b>+189,00 €</b><span>Two-layer mat preview. Exact cut lines are confirmed in the production proof.</span></div>
+          </div>
+        </section>
+
+        <section class="panel-section" data-panel="coverage" hidden>
+          <p class="step">06 · SELECT COVERAGE</p>
+          <button class="option active" type="button" data-coverage="full"><span><b>FULL KIT</b><small>Upper deck, hood and hull sides</small></span><em>599 €</em></button>
+          <button class="option" type="button" data-coverage="side"><span><b>SIDE KIT</b><small>Hull sides and rear panels</small></span><em>399 €</em></button>
+          <button class="option" type="button" data-coverage="accent"><span><b>ACCENT KIT</b><small>Selected impact panels</small></span><em>249 €</em></button>
+        </section>
+
+        <section class="panel-section" data-panel="finish" hidden>
+          <p class="step">07 · PROTECTIVE FINISH</p>
+          <button class="option active" type="button" data-finish="gloss"><span><b>HIGH GLOSS</b><small>Maximum color depth</small></span><em>INCLUDED</em></button>
+          <button class="option" type="button" data-finish="matte"><span><b>STEALTH MATTE</b><small>Low-reflection race finish</small></span><em>+49 €</em></button>
+          <button class="option" type="button" data-finish="sparkle"><span><b>METAL FLAKE</b><small>Fine glitter laminate</small></span><em>+79 €</em></button>
+        </section>
+
+        <section class="panel-section" data-panel="notes" hidden>
+          <p class="step">08 · PRODUCTION NOTES</p>
+          <label>NOTES FOR OUR DESIGN TEAM<textarea rows="8" placeholder="Logo placement, exact colors, sponsor names, special requests…" data-notes></textarea></label>
+          <div class="fit-note"><b>MOCKUP APPROVAL</b><span>Nothing is printed until you approve the final panel layout.</span></div>
+        </section>
+      </div>
+
+      <div class="control-actions">
+        <button type="button" data-save>SAVE BUILD</button>
+        <button class="primary" type="button" data-add><span>ADD CONFIGURED KIT</span><b data-add-price>788,00 €</b></button>
+      </div>
+    </aside>
+  </main>
+
+  <dialog data-builds-dialog><button class="dialog-close" type="button" data-dialog-close>×</button><small>LOCAL STUDIO</small><h2>MY SAVED BUILDS</h2><div data-build-list></div></dialog>
+  <dialog data-price-dialog>
+    <button class="dialog-close" type="button" data-dialog-close>×</button><small>BUILD SUMMARY</small><h2>PRICE BREAKDOWN</h2>
+    <p><span>Coverage</span><b data-breakdown-coverage>Full Kit</b></p>
+    <p><span>Material</span><b data-breakdown-material>Standard</b></p>
+    <p><span>Finish</span><b data-breakdown-finish>Gloss</b></p>
+    <p><span>Traction mats</span><b data-breakdown-mats>189,00 €</b></p>
+    <p class="dialog-total"><span>Total</span><b data-breakdown-price>788,00 €</b></p>
+  </dialog>
+  <div class="toast" data-toast></div>
+  <script src="studio.js"></script>
+</body>
+</html>
