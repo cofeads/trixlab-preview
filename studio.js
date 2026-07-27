@@ -230,7 +230,7 @@
       const palette=state.colorway ? paletteLabels[state.colorway] : 'CUSTOM';
       const filename=`TRIXLAB_TRIXX_2UP_${designLabels[state.design]}_${palette}_1TO1.svg`.replace(/[^a-z0-9_.-]+/gi,'_');
       downloadBlob(new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),filename);
-      notify('1:1 SVG READY — USE WITH THE VECTOR CUT MASTER');
+      notify('1:1 PRODUCTION SVG READY');
     }catch(error){
       console.error(error);
       notify('EXPORT FAILED — PLEASE TRY AGAIN');
