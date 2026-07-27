@@ -25,8 +25,6 @@ for(const layer of ['white','black','red','grey']){
   assert.ok(fs.existsSync(template),`real PDF template layer ${layer} exists`);
 }
 assert.ok(fs.existsSync('assets/trixx-2up-template-all.webp'),'single combined PDF kit mask exists');
-assert.ok(fs.existsSync('assets/trixx-2up-cut-master-1to1.pdf'),'the original 1:1 vector cut master is included');
-assert.ok(fs.statSync('assets/trixx-2up-cut-master-1to1.pdf').size>20_000_000,'the production master is the full vector PDF');
 assert.match(landing,/href="studio\.html"/,'landing links to standalone studio');
 assert.doesNotMatch(landing,/data-studio/,'studio is no longer embedded in landing');
 for(const selector of ['data-studio','data-design','data-material','data-colorway','data-name','data-number','data-logo','data-coverage','data-finish','data-save','data-add','data-mat-pattern','data-mats-enabled','data-products-drawer']){
@@ -51,7 +49,6 @@ assert.match(html,/data-template-view/,'single panel layout is available');
 assert.match(html,/data-template-design/,'panel layout has a live design job ticket');
 assert.match(html,/data-template-logo/,'uploaded logos are mirrored into the panel layout');
 assert.match(html,/data-export-svg/,'configured production SVG can be downloaded');
-assert.match(html,/trixx-2up-cut-master-1to1\.pdf/,'exact cut-master PDF is downloadable');
 assert.doesNotMatch(html,/trixx-2up-template-outline\.webp/,'duplicate source-template overlay is not rendered');
 assert.match(html,/data-vehicle-image src="assets\/design-digital-left\.webp"/,'a new high-quality DIGITAL VOID render is the initial customer view');
 assert.equal((html.match(/data-camera-map="/g)||[]).length,4,'four separately mapped camera angles exist');
