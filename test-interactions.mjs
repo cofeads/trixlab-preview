@@ -112,7 +112,7 @@ click('[data-view="template"]');
 click('[data-export-svg]');
 await new Promise((resolve)=>setTimeout(resolve,100));
 assert.equal(document.querySelector('[data-export-svg]').disabled,false,'1:1 production export completes');
-assert.match(document.querySelector('[data-toast]').textContent,/1:1 SVG READY/,'production export reports a ready 1:1 file');
+assert.match(document.querySelector('[data-toast]').textContent,/1:1 PRODUCTION SVG READY/,'production export reports a ready 1:1 file');
 
 click('[data-save]');
 assert.equal(document.querySelector('[data-build-count]').textContent,'1','build saves locally');
