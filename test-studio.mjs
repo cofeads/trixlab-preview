@@ -41,6 +41,7 @@ assert.equal((html.match(/class="product-card/g)||[]).length,3,'product drawer g
 assert.equal((html.match(/data-mat-pattern="/g)||[]).length,6,'traction mats offer 6 routed patterns');
 assert.equal((html.match(/data-tab="/g)||[]).length,8,'studio has 8 configuration steps');
 assert.match(html,/class="photo-wrap-layer"/,'wrap is a separate panel-aligned vector layer');
+assert.match(html,/class="photo-wrap-layer"[^>]*hidden/,'internal mapping layer is hidden before JavaScript loads');
 assert.match(html,/class="photo-mat-layer"/,'traction mat is a separate vector layer');
 assert.match(html,/data-template-view/,'single panel layout is available');
 assert.doesNotMatch(html,/trixx-2up-template-outline\.webp/,'duplicate source-template overlay is not rendered');
