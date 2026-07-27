@@ -47,7 +47,7 @@ assert.match(html,/class="photo-wrap-layer"[^>]*hidden/,'internal mapping layer 
 assert.match(html,/class="photo-mat-layer"/,'traction mat is a separate vector layer');
 assert.match(html,/data-template-view/,'single panel layout is available');
 assert.doesNotMatch(html,/trixx-2up-template-outline\.webp/,'duplicate source-template overlay is not rendered');
-assert.match(html,/data-vehicle-image src="assets\/apex-race-left\.webp"/,'high-quality panel render is the initial customer view');
+assert.match(html,/data-vehicle-image src="assets\/design-digital-left\.webp"/,'a new high-quality DIGITAL VOID render is the initial customer view');
 assert.equal((html.match(/data-camera-map="/g)||[]).length,4,'four separately mapped camera angles exist');
 assert.equal((html.match(/data-view="/g)||[]).length,5,'four camera angles plus panel layout are selectable');
 assert.doesNotMatch(html,/fit-points|mapping-status|P[1-9]/,'internal mapping points are never exposed in the customer UI');

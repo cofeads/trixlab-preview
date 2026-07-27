@@ -70,9 +70,9 @@
     finish:{gloss:'High Gloss',matte:'Stealth Matte',sparkle:'Metal Flake'}
   };
   const state = {
-    product:'trixx-2up',year:'2022',design:'apex',pattern:'slash',material:'standard',
-    coverage:'full',finish:'gloss',colorway:'race',primary:'#ef1f2d',secondary:'#101310',
-    accent:'#f5f7f5',name:'RACE GRAPHICS',number:'21',notes:'',logo:'',logoSize:100,
+    product:'trixx-2up',year:'2022',design:'digital',pattern:'digital',material:'standard',
+    coverage:'full',finish:'gloss',colorway:'vapor',primary:'#826dff',secondary:'#19152e',
+    accent:'#5ef0e6',name:'RACE GRAPHICS',number:'21',notes:'',logo:'',logoSize:100,
     logoX:66,logoY:55,zoom:1,view:'left',matsEnabled:true,matPattern:'diamond',matTop:'#151917',
     matBottom:'#9cff00',matText:'TRIXLAB'
   };
@@ -180,8 +180,7 @@
       q(`[data-color-value="${input.dataset.wrapColor}"]`).textContent = input.value.toUpperCase();
     });
     const logo = q('[data-logo-preview]');
-    logo.src = state.logo;
-    logo.hidden = !state.logo;
+    if(state.logo){logo.src=state.logo;logo.hidden=false;}else{logo.removeAttribute('src');logo.hidden=true;}
     logo.style.width = `${state.logoSize*1.3}px`;
     logo.style.setProperty('--logo-x',`${state.logoX}%`);
     logo.style.setProperty('--logo-y',`${state.logoY}%`);
