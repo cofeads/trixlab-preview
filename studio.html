@@ -8,6 +8,14 @@
   <link rel="stylesheet" href="studio.css">
 </head>
 <body>
+  <div class="studio-loader" data-loader aria-label="TRIXLAB Studio wird geladen">
+    <div class="loader-mark">
+      <img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB">
+      <span>RACE GRAPHICS &amp; PERFORMANCE PARTS</span>
+    </div>
+    <div class="loader-track"><i data-loader-progress></i></div>
+    <small data-loader-status>LOADING TRIXX 2UP MODEL…</small>
+  </div>
   <header class="studio-header">
     <div class="header-left">
       <a class="back" href="index.html">← <span>SHOP</span></a>
@@ -16,6 +24,8 @@
     <a class="studio-logo" href="index.html"><img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB"></a>
     <div class="header-actions">
       <button type="button" data-builds>MY BUILDS <b data-build-count>0</b></button>
+      <button type="button" data-save-header>SAVE</button>
+      <button type="button" data-help-open aria-label="Studio-Hilfe öffnen">?</button>
       <button type="button" data-cart>CART <b>0</b></button>
     </div>
   </header>
@@ -64,6 +74,12 @@
       </div>
       <div class="vehicle-viewer" data-viewer>
         <div class="grid-floor"></div>
+        <div class="editor-tools" aria-label="Canvas tools">
+          <button type="button" data-move-mode aria-pressed="false">MOVE</button>
+          <button type="button" data-undo disabled aria-label="Undo">↶</button>
+          <button type="button" data-redo disabled aria-label="Redo">↷</button>
+          <button type="button" data-reset-view>RESET</button>
+        </div>
         <div class="vehicle-stack" data-photo-view>
           <img class="vehicle-image" data-vehicle-image src="assets/design-digital-left.webp" alt="TRIXLAB DIGITAL VOID render for 2022 Sea-Doo Spark Trixx 2UP">
           <svg class="photo-wrap-layer" data-wrap-layer viewBox="0 0 800 600" aria-label="Production mapping layer" hidden>
@@ -253,7 +269,7 @@
     </section>
 
     <aside class="control-panel">
-      <div class="control-head"><div><small>CONFIGURATION</small><h2>BUILD YOUR KIT</h2></div><span data-progress>01 / 08</span></div>
+      <div class="control-head"><div><small>CONFIGURATION</small><h2>BUILD YOUR KIT</h2></div><span data-progress>01 / 10</span></div>
       <nav class="control-tabs" aria-label="Customizer sections">
         <button class="active" type="button" data-tab="machine">MACHINE</button>
         <button type="button" data-tab="material">MATERIAL</button>
@@ -262,6 +278,8 @@
         <button type="button" data-tab="mats">MATS</button>
         <button type="button" data-tab="coverage">COVERAGE</button>
         <button type="button" data-tab="finish">FINISH</button>
+        <button type="button" data-tab="overlays">OVERLAYS</button>
+        <button type="button" data-tab="ai">AI ELEMENTS</button>
         <button type="button" data-tab="notes">NOTES</button>
       </nav>
 
@@ -320,6 +338,23 @@
           <p class="step">04 · ADD RIDER DETAILS</p>
           <label>RIDER / BRAND NAME<input type="text" value="RACE GRAPHICS" maxlength="22" data-name></label>
           <label>RACE NUMBER<input type="text" value="21" maxlength="3" data-number></label>
+          <div class="field-grid">
+            <label>FONT<select data-text-font><option value="Arial,Helvetica,sans-serif">RACE SANS</option><option value="Impact,Arial Black,sans-serif">IMPACT</option><option value="Georgia,serif">CLASSIC</option><option value="monospace">TECH MONO</option></select></label>
+            <label>TEXT COLOR<input type="color" value="#ffffff" data-text-color></label>
+          </div>
+          <div class="text-effects">
+            <label class="effect-toggle"><input type="checkbox" checked data-text-outline><span>OUTLINE</span></label>
+            <label class="effect-toggle"><input type="checkbox" checked data-text-shadow><span>DROP SHADOW</span></label>
+          </div>
+          <p class="mini-title">TRIXLAB ELEMENT LIBRARY</p>
+          <div class="logo-library">
+            <button type="button" data-library-logo="race"><i>TL</i><span>RACE MARK</span></button>
+            <button type="button" data-library-logo="bolt"><i>ϟ</i><span>VOLT BOLT</span></button>
+            <button type="button" data-library-logo="checker"><i>▦</i><span>CHECKER</span></button>
+            <button type="button" data-library-logo="wave"><i>≈</i><span>WAVE</span></button>
+            <button type="button" data-library-logo="ck"><i>CK</i><span>CK BADGE</span></button>
+            <button type="button" data-library-logo="number"><i>21</i><span>NUMBER</span></button>
+          </div>
           <label class="upload">UPLOAD YOUR LOGO<input type="file" accept=".png,.jpg,.jpeg,.webp,.svg" data-logo><span>PNG, JPG, WEBP OR SVG · MAX 5 MB</span></label>
           <label>LOGO SIZE<input type="range" min="50" max="180" value="100" data-logo-size></label>
           <div class="logo-actions"><button type="button" data-logo-center>CENTER LOGO</button><button type="button" data-logo-remove>REMOVE</button></div>
@@ -369,6 +404,13 @@
           <button class="option active" type="button" data-coverage="full"><span><b>FULL KIT</b><small>Upper deck, hood and hull sides</small></span><em>599 €</em></button>
           <button class="option" type="button" data-coverage="side"><span><b>SIDE KIT</b><small>Hull sides and rear panels</small></span><em>399 €</em></button>
           <button class="option" type="button" data-coverage="accent"><span><b>ACCENT KIT</b><small>Selected impact panels</small></span><em>249 €</em></button>
+          <p class="mini-title">OR BUILD CUSTOM COVERAGE</p>
+          <div class="coverage-builder">
+            <button class="active" type="button" data-coverage-zone="upper"><span><b>HOOD + UPPER</b><small>Front and upper deck panels</small></span><em>+179 €</em></button>
+            <button class="active" type="button" data-coverage-zone="side"><span><b>HULL SIDES</b><small>Left and right side panels</small></span><em>+249 €</em></button>
+            <button class="active" type="button" data-coverage-zone="accent"><span><b>ACCENT PANELS</b><small>Selected impact pieces</small></span><em>+99 €</em></button>
+          </div>
+          <div class="custom-coverage-total"><span>CUSTOM COVERAGE</span><b data-custom-coverage-price>527,00 €</b></div>
         </section>
 
         <section class="panel-section" data-panel="finish" hidden>
@@ -378,8 +420,30 @@
           <button class="option" type="button" data-finish="sparkle"><span><b>METAL FLAKE</b><small>Fine glitter laminate</small></span><em>+79 €</em></button>
         </section>
 
+        <section class="panel-section" data-panel="overlays" hidden>
+          <p class="step">08 · OVERLAYS + EFFECTS</p>
+          <button class="option active" type="button" data-overlay="none"><span><b>NO EXTRA OVERLAY</b><small>Original motif artwork</small></span><em>INCLUDED</em></button>
+          <button class="option" type="button" data-overlay="halftone"><span><b>RACE HALFTONE</b><small>Fine speed-dot fade</small></span><em>INCLUDED</em></button>
+          <button class="option" type="button" data-overlay="checker"><span><b>CHECKER FADE</b><small>Motorsport grid overlay</small></span><em>INCLUDED</em></button>
+          <button class="option" type="button" data-overlay="topo"><span><b>TOPO LINES</b><small>Technical contour lines</small></span><em>INCLUDED</em></button>
+          <button class="option" type="button" data-overlay="speed"><span><b>SPEED CUTS</b><small>Aggressive diagonal motion</small></span><em>INCLUDED</em></button>
+        </section>
+
+        <section class="panel-section" data-panel="ai" hidden>
+          <p class="step">09 · TRIXLAB AI DESIGN ASSIST</p>
+          <label>DESCRIBE YOUR ELEMENT<textarea rows="4" maxlength="90" placeholder="Example: aggressive red racing badge with waves" data-ai-prompt></textarea></label>
+          <div class="ai-styles">
+            <button class="active" type="button" data-ai-style="race">RACE</button>
+            <button type="button" data-ai-style="line">LINE ART</button>
+            <button type="button" data-ai-style="badge">BADGE</button>
+          </div>
+          <button class="ai-generate" type="button" data-ai-generate><span>GENERATE CONCEPT ELEMENT</span><b>✦</b></button>
+          <button class="ai-result" type="button" data-ai-result hidden><i>AI</i><span><b data-ai-result-name>NEW ELEMENT</b><small>Click to apply again</small></span></button>
+          <div class="fit-note"><b>AI CONCEPT MODE</b><span>Creates an original TRIXLAB vector concept and matches the design palette. Final artwork is checked before print.</span></div>
+        </section>
+
         <section class="panel-section" data-panel="notes" hidden>
-          <p class="step">08 · PRODUCTION NOTES</p>
+          <p class="step">10 · PRODUCTION NOTES</p>
           <label>NOTES FOR OUR DESIGN TEAM<textarea rows="8" placeholder="Logo placement, exact colors, sponsor names, special requests…" data-notes></textarea></label>
           <div class="fit-note"><b>MOCKUP APPROVAL</b><span>Nothing is printed until you approve the final panel layout.</span></div>
         </section>
@@ -400,6 +464,37 @@
     <p><span>Finish</span><b data-breakdown-finish>Gloss</b></p>
     <p><span>Traction mats</span><b data-breakdown-mats>189,00 €</b></p>
     <p class="dialog-total"><span>Total</span><b data-breakdown-price>788,00 €</b></p>
+  </dialog>
+  <dialog class="model-gate" data-model-gate>
+    <button class="dialog-close" type="button" data-model-gate-close aria-label="Modellauswahl schließen">×</button>
+    <img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB">
+    <small>01 · SELECT YOUR VEHICLE</small>
+    <h2>CHOOSE YOUR SEA-DOO.</h2>
+    <p class="gate-copy">Jedes Modell hat eine eigene Geometrie. Der aktive Editor und der 1:1-Plotter gehören ausschließlich zum Spark Trixx 2UP.</p>
+    <div class="gate-models">
+      <button type="button" disabled><span>1UP</span><b>TRIXX 1UP</b><small>COMING SOON</small></button>
+      <button class="active" type="button" data-gate-model="trixx-2up"><span>2UP</span><b>TRIXX 2UP · 2022</b><small>READY · EXACT PANEL MAP</small></button>
+      <button type="button" disabled><span>3UP</span><b>TRIXX 3UP</b><small>COMING SOON</small></button>
+    </div>
+    <button class="gate-continue" type="button" data-model-gate-continue>CONTINUE TO CUSTOMIZER</button>
+  </dialog>
+  <div class="tour-layer" data-tour-layer hidden>
+    <div class="tour-backdrop"></div>
+    <div class="tour-card" data-tour-card>
+      <div class="tour-top"><span data-tour-step>01 / 06</span><button type="button" data-tour-skip>SKIP</button></div>
+      <small data-tour-kicker>DESIGN LIBRARY</small>
+      <h3 data-tour-title>CHOOSE A MOTIF.</h3>
+      <p data-tour-copy>Start with one of the original TRIXLAB designs. The Sea-Doo model remains the fixed base.</p>
+      <div class="tour-actions"><button type="button" data-tour-back disabled>BACK</button><button type="button" data-tour-next>NEXT</button></div>
+    </div>
+  </div>
+  <dialog data-support-dialog>
+    <button class="dialog-close" type="button" data-dialog-close>×</button>
+    <small>TRIXLAB STUDIO HELP</small><h2>EDITOR GUIDE</h2>
+    <p><span>MOVE</span><b>Pan the canvas without moving your logo</b></p>
+    <p><span>UNDO / REDO</span><b>Restore recent design changes</b></p>
+    <p><span>PANEL LAYOUT</span><b>Check the exact 1:1 production arrangement</b></p>
+    <button class="guide-restart" type="button" data-tour-start>START GUIDED TOUR</button>
   </dialog>
   <div class="toast" data-toast></div>
   <script src="studio.js"></script>
