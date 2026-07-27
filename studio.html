@@ -56,74 +56,157 @@
 
     <section class="visual-stage">
       <div class="stage-top">
-        <div><span class="live-dot"></span> LIVE MOCKUP · FIXED BASE</div>
-        <div class="view-switch"><button class="active" type="button" data-view="photo">REAL PHOTO</button><button type="button" data-view="template">1:1 PANEL MAP</button></div>
+        <div><span class="live-dot"></span> POINT-MAPPED MOCKUP · SAME 2022 TRIXX 2UP</div>
+        <div class="view-switch">
+          <button class="active" type="button" data-view="left">LEFT ¾</button>
+          <button type="button" data-view="right">RIGHT ¾</button>
+          <button type="button" data-view="front">FRONT</button>
+          <button type="button" data-view="rear">REAR + MATS</button>
+          <button type="button" data-view="template">1:1 MAP</button>
+        </div>
       </div>
       <div class="vehicle-viewer" data-viewer>
         <div class="grid-floor"></div>
         <div class="vehicle-stack" data-photo-view>
-          <img class="vehicle-image" data-vehicle-image src="assets/seadoo-spark-trixx-2up-real-base.webp" alt="Real Sea-Doo Spark Trixx 2UP studio photo">
-          <svg class="photo-wrap-layer" data-wrap-layer viewBox="0 0 1425 1150" aria-label="Panel-aligned vinyl preview">
+          <img class="vehicle-image" data-vehicle-image src="assets/trixx-2022-left.webp" alt="Real 2022 Sea-Doo Spark Trixx 2UP studio photo">
+          <svg class="photo-wrap-layer" data-wrap-layer viewBox="0 0 800 600" aria-label="Point-mapped vinyl preview">
             <defs>
-              <pattern id="photo-pattern" width="74" height="74" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
-                <rect width="20" height="74" fill="var(--wrap-accent)" opacity=".82"/>
+              <pattern id="photo-pattern" width="42" height="42" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
+                <rect width="11" height="42" fill="var(--wrap-accent)" opacity=".82"/>
               </pattern>
-              <pattern id="photo-hex" width="52" height="46" patternUnits="userSpaceOnUse">
-                <path d="M13 2h26l12 21-12 21H13L1 23Z" fill="none" stroke="var(--wrap-accent)" stroke-width="5"/>
+              <pattern id="photo-hex" width="30" height="26" patternUnits="userSpaceOnUse">
+                <path d="M8 1h14l7 12-7 12H8L1 13Z" fill="none" stroke="var(--wrap-accent)" stroke-width="3"/>
               </pattern>
-              <pattern id="photo-topo" width="82" height="62" patternUnits="userSpaceOnUse">
-                <path d="M-8 16Q18-9 89 18M-8 46Q22 17 91 48" fill="none" stroke="var(--wrap-accent)" stroke-width="5"/>
+              <pattern id="photo-topo" width="46" height="36" patternUnits="userSpaceOnUse">
+                <path d="M-4 9Q10-5 50 10M-4 27Q12 10 51 28" fill="none" stroke="var(--wrap-accent)" stroke-width="3"/>
               </pattern>
-              <pattern id="photo-carbon" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                <rect width="15" height="34" fill="var(--wrap-accent)"/>
+              <pattern id="photo-carbon" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <rect width="8" height="20" fill="var(--wrap-accent)"/>
               </pattern>
-              <pattern id="photo-wave" width="70" height="42" patternUnits="userSpaceOnUse">
-                <path d="M0 23Q17 3 35 23t35 0" fill="none" stroke="var(--wrap-accent)" stroke-width="7"/>
+              <pattern id="photo-wave" width="40" height="24" patternUnits="userSpaceOnUse">
+                <path d="M0 13Q10 2 20 13t20 0" fill="none" stroke="var(--wrap-accent)" stroke-width="4"/>
               </pattern>
-              <pattern id="photo-digital" width="58" height="58" patternUnits="userSpaceOnUse">
-                <path d="M3 3h23v17H14v17H3ZM34 28h21v27H34Z" fill="var(--wrap-accent)"/>
+              <pattern id="photo-digital" width="34" height="34" patternUnits="userSpaceOnUse">
+                <path d="M2 2h13v10H8v10H2ZM20 16h12v16H20Z" fill="var(--wrap-accent)"/>
               </pattern>
-              <clipPath id="photo-panels">
-                <path d="M245 607 408 580 658 610 807 650 779 680 523 662 312 642Z"/>
-                <path d="M681 483 784 452 899 487 992 520 929 557 787 552 705 525Z"/>
-                <path d="M900 475 1015 493 1110 527 1260 546 1370 586 1340 620 1195 610 1060 578 970 550Z"/>
-                <path d="M999 593 1185 599 1340 615 1300 693 1178 711 1060 672Z"/>
-                <path d="M172 604 318 572 420 592 380 644 224 676 170 656Z"/>
-                <path d="M730 454 875 413 1005 435 1088 486 1025 505 900 478 800 491Z"/>
-              </clipPath>
             </defs>
-            <g class="photo-color-map" clip-path="url(#photo-panels)">
-              <rect width="1425" height="1150" class="photo-primary"/>
-              <path class="photo-secondary" d="M151 665 431 565 807 654 1110 590 1373 632 1297 699 1066 673 806 687 527 651 277 683ZM675 480 878 420 1085 484 1008 518 873 475 735 514Z"/>
-              <path class="photo-accent" d="M173 631 393 590 590 620 815 646 1015 600 1268 619 1201 643 1037 626 808 670 575 639 376 610ZM757 463 873 427 1019 454 1059 482 1012 495 888 457 792 486Z"/>
-              <rect width="1425" height="1150" class="photo-pattern photo-pattern-stripe" fill="url(#photo-pattern)"/>
-              <rect width="1425" height="1150" class="photo-pattern photo-pattern-hex" fill="url(#photo-hex)"/>
-              <rect width="1425" height="1150" class="photo-pattern photo-pattern-topo" fill="url(#photo-topo)"/>
-              <rect width="1425" height="1150" class="photo-pattern photo-pattern-carbon" fill="url(#photo-carbon)"/>
-              <rect width="1425" height="1150" class="photo-pattern photo-pattern-wave" fill="url(#photo-wave)"/>
-              <rect width="1425" height="1150" class="photo-pattern photo-pattern-digital" fill="url(#photo-digital)"/>
+
+            <g class="camera-map" data-camera-map="left">
+              <g class="photo-color-map">
+                <path class="photo-primary" d="M96 276 160 248 204 266 197 334 160 349 106 321Z"/>
+                <path class="photo-accent" d="M181 230 225 203 291 204 300 249 248 267 198 256Z"/>
+                <path class="photo-secondary" d="M229 251 295 238 355 272 337 315 277 303 241 281Z"/>
+                <path class="photo-primary" d="M199 304 350 303 485 330 467 377 310 370 215 344Z"/>
+                <path class="photo-accent" d="M375 331 512 309 662 350 670 404 581 411 473 383 369 370Z"/>
+                <path class="photo-secondary" d="M353 365 525 352 671 393 645 432 491 418 380 391Z"/>
+                <path class="photo-pattern photo-pattern-stripe" d="M96 276 160 248 204 266 197 334 160 349 106 321ZM181 230 225 203 291 204 300 249 248 267 198 256ZM229 251 295 238 355 272 337 315 277 303 241 281ZM199 304 350 303 485 330 467 377 310 370 215 344ZM375 331 512 309 662 350 670 404 581 411 473 383 369 370Z"/>
+              </g>
+              <g class="fit-points">
+                <path d="M101 290 198 253 292 247 354 303 470 367 658 399"/>
+                <g transform="translate(101 290)"><circle r="9"/><text>P1</text></g>
+                <g transform="translate(198 253)"><circle r="9"/><text>P2</text></g>
+                <g transform="translate(292 247)"><circle r="9"/><text>P3</text></g>
+                <g transform="translate(354 303)"><circle r="9"/><text>P4</text></g>
+                <g transform="translate(470 367)"><circle r="9"/><text>P5</text></g>
+                <g transform="translate(658 399)"><circle r="9"/><text>P6</text></g>
+              </g>
             </g>
-            <g class="photo-panel-seams" fill="none">
-              <path d="M245 607 408 580 658 610 807 650 779 680 523 662 312 642Z"/>
-              <path d="M681 483 784 452 899 487 992 520 929 557 787 552 705 525Z"/>
-              <path d="M900 475 1015 493 1110 527 1260 546 1370 586 1340 620 1195 610 1060 578 970 550Z"/>
-              <path d="M999 593 1185 599 1340 615 1300 693 1178 711 1060 672Z"/>
-              <path d="M172 604 318 572 420 592 380 644 224 676 170 656Z"/>
+
+            <g class="camera-map" data-camera-map="right" hidden>
+              <g transform="translate(800 0) scale(-1 1)">
+                <g class="photo-color-map">
+                  <path class="photo-primary" d="M96 276 160 248 204 266 197 334 160 349 106 321Z"/>
+                  <path class="photo-accent" d="M181 230 225 203 291 204 300 249 248 267 198 256Z"/>
+                  <path class="photo-secondary" d="M229 251 295 238 355 272 337 315 277 303 241 281Z"/>
+                  <path class="photo-primary" d="M199 304 350 303 485 330 467 377 310 370 215 344Z"/>
+                  <path class="photo-accent" d="M375 331 512 309 662 350 670 404 581 411 473 383 369 370Z"/>
+                  <path class="photo-secondary" d="M353 365 525 352 671 393 645 432 491 418 380 391Z"/>
+                  <path class="photo-pattern photo-pattern-stripe" d="M96 276 160 248 204 266 197 334 160 349 106 321ZM181 230 225 203 291 204 300 249 248 267 198 256ZM229 251 295 238 355 272 337 315 277 303 241 281ZM199 304 350 303 485 330 467 377 310 370 215 344ZM375 331 512 309 662 350 670 404 581 411 473 383 369 370Z"/>
+                </g>
+              </g>
+              <g class="fit-points">
+                <path d="M699 290 602 253 508 247 446 303 330 367 142 399"/>
+                <g transform="translate(699 290)"><circle r="9"/><text>P1</text></g>
+                <g transform="translate(602 253)"><circle r="9"/><text>P2</text></g>
+                <g transform="translate(508 247)"><circle r="9"/><text>P3</text></g>
+                <g transform="translate(446 303)"><circle r="9"/><text>P4</text></g>
+                <g transform="translate(330 367)"><circle r="9"/><text>P5</text></g>
+                <g transform="translate(142 399)"><circle r="9"/><text>P6</text></g>
+              </g>
+            </g>
+
+            <g class="camera-map" data-camera-map="front" hidden>
+              <g class="photo-color-map">
+                <path class="photo-accent" d="M338 195 400 183 463 196 478 235 438 270 362 270 322 235Z"/>
+                <path class="photo-secondary" d="M276 235 337 199 326 285 292 323 254 307Z"/>
+                <path class="photo-secondary" d="M524 235 463 199 474 285 508 323 546 307Z"/>
+                <path class="photo-primary" d="M211 310 274 278 330 323 391 343 391 393 299 384 235 367Z"/>
+                <path class="photo-primary" d="M589 310 526 278 470 323 409 343 409 393 501 384 565 367Z"/>
+                <path class="photo-accent" d="M235 367 391 393 400 448 290 431 248 405Z"/>
+                <path class="photo-accent" d="M565 367 409 393 400 448 510 431 552 405Z"/>
+                <path class="photo-pattern photo-pattern-stripe" d="M338 195 400 183 463 196 478 235 438 270 362 270 322 235ZM211 310 274 278 330 323 391 343 391 393 299 384 235 367ZM589 310 526 278 470 323 409 343 409 393 501 384 565 367Z"/>
+              </g>
+              <g class="fit-points">
+                <path d="M400 192 322 236 218 331 400 391 582 331 478 236Z"/>
+                <g transform="translate(400 192)"><circle r="9"/><text>P1</text></g>
+                <g transform="translate(322 236)"><circle r="9"/><text>P2</text></g>
+                <g transform="translate(218 331)"><circle r="9"/><text>P3</text></g>
+                <g transform="translate(400 391)"><circle r="9"/><text>P4</text></g>
+                <g transform="translate(582 331)"><circle r="9"/><text>P5</text></g>
+                <g transform="translate(478 236)"><circle r="9"/><text>P6</text></g>
+              </g>
+            </g>
+
+            <g class="camera-map" data-camera-map="rear" hidden>
+              <g class="photo-color-map">
+                <path class="photo-secondary" d="M316 186 400 169 484 186 492 229 447 247 353 247 308 229Z"/>
+                <path class="photo-primary" d="M207 330 268 292 349 326 372 388 301 392 232 371Z"/>
+                <path class="photo-primary" d="M593 330 532 292 451 326 428 388 499 392 568 371Z"/>
+                <path class="photo-accent" d="M348 316 400 302 452 316 473 391 400 421 327 391Z"/>
+                <path class="photo-secondary" d="M232 371 327 391 400 421 400 455 282 442 229 414Z"/>
+                <path class="photo-secondary" d="M568 371 473 391 400 421 400 455 518 442 571 414Z"/>
+                <path class="photo-pattern photo-pattern-stripe" d="M316 186 400 169 484 186 492 229 447 247 353 247 308 229ZM207 330 268 292 349 326 372 388 301 392 232 371ZM593 330 532 292 451 326 428 388 499 392 568 371Z"/>
+              </g>
+              <g class="fit-points">
+                <path d="M400 180 312 230 215 344 330 388 400 420 470 388 585 344 488 230Z"/>
+                <g transform="translate(400 180)"><circle r="9"/><text>P1</text></g>
+                <g transform="translate(312 230)"><circle r="9"/><text>P2</text></g>
+                <g transform="translate(215 344)"><circle r="9"/><text>P3</text></g>
+                <g transform="translate(330 388)"><circle r="9"/><text>P4</text></g>
+                <g transform="translate(470 388)"><circle r="9"/><text>P5</text></g>
+                <g transform="translate(585 344)"><circle r="9"/><text>P6</text></g>
+              </g>
             </g>
           </svg>
-          <svg class="photo-mat-layer" data-mat-layer viewBox="0 0 1425 1150" aria-label="Traction mat preview">
+          <svg class="photo-mat-layer" data-mat-layer viewBox="0 0 800 600" aria-label="Point-mapped traction mat preview">
             <defs>
-              <pattern id="photo-mat-diamond" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect x="4" y="4" width="15" height="15" rx="2" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
-              <pattern id="photo-mat-hive" width="30" height="26" patternUnits="userSpaceOnUse"><path d="M8 1h14l7 12-7 12H8L1 13z" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
-              <pattern id="photo-mat-razor" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="9" height="34" fill="var(--mat-bottom)"/></pattern>
-              <pattern id="photo-mat-spark" width="34" height="34" patternUnits="userSpaceOnUse"><path d="m17 1 4 11 12 5-12 4-4 12-5-12-11-4 11-5z" fill="var(--mat-bottom)"/></pattern>
-              <pattern id="photo-mat-topo" width="42" height="34" patternUnits="userSpaceOnUse"><path d="M-4 10Q12-3 45 12M-4 28Q14 13 46 29" fill="none" stroke="var(--mat-bottom)" stroke-width="4"/></pattern>
-              <pattern id="photo-mat-wave" width="42" height="28" patternUnits="userSpaceOnUse"><path d="M0 15Q10 2 21 15t21 0" fill="none" stroke="var(--mat-bottom)" stroke-width="5"/></pattern>
+              <pattern id="photo-mat-diamond" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect x="2" y="2" width="9" height="9" rx="1" fill="none" stroke="var(--mat-bottom)" stroke-width="2"/></pattern>
+              <pattern id="photo-mat-hive" width="18" height="16" patternUnits="userSpaceOnUse"><path d="M5 1h8l4 7-4 7H5L1 8z" fill="none" stroke="var(--mat-bottom)" stroke-width="2"/></pattern>
+              <pattern id="photo-mat-razor" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="5" height="20" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="photo-mat-spark" width="20" height="20" patternUnits="userSpaceOnUse"><path d="m10 1 2 6 7 3-7 2-2 7-3-7-6-2 6-3z" fill="var(--mat-bottom)"/></pattern>
+              <pattern id="photo-mat-topo" width="24" height="20" patternUnits="userSpaceOnUse"><path d="M-2 6Q7-2 26 7M-2 16Q8 8 26 17" fill="none" stroke="var(--mat-bottom)" stroke-width="2"/></pattern>
+              <pattern id="photo-mat-wave" width="24" height="16" patternUnits="userSpaceOnUse"><path d="M0 9Q6 1 12 9t12 0" fill="none" stroke="var(--mat-bottom)" stroke-width="3"/></pattern>
             </defs>
-            <path class="photo-mat" d="M286 584 410 557 603 586 697 607 649 627 445 592Z"/>
-            <path class="photo-mat" d="M690 602 822 579 1005 579 1147 599 1054 621 840 616Z"/>
-            <path class="photo-mat-routing" d="M286 584 410 557 603 586 697 607 649 627 445 592ZM690 602 822 579 1005 579 1147 599 1054 621 840 616Z"/>
-            <text x="434" y="590" transform="rotate(7 434 590)" data-mat-preview>TRIXLAB</text>
+            <g class="camera-mats" data-camera-mats="left">
+              <path class="photo-mat" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350Z"/>
+              <path class="photo-mat" d="M554 320 618 337 651 373 627 385 586 365Z"/>
+              <path class="photo-mat-routing" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350ZM554 320 618 337 651 373 627 385 586 365Z"/>
+              <text x="438" y="340" data-mat-preview>TRIXLAB</text>
+            </g>
+            <g class="camera-mats" data-camera-mats="right" hidden transform="translate(800 0) scale(-1 1)">
+              <path class="photo-mat" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350Z"/>
+              <path class="photo-mat" d="M554 320 618 337 651 373 627 385 586 365Z"/>
+              <path class="photo-mat-routing" d="M370 332 487 314 575 332 554 352 461 346 387 360 365 350ZM554 320 618 337 651 373 627 385 586 365Z"/>
+            </g>
+            <g class="camera-mats" data-camera-mats="front" hidden></g>
+            <g class="camera-mats" data-camera-mats="rear" hidden>
+              <path class="photo-mat" d="M254 230 291 213 333 246 351 315 323 312 284 288 260 258Z"/>
+              <path class="photo-mat" d="M546 230 509 213 467 246 449 315 477 312 516 288 540 258Z"/>
+              <path class="photo-mat" d="M238 329 304 308 355 328 344 385 287 379 246 354Z"/>
+              <path class="photo-mat" d="M562 329 496 308 445 328 456 385 513 379 554 354Z"/>
+              <path class="photo-mat-routing" d="M254 230 291 213 333 246 351 315 323 312 284 288 260 258ZM546 230 509 213 467 246 449 315 477 312 516 288 540 258ZM238 329 304 308 355 328 344 385 287 379 246 354ZM562 329 496 308 445 328 456 385 513 379 554 354Z"/>
+              <text x="275" y="349" data-mat-preview>TRIXLAB</text>
+            </g>
           </svg>
           <div class="coverage-mask"></div>
           <div class="brand-stamp"><b>TRIXLAB</b><span data-preview-name>RACE GRAPHICS</span></div>
@@ -138,9 +221,23 @@
             <div class="template-layer template-grey"></div>
             <div class="template-layer template-pattern"></div>
             <img class="template-outline" src="assets/trixx-2up-template-outline.webp" alt="Exact 1:1 Sea-Doo Spark Trixx 2UP plotter panel outlines">
+            <svg class="template-fit-points" viewBox="0 0 1000 1000" aria-label="Corresponding fit points on 1:1 panel map">
+              <path d="M500 118 344 230 250 445 190 650 310 808 500 910 690 808 810 650 750 445 656 230Z"/>
+              <g transform="translate(500 118)"><circle r="12"/><text>P1</text></g>
+              <g transform="translate(344 230)"><circle r="12"/><text>P2</text></g>
+              <g transform="translate(250 445)"><circle r="12"/><text>P3</text></g>
+              <g transform="translate(190 650)"><circle r="12"/><text>P4</text></g>
+              <g transform="translate(310 808)"><circle r="12"/><text>P5</text></g>
+              <g transform="translate(500 910)"><circle r="12"/><text>P6</text></g>
+              <g transform="translate(690 808)"><circle r="12"/><text>P5</text></g>
+              <g transform="translate(810 650)"><circle r="12"/><text>P4</text></g>
+              <g transform="translate(750 445)"><circle r="12"/><text>P3</text></g>
+              <g transform="translate(656 230)"><circle r="12"/><text>P2</text></g>
+            </svg>
           </div>
-          <div class="template-legend"><b>USER 1:1 PDF</b><span><i class="legend-primary"></i>PRIMARY</span><span><i class="legend-secondary"></i>SECONDARY</span><span><i class="legend-accent"></i>ACCENT</span><em>2018–2023 · 2UP · exact panel geometry</em></div>
+          <div class="template-legend"><b>USER 1:1 PDF</b><span><i class="legend-primary"></i>PRIMARY</span><span><i class="legend-secondary"></i>SECONDARY</span><span><i class="legend-accent"></i>ACCENT</span><em>P1–P6 correspond to every photo view</em></div>
         </div>
+        <div class="mapping-status"><b>P1–P6</b><span>FIXED PANEL REFERENCES · ALWAYS RENDERED</span></div>
         <div class="drag-hint" data-drag-hint hidden>LOGO ZIEHEN, UM ES ZU POSITIONIEREN</div>
         <div class="vehicle-meta"><b data-design-name>APEX R</b><span data-vehicle-meta>SEA-DOO TRIXX 2UP · 2022</span></div>
         <div class="zoom-tools"><button type="button" data-zoom-out>−</button><span data-zoom>100%</span><button type="button" data-zoom-in>+</button></div>
@@ -221,6 +318,22 @@
               <button class="pattern" type="button" data-mat-pattern="spark"><i></i>SPARK</button>
               <button class="pattern" type="button" data-mat-pattern="topo"><i></i>TOPO</button>
               <button class="pattern" type="button" data-mat-pattern="wave"><i></i>WAVE</button>
+            </div>
+            <div class="mat-template-map">
+              <span>2UP 2014–2023 CUT SET · 8 PIECES</span>
+              <svg viewBox="0 0 440 135" aria-label="Spark Trixx 2UP traction mat cut-piece map">
+                <g class="mat-map-piece">
+                  <path d="M65 22 188 18 211 38 181 54 76 49Z"/>
+                  <path d="M375 22 252 18 229 38 259 54 364 49Z"/>
+                  <path d="M19 17 48 10 55 38 25 45Z"/>
+                  <path d="M421 17 392 10 385 38 415 45Z"/>
+                  <path d="M68 79 190 76 211 98 184 116 76 108Z"/>
+                  <path d="M372 79 250 76 229 98 256 116 364 108Z"/>
+                  <path d="M17 78 49 68 58 103 29 115Z"/>
+                  <path d="M423 78 391 68 382 103 411 115Z"/>
+                </g>
+              </svg>
+              <b>P7–P10 · FOOTWELL + REAR DECK</b>
             </div>
             <div class="field-grid">
               <label>TOP COLOR<input type="color" value="#151917" data-mat-color="top"></label>
