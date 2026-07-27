@@ -9,6 +9,12 @@
   const materialPrices = {standard:0,chrome:30000,holographic:30000};
   const finishPrices = {gloss:0,matte:4900,sparkle:7900};
   const matsPrice = 18900;
+  const matProfilePrices = {'dual-6':0,'triple-9':4900};
+  const matColorways = {
+    race:['#151917','#ef1f2d','#f5f7f5'],toxic:['#151917','#9cff00','#f5f7f5'],
+    mono:['#f1f3f1','#151917','#8e9690'],ice:['#13202b','#08a9ff','#dffaff'],
+    candy:['#151917','#ff2b92','#08e7e2']
+  };
   const products = {
     'trixx-1up':{name:'Spark Trixx 1UP',platform:'Spark Trixx 1UP',image:'',mats:false,available:false},
     'trixx-2up':{name:'Spark Trixx 2UP',platform:'Spark Trixx 2UP',image:'assets/apex-race-left.webp',mats:true,available:true},
@@ -34,7 +40,7 @@
     fetti:'assets/design-fetti-left.webp',
     factory:'assets/design-factory-left.webp'
   };
-  const cameraLabels = {left:'LEFT ¾',right:'RIGHT ¾',front:'FRONT',rear:'REAR + MATS',template:'PANEL LAYOUT'};
+  const cameraLabels = {left:'LEFT ¾',right:'RIGHT ¾',front:'FRONT',rear:'REAR + MATS',template:'PANEL LAYOUT','mat-template':'MAT 8-PIECE LAYOUT'};
   const designLabels = {
     apex:'APEX R',midnight:'NIGHTSHIFT',electric:'VOLTAGE',toxic:'TOXIC LINE',
     carbon:'CARBON ATTACK',miami:'MIAMI RUN',arctic:'ARCTIC SHIFT',camo:'RACE CAMO',
@@ -85,7 +91,8 @@
     coverage:'full',finish:'gloss',colorway:'vapor',primary:'#826dff',secondary:'#19152e',
     accent:'#5ef0e6',name:'RACE GRAPHICS',number:'21',notes:'',logo:'',logoSize:100,
     logoX:66,logoY:55,zoom:1,view:'left',matsEnabled:true,matPattern:'diamond',matTop:'#151917',
-    matBottom:'#9cff00',matText:'TRIXLAB',coverageZones:['upper','side','accent'],overlay:'none',
+    matBottom:'#ef1f2d',matCore:'#f5f7f5',matText:'CK',matColorway:'race',matProfile:'dual-6',
+    matBadge:'ck',matEdge:'bevel',coverageZones:['upper','side','accent'],overlay:'none',
     textFont:'Arial,Helvetica,sans-serif',textColor:'#ffffff',textOutline:true,textShadow:true,
     aiStyle:'race',panX:0,panY:0,moveMode:false
   };
@@ -100,7 +107,9 @@
   const coveragePrice = () => state.coverage === 'custom'
     ? state.coverageZones.reduce((sum,zone) => sum + customCoveragePrices[zone],0)
     : basePrices[state.coverage];
-  const price = () => coveragePrice() + materialPrices[state.material] + finishPrices[state.finish] + (state.matsEnabled ? matsPrice : 0);
+  const matPrice = () => matsPrice + matProfilePrices[state.matProfile];
+  const price = () => coveragePrice() + materialPrices[state.material] + finishPrices[state.finish] + (state.matsEnabled ? matPrice() : 0);
+  const matDisplayText = () => state.matBadge==='none'?'':state.matBadge==='ck'?'CK':state.matBadge==='trixlab'?'TRIXLAB':(state.matText||'CUSTOM').toUpperCase();
   const hexHue = (hex) => {
     const value = parseInt(hex.slice(1),16);
     const r=((value>>16)&255)/255,g=((value>>8)&255)/255,b=(value&255)/255;
@@ -212,6 +221,24 @@
     topo:'<pattern id="extra-overlay" width="120" height="90" patternUnits="userSpaceOnUse"><path d="M-10 20Q35-15 130 24M-8 53Q38 17 132 57M0 84Q45 49 135 86" fill="none" stroke="#fff" stroke-width="5"/></pattern>',
     speed:'<pattern id="extra-overlay" width="180" height="100" patternUnits="userSpaceOnUse" patternTransform="skewX(-22)"><path d="M0 0h18v100H0Zm42 0h8v100h-8Zm74 0h30v100h-30Z" fill="#fff"/></pattern>'
   })[state.overlay]||'';
+  const matPatternDefinition = () => ({
+    diamond:`<pattern id="mat-routing" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect x="4" y="4" width="18" height="18" rx="2" fill="none" stroke="${state.matBottom}" stroke-width="4"/></pattern>`,
+    hive:`<pattern id="mat-routing" width="36" height="32" patternUnits="userSpaceOnUse"><path d="M10 2h16l8 14-8 14H10L2 16Z" fill="none" stroke="${state.matBottom}" stroke-width="4"/></pattern>`,
+    razor:`<pattern id="mat-routing" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="10" height="40" fill="${state.matBottom}"/></pattern>`,
+    spark:`<pattern id="mat-routing" width="42" height="42" patternUnits="userSpaceOnUse"><path d="m21 2 5 13 14 6-14 5-5 14-6-14-13-5 13-6Z" fill="${state.matBottom}"/></pattern>`,
+    topo:`<pattern id="mat-routing" width="54" height="44" patternUnits="userSpaceOnUse"><path d="M-4 12Q16-5 59 14M-4 35Q18 18 59 37" fill="none" stroke="${state.matBottom}" stroke-width="4"/></pattern>`,
+    wave:`<pattern id="mat-routing" width="54" height="38" patternUnits="userSpaceOnUse"><path d="M0 21Q14 3 27 21t27 0" fill="none" stroke="${state.matBottom}" stroke-width="6"/></pattern>`
+  })[state.matPattern];
+  const matCutPaths = [
+    ['LF-01','M88 114 474 94 526 142 482 220 132 211 68 170Z'],
+    ['RF-01','M1112 114 726 94 674 142 718 220 1068 211 1132 170Z'],
+    ['LR-02','M74 278 224 250 270 302 242 382 98 369 54 324Z'],
+    ['RR-02','M1126 278 976 250 930 302 958 382 1102 369 1146 324Z'],
+    ['LD-03','M318 292 520 274 558 324 520 411 341 404 300 355Z'],
+    ['RD-03','M882 292 680 274 642 324 680 411 859 404 900 355Z'],
+    ['LH-04','M356 490 518 471 550 512 513 591 372 584 336 537Z'],
+    ['RH-04','M844 490 682 471 650 512 687 591 828 584 864 537Z']
+  ];
   const downloadBlob = (blob,filename) => {
     const url=URL.createObjectURL(blob);
     const anchor=document.createElement('a');
@@ -221,6 +248,37 @@
     anchor.click();
     anchor.remove();
     setTimeout(()=>URL.revokeObjectURL(url),1500);
+  };
+  const exportMatsSvg = () => {
+    if(state.product!=='trixx-2up'){notify('MAT EXPORT IS AVAILABLE FOR TRIXX 2UP');return;}
+    const safeText=escapeXml(matDisplayText());
+    const cutDefs=matCutPaths.map(([id,path])=>`<path id="${id}" d="${path}"/>`).join('');
+    const artwork=matCutPaths.map(([id])=>`<g id="PIECE_${id}"><use href="#${id}" fill="${state.matTop}" stroke="${state.matBottom}" stroke-width="7"/><use href="#${id}" fill="url(#mat-routing)" opacity=".92"/><use href="#${id}" fill="none" stroke="#ff00b8" stroke-width="1"/></g>`).join('');
+    const badges=safeText?`<g id="ROUTED_BADGES" font-family="Arial,Helvetica,sans-serif" font-size="38" font-weight="900" font-style="italic" text-anchor="middle" fill="${state.matBottom}" stroke="${state.matTop}" stroke-width="3" paint-order="stroke"><text x="430" y="365">${safeText}</text><text x="770" y="365">${safeText}</text></g>`:'';
+    const metadata=escapeXml(JSON.stringify({
+      type:'TRIXLAB Spark Trixx 2UP traction mat CNC proof',fitment:'2017-2023',
+      pieces:8,canvas:'1200mm x 700mm',scale:'1:1',pattern:matPatternLabels[state.matPattern],
+      profile:state.matProfile,edge:state.matEdge,colors:{top:state.matTop,reveal:state.matBottom,core:state.matCore},
+      badge:state.matBadge,text:matDisplayText(),status:'PROOF — verify paths against factory DXF before cutting'
+    }));
+    const svg=`<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200mm" height="700mm" viewBox="0 0 1200 700">
+  <title>TRIXLAB Spark Trixx 2UP Traction Mats — 8 Piece 1:1 Proof</title>
+  <metadata>${metadata}</metadata>
+  <defs>${matPatternDefinition()}${cutDefs}</defs>
+  <rect width="1200" height="700" fill="#fff"/>
+  <g id="CORE_LAYER" fill="${state.matCore}" opacity="${state.matProfile==='triple-9'?1:0}">${matCutPaths.map(([id])=>`<use href="#${id}" transform="translate(0 7)"/>`).join('')}</g>
+  <g id="TOP_AND_ROUTING">${artwork}</g>
+  ${badges}
+  <g id="JOB_TICKET" font-family="Arial,Helvetica,sans-serif">
+    <rect x="35" y="620" width="1130" height="48" rx="12" fill="#0b0e0c"/>
+    <text x="55" y="650" fill="#9cff00" font-size="15" font-weight="900">TRIXLAB · SPARK TRIXX 2UP 2017–2023 · ${state.matProfile==='triple-9'?'9MM TRIPLE LAYER':'6MM DUAL LAYER'} · ${escapeXml(matPatternLabels[state.matPattern])}</text>
+    <text x="1145" y="650" text-anchor="end" fill="#fff" font-size="12" font-weight="700">MAGENTA = CUT CONTOUR · VERIFY FACTORY DXF</text>
+  </g>
+</svg>`;
+    const filename=`TRIXLAB_TRIXX_2UP_MATS_${matPatternLabels[state.matPattern]}_${state.matProfile}_PROOF_1TO1.svg`.replace(/[^a-z0-9_.-]+/gi,'_');
+    downloadBlob(new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),filename);
+    notify('1:1 MAT PRODUCTION PROOF READY');
   };
   const exportProductionSvg = async () => {
     if (state.product !== 'trixx-2up') {
@@ -239,7 +297,6 @@
       ].map(assetAsDataUrl));
       const safeName=escapeXml(state.name || 'RACE GRAPHICS');
       const safeNumber=escapeXml(state.number || '21');
-      const safeMatText=escapeXml(state.matText || 'TRIXLAB');
       const safeLogo=state.logo ? escapeXml(state.logo) : '';
       const logoWidth=Math.max(180,Math.min(620,state.logoSize*4));
       const materialOverlay=state.material==='chrome'
@@ -259,7 +316,10 @@
         coverage:labels.coverage[state.coverage],coverageZones:state.coverageZones,overlay:state.overlay,
         typography:{font:state.textFont,color:state.textColor,outline:state.textOutline,shadow:state.textShadow},
         name:state.name,number:state.number,
-        mats:state.matsEnabled ? {pattern:matPatternLabels[state.matPattern],top:state.matTop,bottom:state.matBottom,text:state.matText} : false,
+        mats:state.matsEnabled ? {
+          pattern:matPatternLabels[state.matPattern],profile:state.matProfile,edge:state.matEdge,
+          top:state.matTop,reveal:state.matBottom,core:state.matCore,badge:state.matBadge,text:matDisplayText()
+        } : false,
         notes:state.notes
       }));
       const svg=`<?xml version="1.0" encoding="UTF-8"?>
@@ -304,7 +364,7 @@
     <text x="80" y="100" font-size="25" font-weight="900" fill="#008d70">TRIXLAB · TRIXX 2UP · 1:1 / 4000 × 4000 MM</text>
     <text x="80" y="146" font-size="36" font-weight="900" fill="#111">${escapeXml(designLabels[state.design])} / ${escapeXml(state.colorway ? paletteLabels[state.colorway] : 'CUSTOM')}</text>
     <text x="80" y="185" font-size="23" font-weight="700" fill="#555">${escapeXml(labels.coverage[state.coverage])} · ${escapeXml(labels.material[state.material])} · ${escapeXml(labels.finish[state.finish])}</text>
-    ${state.matsEnabled ? `<text x="80" y="226" font-size="23" font-weight="700" fill="#555">MATS: ${escapeXml(matPatternLabels[state.matPattern])} · ${escapeXml(state.matTop)} / ${escapeXml(state.matBottom)} · ${safeMatText}</text>` : ''}
+    ${state.matsEnabled ? `<text x="80" y="226" font-size="23" font-weight="700" fill="#555">MATS: ${escapeXml(matPatternLabels[state.matPattern])} · ${escapeXml(state.matProfile)} · ${escapeXml(state.matTop)} / ${escapeXml(state.matBottom)} · ${escapeXml(matDisplayText())}</text>` : ''}
   </g>
 </svg>`;
       const palette=state.colorway ? paletteLabels[state.colorway] : 'CUSTOM';
@@ -354,6 +414,8 @@
     root.dataset.previewMode = usesHqRender ? 'render' : usesLiveMapping ? 'mapped' : 'template';
     root.dataset.mats = state.matsEnabled ? 'on' : 'off';
     root.dataset.matPattern = state.matPattern;
+    root.dataset.matProfile = state.matProfile;
+    root.dataset.matEdge = state.matEdge;
     root.dataset.overlay = state.overlay;
     root.dataset.canvasMode = state.moveMode ? 'move' : 'select';
     root.style.setProperty('--wrap-primary',state.primary);
@@ -361,6 +423,7 @@
     root.style.setProperty('--wrap-accent',state.accent);
     root.style.setProperty('--mat-top',state.matTop);
     root.style.setProperty('--mat-bottom',state.matBottom);
+    root.style.setProperty('--mat-core',state.matCore);
     root.style.setProperty('--livery-hue',`${(paletteHue-designHue+360)%360}deg`);
     root.style.setProperty('--livery-sat',state.colorway==='mono'||state.colorway==='stealth' ? '.42' : '1.08');
     root.style.setProperty('--text-font',state.textFont);
@@ -370,8 +433,9 @@
     q('[data-viewer]').style.setProperty('--zoom',state.zoom);
     q('[data-viewer]').style.setProperty('--pan-x',`${state.panX}px`);
     q('[data-viewer]').style.setProperty('--pan-y',`${state.panY}px`);
-    q('[data-photo-view]').hidden = state.view==='template';
+    q('[data-photo-view]').hidden = ['template','mat-template'].includes(state.view);
     q('[data-template-view]').hidden = state.view!=='template';
+    q('[data-mat-template-view]').hidden = state.view!=='mat-template';
     q('[data-wrap-layer]').hidden = !usesLiveMapping;
     q('[data-mat-layer]').hidden = !matsVisible;
     qa('[data-camera-map]').forEach((map) => map.toggleAttribute('hidden',!usesTrixxMapping || map.dataset.cameraMap!==state.view));
@@ -412,9 +476,14 @@
     q('[data-logo-size]').value = state.logoSize;
     q('[data-mats-enabled]').checked = state.matsEnabled;
     q('[data-mat-text]').value = state.matText;
-    qa('[data-mat-preview]').forEach((element) => element.textContent = state.matText || 'TRIXLAB');
+    qa('[data-mat-preview]').forEach((element) => element.textContent = matDisplayText());
     q('[data-mat-color="top"]').value = state.matTop;
     q('[data-mat-color="bottom"]').value = state.matBottom;
+    q('[data-mat-color="core"]').value = state.matCore;
+    q('[data-mat-profile]').value = state.matProfile;
+    q('[data-mat-badge]').value = state.matBadge;
+    q('[data-mat-edge]').value = state.matEdge;
+    q('[data-mat-layout-spec]').textContent=state.matProfile==='triple-9'?'9MM TRIPLE LAYER':'6MM DUAL LAYER';
     q('.mat-controls').hidden = !state.matsEnabled;
     qa('[data-template-name]').forEach((element) => element.textContent=state.name || 'RACE GRAPHICS');
     qa('[data-template-number]').forEach((element) => element.textContent=state.number || '21');
@@ -422,7 +491,7 @@
     q('[data-template-palette]').textContent=state.colorway ? paletteLabels[state.colorway] : 'CUSTOM';
     q('[data-template-material]').textContent=`${labels.material[state.material]} · ${labels.finish[state.finish]} · ${labels.coverage[state.coverage]}`.toUpperCase();
     q('[data-template-mat]').textContent=state.matsEnabled
-      ? `${matPatternLabels[state.matPattern]} MATS · ${state.matTop.toUpperCase()} / ${state.matBottom.toUpperCase()} · ${state.matText || 'TRIXLAB'}`
+      ? `${matPatternLabels[state.matPattern]} · ${state.matProfile==='triple-9'?'9MM TRIPLE':'6MM DUAL'} · ${state.matTop.toUpperCase()} / ${state.matBottom.toUpperCase()} · ${matDisplayText()||'NO BADGE'}`
       : 'TRACTION MATS NOT SELECTED';
     document.querySelectorAll('[data-product]').forEach((button) => button.classList.toggle('active',button.dataset.product===state.product));
     qa('[data-wrap-color]').forEach((input) => {
@@ -438,7 +507,7 @@
       if(state.logo){templateLogo.src=state.logo;templateLogo.hidden=false;}else{templateLogo.removeAttribute('src');templateLogo.hidden=true;}
       templateLogo.style.width=`${Math.max(7,Math.min(18,state.logoSize/8))}%`;
     });
-    q('[data-drag-hint]').hidden = !state.logo || state.view==='template';
+    q('[data-drag-hint]').hidden = !state.logo || ['template','mat-template'].includes(state.view);
     const total = format(price());
     q('[data-price]').textContent = total;
     q('[data-add-price]').textContent = total;
@@ -446,7 +515,9 @@
     document.querySelector('[data-breakdown-coverage]').textContent = labels.coverage[state.coverage];
     document.querySelector('[data-breakdown-material]').textContent = labels.material[state.material];
     document.querySelector('[data-breakdown-finish]').textContent = labels.finish[state.finish];
-    document.querySelector('[data-breakdown-mats]').textContent = state.matsEnabled ? format(matsPrice) : 'Not selected';
+    document.querySelector('[data-breakdown-mats]').textContent = state.matsEnabled ? format(matPrice()) : 'Not selected';
+    q('[data-mats-only-price]').textContent=format(matPrice());
+    q('[data-mat-price-note]').textContent=`+${format(matPrice())}`;
     q('[data-custom-coverage-price]').textContent=format(state.coverageZones.reduce((sum,zone)=>sum+customCoveragePrices[zone],0));
     document.querySelector('[data-build-count]').textContent = getBuilds().length;
     document.querySelector('[data-cart] b').textContent = cartCount();
@@ -456,6 +527,8 @@
     setActive('[data-finish]','finish',state.finish);
     setActive('[data-colorway]','colorway',state.colorway);
     setActive('[data-mat-pattern]','matPattern',state.matPattern);
+    setActive('[data-mat-colorway]','matColorway',state.matColorway);
+    setActive('[data-mat-view]','matView',state.view);
     setActive('.view-switch [data-view]','view',state.view);
     setActive('[data-coverage-zone]','coverageZone','__none__');
     qa('[data-coverage-zone]').forEach((button)=>button.classList.toggle('active',state.coverageZones.includes(button.dataset.coverageZone)));
@@ -474,11 +547,15 @@
   document.querySelectorAll('[data-products-open]').forEach((button) => button.addEventListener('click',openProducts));
   document.querySelectorAll('[data-products-close]').forEach((button) => button.addEventListener('click',closeProducts));
   document.querySelectorAll('[data-product]').forEach((button) => button.addEventListener('click',() => setProduct(button.dataset.product,true)));
-  qa('[data-view]').forEach((button) => button.addEventListener('click',() => {state.view=button.dataset.view;render();}));
+  qa('[data-view]').forEach((button) => button.addEventListener('click',() => {
+    state.view=button.dataset.view;
+    if(state.view==='mat-template')state.matsEnabled=true;
+    render();
+  }));
 
   qa('[data-tab]').forEach((button) => button.addEventListener('click',() => {
     const tab = button.dataset.tab;
-    if (tab === 'mats' && state.view !== 'rear') state.view = 'rear';
+    if (tab === 'mats') {state.view = 'mat-template';state.matsEnabled=true;}
     qa('[data-tab]').forEach((item) => item.classList.toggle('active',item===button));
     qa('[data-panel]').forEach((panel) => {
       const active = panel.dataset.panel===tab;
@@ -504,7 +581,7 @@
   qa('[data-coverage]').forEach((button) => button.addEventListener('click',() => {
     state.coverage=button.dataset.coverage;
     state.coverageZones=state.coverage==='full'?['upper','side','accent']:state.coverage==='side'?['side']:['accent'];
-    if (state.view === 'template') state.view = 'left';
+    if (['template','mat-template'].includes(state.view)) state.view = 'left';
     render();
     notify(`${coverageLabels[state.coverage]} SELECTED`);
   }));
@@ -589,22 +666,36 @@
 
   q('[data-mats-enabled]').addEventListener('change',(event) => {
     state.matsEnabled=event.target.checked;
-    if (state.matsEnabled && !['left','right','rear'].includes(state.view)) state.view='rear';
+    if (state.matsEnabled && !['left','right','rear','mat-template'].includes(state.view)) state.view='mat-template';
     render();
   });
+  qa('[data-mat-view]').forEach((button)=>button.addEventListener('click',()=>{
+    state.view=button.dataset.matView;state.matsEnabled=true;render();
+  }));
+  qa('[data-mat-colorway]').forEach((button)=>button.addEventListener('click',()=>{
+    state.matColorway=button.dataset.matColorway;
+    if(matColorways[state.matColorway])[state.matTop,state.matBottom,state.matCore]=matColorways[state.matColorway];
+    state.matsEnabled=true;render();
+  }));
   qa('[data-mat-pattern]').forEach((button) => button.addEventListener('click',() => {
     state.matPattern=button.dataset.matPattern;
     state.matsEnabled=true;
-    if (!['left','right','rear'].includes(state.view)) state.view='rear';
+    if (!['left','right','rear','mat-template'].includes(state.view)) state.view='mat-template';
     render();
   }));
   qa('[data-mat-color]').forEach((input) => input.addEventListener('input',(event) => {
-    state[event.target.dataset.matColor==='top'?'matTop':'matBottom']=event.target.value;
+    const key={top:'matTop',bottom:'matBottom',core:'matCore'}[event.target.dataset.matColor];
+    state[key]=event.target.value;
+    state.matColorway='custom';
     state.matsEnabled=true;
     render();
   }));
+  q('[data-mat-profile]').addEventListener('change',(event)=>{state.matProfile=event.target.value;state.matsEnabled=true;render();});
+  q('[data-mat-badge]').addEventListener('change',(event)=>{state.matBadge=event.target.value;state.matsEnabled=true;render();});
+  q('[data-mat-edge]').addEventListener('change',(event)=>{state.matEdge=event.target.value;state.matsEnabled=true;render();});
   q('[data-mat-text]').addEventListener('input',(event) => {
     state.matText=event.target.value.toUpperCase();
+    state.matBadge='custom';
     state.matsEnabled=true;
     render();
   });
@@ -614,7 +705,7 @@
     if(hasZone&&state.coverageZones.length===1){notify('KEEP AT LEAST ONE PANEL AREA');return;}
     state.coverageZones=hasZone?state.coverageZones.filter((item)=>item!==zone):[...state.coverageZones,zone];
     state.coverage='custom';
-    if(state.view==='template')state.view='left';
+    if(['template','mat-template'].includes(state.view))state.view='left';
     render();
     notify(`CUSTOM COVERAGE · ${state.coverageZones.length} AREA${state.coverageZones.length===1?'':'S'}`);
   }));
@@ -679,6 +770,7 @@
   });
   q('[data-price-info]').addEventListener('click',() => document.querySelector('[data-price-dialog]').showModal());
   q('[data-export-svg]').addEventListener('click',exportProductionSvg);
+  q('[data-export-mats-svg]').addEventListener('click',exportMatsSvg);
   q('[data-save]').addEventListener('click',() => {
     const builds=getBuilds();
     builds.unshift({id:Date.now(),name:`${designLabels[state.design]} · ${state.year} ${products[state.product].name}`,date:new Date().toISOString(),state:snapshot()});
@@ -704,13 +796,34 @@
   document.querySelector('[data-builds]').addEventListener('click',() => {renderBuilds();document.querySelector('[data-builds-dialog]').showModal();});
   document.querySelectorAll('[data-dialog-close]').forEach((button)=>button.addEventListener('click',()=>button.closest('dialog').close()));
   document.querySelectorAll('dialog').forEach((dialog)=>dialog.addEventListener('click',(event)=>{if(event.target===dialog)dialog.close();}));
+  q('[data-add-mats]').addEventListener('click',()=>{
+    state.matsEnabled=true;
+    const items=getCart();
+    const configuration={
+      product:state.product,year:state.year,type:'traction-mats',fitment:'Spark Trixx 2UP 2017-2023',
+      pattern:state.matPattern,profile:state.matProfile,edge:state.matEdge,
+      top:state.matTop,reveal:state.matBottom,core:state.matCore,badge:state.matBadge,text:matDisplayText()
+    };
+    const key=JSON.stringify(configuration);
+    const existing=items.find((item)=>item.key===key);
+    if(existing)existing.quantity=Number(existing.quantity||1)+1;
+    else items.push({
+      id:`trixlab-mats-${Date.now()}`,key,quantity:1,
+      title:'Custom Traction Mats · Spark Trixx 2UP',
+      subtitle:`8 pieces · ${matPatternLabels[state.matPattern]} · ${state.matProfile==='triple-9'?'9mm Triple Layer':'6mm Dual Layer'} · ${matDisplayText()||'No badge'}`,
+      price:matPrice(),image:'assets/trixx-2022-rear.webp',configuration
+    });
+    saveCart(items);render();notify('CUSTOM TRACTION MATS ADDED TO CART');
+  });
   q('[data-add]').addEventListener('click',() => {
     const items=getCart();
     const configuration={
       product:state.product,year:state.year,design:state.design,designName:designLabels[state.design],
       colorway:state.colorway || 'custom',coverage:state.coverage,coverageName:labels.coverage[state.coverage],
       material:state.material,finish:state.finish,matsEnabled:state.matsEnabled,
-      matPattern:state.matPattern,name:state.name,number:state.number,coverageZones:state.coverageZones,
+      matPattern:state.matPattern,matProfile:state.matProfile,matEdge:state.matEdge,
+      matTop:state.matTop,matBottom:state.matBottom,matCore:state.matCore,
+      matBadge:state.matBadge,matText:matDisplayText(),name:state.name,number:state.number,coverageZones:state.coverageZones,
       overlay:state.overlay,textFont:state.textFont,textColor:state.textColor
     };
     const key=JSON.stringify(configuration);
@@ -719,7 +832,7 @@
     else items.push({
       id:`trixlab-${Date.now()}`,key,quantity:1,
       title:`${designLabels[state.design]} · Spark Trixx 2UP`,
-      subtitle:`${labels.coverage[state.coverage]} · ${labels.material[state.material]}${state.matsEnabled ? ` · ${matPatternLabels[state.matPattern]} Mats` : ''}`,
+      subtitle:`${labels.coverage[state.coverage]} · ${labels.material[state.material]}${state.matsEnabled ? ` · ${matPatternLabels[state.matPattern]} ${state.matProfile==='triple-9'?'9mm':'6mm'} Mats` : ''}`,
       price:price(),image:designRenderImages[state.design],configuration
     });
     saveCart(items);
