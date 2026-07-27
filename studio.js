@@ -5,6 +5,7 @@
   const storageKey = 'trixlab-studio-builds-v3';
   const cartKey = 'trixlab-cart-v1';
   const basePrices = {full:59900,side:39900,accent:24900};
+  const customCoveragePrices = {upper:17900,side:24900,accent:9900};
   const materialPrices = {standard:0,chrome:30000,holographic:30000};
   const finishPrices = {gloss:0,matte:4900,sparkle:7900};
   const matsPrice = 18900;
@@ -66,14 +67,15 @@
     gold:'GOLD',mono:'MONO',lagoon:'LAGOON',crimson:'CRIMSON'
   };
   const labels = {
-    coverage:{full:'Full Kit',side:'Side Kit',accent:'Accent Kit'},
+    coverage:{full:'Full Kit',side:'Side Kit',accent:'Accent Kit',custom:'Custom Coverage'},
     material:{standard:'Standard Marine Vinyl',chrome:'Chrome Base',holographic:'Holographic Base'},
     finish:{gloss:'High Gloss',matte:'Stealth Matte',sparkle:'Metal Flake'}
   };
   const coverageLabels = {
     full:'FULL KIT · UPPER + SIDE PANELS',
     side:'SIDE KIT · HULL SIDES + REAR',
-    accent:'ACCENT KIT · SELECTED IMPACT PANELS'
+    accent:'ACCENT KIT · SELECTED IMPACT PANELS',
+    custom:'CUSTOM COVERAGE'
   };
   const matPatternLabels = {
     diamond:'DIAMOND',hive:'HIVE',razor:'RAZOR',spark:'SPARK',topo:'TOPO',wave:'WAVE'
@@ -83,13 +85,22 @@
     coverage:'full',finish:'gloss',colorway:'vapor',primary:'#826dff',secondary:'#19152e',
     accent:'#5ef0e6',name:'RACE GRAPHICS',number:'21',notes:'',logo:'',logoSize:100,
     logoX:66,logoY:55,zoom:1,view:'left',matsEnabled:true,matPattern:'diamond',matTop:'#151917',
-    matBottom:'#9cff00',matText:'TRIXLAB'
+    matBottom:'#9cff00',matText:'TRIXLAB',coverageZones:['upper','side','accent'],overlay:'none',
+    textFont:'Arial,Helvetica,sans-serif',textColor:'#ffffff',textOutline:true,textShadow:true,
+    aiStyle:'race',panX:0,panY:0,moveMode:false
   };
   let toastTimer;
   let drag = null;
+  let panDrag = null;
+  let history = [];
+  let historyIndex = -1;
+  let historyRestoring = false;
 
   const format = (cents) => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(cents/100);
-  const price = () => basePrices[state.coverage] + materialPrices[state.material] + finishPrices[state.finish] + (state.matsEnabled ? matsPrice : 0);
+  const coveragePrice = () => state.coverage === 'custom'
+    ? state.coverageZones.reduce((sum,zone) => sum + customCoveragePrices[zone],0)
+    : basePrices[state.coverage];
+  const price = () => coveragePrice() + materialPrices[state.material] + finishPrices[state.finish] + (state.matsEnabled ? matsPrice : 0);
   const hexHue = (hex) => {
     const value = parseInt(hex.slice(1),16);
     const r=((value>>16)&255)/255,g=((value>>8)&255)/255,b=(value&255)/255;
@@ -113,11 +124,44 @@
   };
   const saveCart = (items) => localStorage.setItem(cartKey,JSON.stringify(items));
   const cartCount = () => getCart().reduce((sum,item) => sum + Number(item.quantity || 1),0);
-  const snapshot = () => ({...state,logo:''});
+  const snapshot = () => ({...state,logo:state.logo.length<300000?state.logo:''});
   const setActive = (selector,key,value) => document.querySelectorAll(selector).forEach((button) => button.classList.toggle('active',button.dataset[key]===value));
   const escapeXml = (value) => String(value ?? '').replace(/[<>&"']/g,(character) => ({
     '<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'
   })[character]);
+  const stateForHistory = () => JSON.stringify(state);
+  const rememberHistory = () => {
+    if (historyRestoring) return;
+    const serialized=stateForHistory();
+    if (history[historyIndex]===serialized) return;
+    history=history.slice(0,historyIndex+1);
+    history.push(serialized);
+    if(history.length>40)history.shift();
+    historyIndex=history.length-1;
+  };
+  const restoreHistory = (nextIndex) => {
+    if(nextIndex<0||nextIndex>=history.length)return;
+    historyRestoring=true;
+    historyIndex=nextIndex;
+    Object.assign(state,JSON.parse(history[historyIndex]));
+    render();
+    historyRestoring=false;
+    document.querySelector('[data-undo]').disabled=historyIndex<=0;
+    document.querySelector('[data-redo]').disabled=historyIndex>=history.length-1;
+  };
+  const svgLogo = (kind,label='TRIXLAB') => {
+    const safe=escapeXml(String(label).toUpperCase().slice(0,12));
+    const symbols={
+      race:`<path d="M18 62 42 18h34L61 46h29l-20 16H18Z" fill="#9cff00"/><text x="106" y="55" text-anchor="middle" font-family="Arial" font-size="24" font-weight="900" font-style="italic" fill="#fff">TRIXLAB</text>`,
+      bolt:`<path d="m84 7-49 56h34L55 94l51-58H72Z" fill="#9cff00"/><text x="150" y="59" font-family="Arial" font-size="20" font-weight="900" fill="#fff">VOLT</text>`,
+      checker:`<g fill="#fff">${[0,1,2,3].map((row)=>[0,1,2,3,4,5].map((column)=>`<rect x="${18+column*18}" y="${16+row*18}" width="18" height="18" opacity="${(row+column)%2?'.18':'1'}"/>`).join('')).join('')}</g><text x="188" y="58" text-anchor="middle" font-family="Arial" font-size="20" font-weight="900" fill="#9cff00">RACE</text>`,
+      wave:`<path d="M8 61q27-47 54 0t54 0 54 0 54 0" fill="none" stroke="#9cff00" stroke-width="12"/><path d="M8 81q27-47 54 0t54 0 54 0 54 0" fill="none" stroke="#fff" stroke-width="4"/>`,
+      ck:`<circle cx="60" cy="50" r="40" fill="none" stroke="#9cff00" stroke-width="8"/><text x="60" y="61" text-anchor="middle" font-family="Arial" font-size="34" font-weight="900" fill="#fff">CK</text><text x="163" y="58" text-anchor="middle" font-family="Arial" font-size="18" font-weight="900" fill="#fff">CUSTOM KIT</text>`,
+      number:`<text x="115" y="78" text-anchor="middle" font-family="Impact,Arial Black" font-size="78" font-style="italic" fill="#fff" stroke="#9cff00" stroke-width="3" paint-order="stroke">${safe||'21'}</text>`,
+      ai:`<path d="M18 75 49 18h44L70 54h32l-27 21Z" fill="${state.accent}"/><path d="M107 23h105v52H92Z" fill="${state.primary}" opacity=".88"/><text x="151" y="58" text-anchor="middle" font-family="Arial" font-size="19" font-weight="900" fill="${state.textColor}">${safe||'TRIXLAB'}</text>`
+    };
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="230" height="100" viewBox="0 0 230 100"><rect width="230" height="100" rx="10" fill="#090b0a" opacity=".92"/>${symbols[kind]||symbols.race}</svg>`)}`;
+  };
   const assetAsDataUrl = async (url) => {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Unable to load ${url}`);
@@ -148,14 +192,26 @@
     return definitions[state.pattern] || definitions.slash;
   };
   const coverageClipDefinition = () => {
+    const pieces = {
+      upper:'<path d="M520 430H2480V1480H520ZM1080 100H1920V950H1080Z"/>',
+      side:'<path d="M0 0H760V3000H0ZM2240 0H3000V3000H2240ZM520 620H1100V2380H520ZM1900 620H2480V2380H1900Z"/>',
+      accent:'<path d="M260 480H720V1240H260ZM2280 480H2740V1240H2280ZM560 1720H1040V2450H560ZM1960 1720H2440V2450H1960ZM1220 180H1780V880H1220ZM1260 2200H1740V2920H1260Z"/>'
+    };
+    if(state.coverage==='custom')return state.coverageZones.map((zone)=>pieces[zone]).join('');
     if (state.coverage === 'side') {
-      return '<path d="M0 0H760V3000H0ZM2240 0H3000V3000H2240ZM520 620H1100V2380H520ZM1900 620H2480V2380H1900Z"/>';
+      return pieces.side;
     }
     if (state.coverage === 'accent') {
-      return '<path d="M260 480H720V1240H260ZM2280 480H2740V1240H2280ZM560 1720H1040V2450H560ZM1960 1720H2440V2450H1960ZM1220 180H1780V880H1220ZM1260 2200H1740V2920H1260Z"/>';
+      return pieces.accent;
     }
     return '<rect width="3000" height="3000"/>';
   };
+  const overlayDefinition = () => ({
+    halftone:'<pattern id="extra-overlay" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="4" fill="#fff"/><circle cx="25" cy="25" r="2" fill="#fff"/></pattern>',
+    checker:'<pattern id="extra-overlay" width="70" height="70" patternUnits="userSpaceOnUse"><path d="M0 0h35v35H0Zm35 35h35v35H35Z" fill="#fff"/></pattern>',
+    topo:'<pattern id="extra-overlay" width="120" height="90" patternUnits="userSpaceOnUse"><path d="M-10 20Q35-15 130 24M-8 53Q38 17 132 57M0 84Q45 49 135 86" fill="none" stroke="#fff" stroke-width="5"/></pattern>',
+    speed:'<pattern id="extra-overlay" width="180" height="100" patternUnits="userSpaceOnUse" patternTransform="skewX(-22)"><path d="M0 0h18v100H0Zm42 0h8v100h-8Zm74 0h30v100h-30Z" fill="#fff"/></pattern>'
+  })[state.overlay]||'';
   const downloadBlob = (blob,filename) => {
     const url=URL.createObjectURL(blob);
     const anchor=document.createElement('a');
@@ -200,7 +256,9 @@
         palette:state.colorway ? paletteLabels[state.colorway] : 'CUSTOM',
         colors:{primary:state.primary,secondary:state.secondary,accent:state.accent},
         material:labels.material[state.material],finish:labels.finish[state.finish],
-        coverage:labels.coverage[state.coverage],name:state.name,number:state.number,
+        coverage:labels.coverage[state.coverage],coverageZones:state.coverageZones,overlay:state.overlay,
+        typography:{font:state.textFont,color:state.textColor,outline:state.textOutline,shadow:state.textShadow},
+        name:state.name,number:state.number,
         mats:state.matsEnabled ? {pattern:matPatternLabels[state.matPattern],top:state.matTop,bottom:state.matBottom,text:state.matText} : false,
         notes:state.notes
       }));
@@ -216,6 +274,7 @@
     <mask id="mask-all"><image href="${allMask}" width="3000" height="3000"/></mask>
     <clipPath id="coverage-clip">${coverageClipDefinition()}</clipPath>
     ${patternDefinition()}
+    ${overlayDefinition()}
     <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".22" stop-color="#616a66"/><stop offset=".5" stop-color="#f8ffff"/><stop offset=".74" stop-color="#7f8783"/><stop offset="1" stop-color="#fff"/></linearGradient>
     <linearGradient id="holo" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff4da6"/><stop offset=".25" stop-color="#7d5cff"/><stop offset=".5" stop-color="#37e7ff"/><stop offset=".75" stop-color="#d7ff42"/><stop offset="1" stop-color="#ff7b45"/></linearGradient>
     <pattern id="sparkle" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="5" cy="7" r="2.2" fill="#fff"/><circle cx="22" cy="20" r="1.5" fill="#fff"/><circle cx="13" cy="28" r="1" fill="#fff"/></pattern>
@@ -226,10 +285,11 @@
     <rect width="3000" height="3000" fill="${state.accent}" mask="url(#mask-white)"/>
     <rect width="3000" height="3000" fill="${state.secondary}" opacity=".52" mask="url(#mask-grey)"/>
     <rect width="3000" height="3000" fill="url(#production-pattern)" opacity=".66" mask="url(#mask-all)"/>
+    ${state.overlay!=='none' ? '<rect width="3000" height="3000" fill="url(#extra-overlay)" opacity=".25" mask="url(#mask-all)"/>' : ''}
     ${materialOverlay}
     ${finishOverlay}
   </g>
-  <g id="PERSONALIZATION" font-family="Arial,Helvetica,sans-serif" font-weight="900" fill="#fff" stroke="#090b0a" paint-order="stroke" stroke-width="5">
+  <g id="PERSONALIZATION" font-family="${escapeXml(state.textFont)}" font-weight="900" fill="${escapeXml(state.textColor)}" stroke="#090b0a" paint-order="stroke" stroke-width="${state.textOutline?5:0}" ${state.textShadow?'style="filter:drop-shadow(0 5px 4px #0008)"':''}>
     <image href="${brand}" x="660" y="1460" width="450" height="130" transform="rotate(61 885 1525)"/>
     <image href="${brand}" x="1890" y="1460" width="450" height="130" transform="rotate(-61 2115 1525)"/>
     <text x="735" y="1665" font-size="42" letter-spacing="4" transform="rotate(61 735 1665)">${safeName}</text>
@@ -278,7 +338,7 @@
   const render = () => {
     const product = products[state.product];
     const usesTrixxMapping = state.product === 'trixx-2up';
-    const usesHqRender = usesTrixxMapping && state.view === 'left' && state.coverage === 'full' && Boolean(designRenderImages[state.design]);
+    const usesHqRender = usesTrixxMapping && state.view === 'left' && state.coverage === 'full' && state.overlay === 'none' && Boolean(designRenderImages[state.design]);
     const usesLiveMapping = usesTrixxMapping && ['left','right','front','rear'].includes(state.view) && !usesHqRender;
     const matsVisible = usesTrixxMapping && state.matsEnabled && ['left','right','rear'].includes(state.view);
     const designHue = hexHue(designColors[state.design][0]);
@@ -294,6 +354,8 @@
     root.dataset.previewMode = usesHqRender ? 'render' : usesLiveMapping ? 'mapped' : 'template';
     root.dataset.mats = state.matsEnabled ? 'on' : 'off';
     root.dataset.matPattern = state.matPattern;
+    root.dataset.overlay = state.overlay;
+    root.dataset.canvasMode = state.moveMode ? 'move' : 'select';
     root.style.setProperty('--wrap-primary',state.primary);
     root.style.setProperty('--wrap-secondary',state.secondary);
     root.style.setProperty('--wrap-accent',state.accent);
@@ -301,13 +363,27 @@
     root.style.setProperty('--mat-bottom',state.matBottom);
     root.style.setProperty('--livery-hue',`${(paletteHue-designHue+360)%360}deg`);
     root.style.setProperty('--livery-sat',state.colorway==='mono'||state.colorway==='stealth' ? '.42' : '1.08');
+    root.style.setProperty('--text-font',state.textFont);
+    root.style.setProperty('--text-color',state.textColor);
+    root.style.setProperty('--text-stroke',state.textOutline ? '1px' : '0');
+    root.style.setProperty('--text-shadow',state.textShadow ? '0 2px 4px #000' : 'none');
     q('[data-viewer]').style.setProperty('--zoom',state.zoom);
+    q('[data-viewer]').style.setProperty('--pan-x',`${state.panX}px`);
+    q('[data-viewer]').style.setProperty('--pan-y',`${state.panY}px`);
     q('[data-photo-view]').hidden = state.view==='template';
     q('[data-template-view]').hidden = state.view!=='template';
     q('[data-wrap-layer]').hidden = !usesLiveMapping;
     q('[data-mat-layer]').hidden = !matsVisible;
     qa('[data-camera-map]').forEach((map) => map.toggleAttribute('hidden',!usesTrixxMapping || map.dataset.cameraMap!==state.view));
     qa('[data-camera-mats]').forEach((map) => map.toggleAttribute('hidden',!matsVisible || map.dataset.cameraMats!==state.view));
+    qa('.photo-color-map > *').forEach((piece) => {
+      let visible=true;
+      if(state.coverage==='custom'){
+        visible=state.coverageZones.some((zone)=>piece.classList.contains(`coverage-${zone}`));
+        if(piece.classList.contains('coverage-accent-only'))visible=false;
+      }
+      piece.classList.toggle('coverage-zone-hidden',!visible);
+    });
     const hqImage = usesHqRender ? designRenderImages[state.design] : '';
     q('[data-vehicle-image]').src = hqImage || (usesTrixxMapping && cameraImages[state.view] ? cameraImages[state.view] : product.image);
     q('[data-vehicle-image]').alt = `${usesHqRender ? 'TRIXLAB rendered' : 'Neutral'} 2022 Sea-Doo ${product.name} · ${cameraLabels[state.view] || 'studio view'}`;
@@ -315,7 +391,9 @@
     q('[data-preview-name]').textContent = state.name || 'RACE GRAPHICS';
     q('[data-preview-number]').textContent = state.number || '21';
     q('[data-design-name]').textContent = designLabels[state.design];
-    q('[data-coverage-label]').textContent = coverageLabels[state.coverage];
+    q('[data-coverage-label]').textContent = state.coverage==='custom'
+      ? `CUSTOM · ${state.coverageZones.map((zone)=>({upper:'HOOD',side:'SIDES',accent:'ACCENTS'})[zone]).join(' + ')}`
+      : coverageLabels[state.coverage];
     const paletteIndex=Math.max(0,Object.keys(colorways).indexOf(state.colorway));
     q('[data-variant-id]').textContent = `${state.colorway ? 'VARIANT' : 'CUSTOM'} ${String(Object.keys(designLabels).indexOf(state.design)*Object.keys(colorways).length+paletteIndex+1).padStart(3,'0')} / ${Object.keys(designLabels).length*Object.keys(colorways).length}`;
     q('[data-vehicle-meta]').textContent = `SEA-DOO ${product.name.toUpperCase()} · ${state.year} · ${cameraLabels[state.view]}`;
@@ -327,6 +405,10 @@
     q('[data-name]').value = state.name;
     q('[data-number]').value = state.number;
     q('[data-notes]').value = state.notes;
+    q('[data-text-font]').value = state.textFont;
+    q('[data-text-color]').value = state.textColor;
+    q('[data-text-outline]').checked = state.textOutline;
+    q('[data-text-shadow]').checked = state.textShadow;
     q('[data-logo-size]').value = state.logoSize;
     q('[data-mats-enabled]').checked = state.matsEnabled;
     q('[data-mat-text]').value = state.matText;
@@ -365,6 +447,7 @@
     document.querySelector('[data-breakdown-material]').textContent = labels.material[state.material];
     document.querySelector('[data-breakdown-finish]').textContent = labels.finish[state.finish];
     document.querySelector('[data-breakdown-mats]').textContent = state.matsEnabled ? format(matsPrice) : 'Not selected';
+    q('[data-custom-coverage-price]').textContent=format(state.coverageZones.reduce((sum,zone)=>sum+customCoveragePrices[zone],0));
     document.querySelector('[data-build-count]').textContent = getBuilds().length;
     document.querySelector('[data-cart] b').textContent = cartCount();
     setActive('.design-card','design',state.design);
@@ -374,6 +457,15 @@
     setActive('[data-colorway]','colorway',state.colorway);
     setActive('[data-mat-pattern]','matPattern',state.matPattern);
     setActive('.view-switch [data-view]','view',state.view);
+    setActive('[data-coverage-zone]','coverageZone','__none__');
+    qa('[data-coverage-zone]').forEach((button)=>button.classList.toggle('active',state.coverageZones.includes(button.dataset.coverageZone)));
+    setActive('[data-overlay]','overlay',state.overlay);
+    setActive('[data-ai-style]','aiStyle',state.aiStyle);
+    q('[data-move-mode]').classList.toggle('active',state.moveMode);
+    q('[data-move-mode]').setAttribute('aria-pressed',String(state.moveMode));
+    rememberHistory();
+    q('[data-undo]').disabled=historyIndex<=0;
+    q('[data-redo]').disabled=historyIndex>=history.length-1;
   };
 
   const drawer = document.querySelector('[data-products-drawer]');
@@ -393,7 +485,7 @@
       panel.hidden = !active;
       panel.classList.toggle('active',active);
     });
-    q('[data-progress]').textContent = `${String(qa('[data-tab]').indexOf(button)+1).padStart(2,'0')} / 08`;
+    q('[data-progress]').textContent = `${String(qa('[data-tab]').indexOf(button)+1).padStart(2,'0')} / ${String(qa('[data-tab]').length).padStart(2,'0')}`;
     render();
   }));
   qa('.design-card').forEach((button) => button.addEventListener('click',() => {
@@ -411,6 +503,7 @@
   qa('[data-material]').forEach((button) => button.addEventListener('click',() => {state.material=button.dataset.material;render();}));
   qa('[data-coverage]').forEach((button) => button.addEventListener('click',() => {
     state.coverage=button.dataset.coverage;
+    state.coverageZones=state.coverage==='full'?['upper','side','accent']:state.coverage==='side'?['side']:['accent'];
     if (state.view === 'template') state.view = 'left';
     render();
     notify(`${coverageLabels[state.coverage]} SELECTED`);
@@ -445,6 +538,15 @@
   q('[data-name]').addEventListener('input',(event) => {state.name=event.target.value;render();});
   q('[data-number]').addEventListener('input',(event) => {state.number=event.target.value.replace(/[^a-z0-9]/gi,'').slice(0,3);render();});
   q('[data-notes]').addEventListener('input',(event) => {state.notes=event.target.value;});
+  q('[data-text-font]').addEventListener('change',(event)=>{state.textFont=event.target.value;render();});
+  q('[data-text-color]').addEventListener('input',(event)=>{state.textColor=event.target.value;render();});
+  q('[data-text-outline]').addEventListener('change',(event)=>{state.textOutline=event.target.checked;render();});
+  q('[data-text-shadow]').addEventListener('change',(event)=>{state.textShadow=event.target.checked;render();});
+  qa('[data-library-logo]').forEach((button)=>button.addEventListener('click',()=>{
+    state.logo=svgLogo(button.dataset.libraryLogo,state.number);
+    state.logoX=62;state.logoY=53;state.logoSize=100;
+    render();notify(`${button.querySelector('span').textContent} ADDED`);
+  }));
   q('[data-logo]').addEventListener('change',(event) => {
     const file=event.target.files?.[0];
     if(!file)return;
@@ -506,8 +608,75 @@
     state.matsEnabled=true;
     render();
   });
+  qa('[data-coverage-zone]').forEach((button)=>button.addEventListener('click',()=>{
+    const zone=button.dataset.coverageZone;
+    const hasZone=state.coverageZones.includes(zone);
+    if(hasZone&&state.coverageZones.length===1){notify('KEEP AT LEAST ONE PANEL AREA');return;}
+    state.coverageZones=hasZone?state.coverageZones.filter((item)=>item!==zone):[...state.coverageZones,zone];
+    state.coverage='custom';
+    if(state.view==='template')state.view='left';
+    render();
+    notify(`CUSTOM COVERAGE · ${state.coverageZones.length} AREA${state.coverageZones.length===1?'':'S'}`);
+  }));
+  qa('[data-overlay]').forEach((button)=>button.addEventListener('click',()=>{
+    state.overlay=button.dataset.overlay;
+    render();
+  }));
+  qa('[data-ai-style]').forEach((button)=>button.addEventListener('click',()=>{
+    state.aiStyle=button.dataset.aiStyle;
+    render();
+  }));
+  const generateConcept=()=>{
+    const prompt=q('[data-ai-prompt]').value.trim();
+    if(!prompt){notify('DESCRIBE YOUR ELEMENT FIRST');return;}
+    const lower=prompt.toLowerCase();
+    const matchedDesign=lower.includes('wave')||lower.includes('ocean')?'miami':lower.includes('camo')?'camo':lower.includes('electric')||lower.includes('bolt')?'electric':lower.includes('retro')?'heritage':'apex';
+    const matchedPalette=lower.includes('red')?'race':lower.includes('green')||lower.includes('toxic')?'toxic':lower.includes('blue')?'ocean':lower.includes('pink')?'miami':state.colorway||'vapor';
+    state.design=matchedDesign;
+    state.pattern=q(`.design-card[data-design="${matchedDesign}"]`).dataset.designPattern;
+    state.colorway=matchedPalette;
+    [state.primary,state.secondary,state.accent]=colorways[matchedPalette];
+    const conceptName=prompt.replace(/[^a-z0-9 äöüß-]/gi,'').trim().split(/\s+/).slice(0,2).join(' ')||'RACE';
+    state.logo=svgLogo('ai',conceptName);
+    state.logoX=62;state.logoY=53;state.logoSize=112;
+    q('[data-ai-result-name]').textContent=`${conceptName.toUpperCase()} · ${state.aiStyle.toUpperCase()}`;
+    q('[data-ai-result]').hidden=false;
+    render();notify('ORIGINAL CONCEPT ELEMENT READY');
+  };
+  q('[data-ai-generate]').addEventListener('click',generateConcept);
+  q('[data-ai-result]').addEventListener('click',()=>{if(state.logo){state.logoX=62;state.logoY=53;render();notify('CONCEPT ELEMENT APPLIED');}});
   q('[data-zoom-in]').addEventListener('click',() => {state.zoom=Math.min(1.25,state.zoom+.05);render();});
   q('[data-zoom-out]').addEventListener('click',() => {state.zoom=Math.max(.8,state.zoom-.05);render();});
+  q('[data-move-mode]').addEventListener('click',()=>{state.moveMode=!state.moveMode;render();});
+  q('[data-reset-view]').addEventListener('click',()=>{state.zoom=1;state.panX=0;state.panY=0;render();notify('VIEW RESET');});
+  q('[data-undo]').addEventListener('click',()=>restoreHistory(historyIndex-1));
+  q('[data-redo]').addEventListener('click',()=>restoreHistory(historyIndex+1));
+  const viewer=q('[data-viewer]');
+  viewer.addEventListener('pointerdown',(event)=>{
+    if(!state.moveMode||event.target.closest('button')||event.target.closest('[data-logo-preview]'))return;
+    panDrag={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,panX:state.panX,panY:state.panY};
+    if(viewer.setPointerCapture)viewer.setPointerCapture(event.pointerId);
+    viewer.classList.add('panning');
+  });
+  viewer.addEventListener('pointermove',(event)=>{
+    if(!panDrag||panDrag.pointerId!==event.pointerId)return;
+    state.panX=Math.max(-240,Math.min(240,panDrag.panX+event.clientX-panDrag.startX));
+    state.panY=Math.max(-180,Math.min(180,panDrag.panY+event.clientY-panDrag.startY));
+    viewer.style.setProperty('--pan-x',`${state.panX}px`);
+    viewer.style.setProperty('--pan-y',`${state.panY}px`);
+  });
+  const endPan=(event)=>{
+    if(!panDrag||panDrag.pointerId!==event.pointerId)return;
+    if(viewer.hasPointerCapture&&viewer.hasPointerCapture(event.pointerId))viewer.releasePointerCapture(event.pointerId);
+    panDrag=null;viewer.classList.remove('panning');render();
+  };
+  viewer.addEventListener('pointerup',endPan);
+  viewer.addEventListener('pointercancel',endPan);
+  document.addEventListener('keydown',(event)=>{
+    if(!(event.ctrlKey||event.metaKey))return;
+    if(event.key.toLowerCase()==='z'){event.preventDefault();restoreHistory(historyIndex+(event.shiftKey?1:-1));}
+    if(event.key.toLowerCase()==='y'){event.preventDefault();restoreHistory(historyIndex+1);}
+  });
   q('[data-price-info]').addEventListener('click',() => document.querySelector('[data-price-dialog]').showModal());
   q('[data-export-svg]').addEventListener('click',exportProductionSvg);
   q('[data-save]').addEventListener('click',() => {
@@ -516,6 +685,7 @@
     localStorage.setItem(storageKey,JSON.stringify(builds.slice(0,12)));
     render();notify('BUILD SAVED');
   });
+  document.querySelector('[data-save-header]').addEventListener('click',()=>q('[data-save]').click());
   const renderBuilds = () => {
     const list=document.querySelector('[data-build-list]');
     const builds=getBuilds();
@@ -540,7 +710,8 @@
       product:state.product,year:state.year,design:state.design,designName:designLabels[state.design],
       colorway:state.colorway || 'custom',coverage:state.coverage,coverageName:labels.coverage[state.coverage],
       material:state.material,finish:state.finish,matsEnabled:state.matsEnabled,
-      matPattern:state.matPattern,name:state.name,number:state.number
+      matPattern:state.matPattern,name:state.name,number:state.number,coverageZones:state.coverageZones,
+      overlay:state.overlay,textFont:state.textFont,textColor:state.textColor
     };
     const key=JSON.stringify(configuration);
     const existing=items.find((item)=>item.key===key);
@@ -559,6 +730,70 @@
     if(!cartCount()){notify('YOUR CART IS EMPTY');return;}
     location.href='index.html?cart=open';
   });
+
+  const introKey='trixlab-studio-intro-v2';
+  const modelGate=document.querySelector('[data-model-gate]');
+  const tourLayer=document.querySelector('[data-tour-layer]');
+  const tourSteps=[
+    {selector:'.design-rail',kicker:'DESIGN LIBRARY',title:'CHOOSE A MOTIF.',copy:'Start with one of 12 original TRIXLAB motifs. Every motif can be combined with all 20 palettes.'},
+    {selector:'[data-viewer]',kicker:'LIVE PREVIEW',title:'CHECK EVERY ANGLE.',copy:'Use left, right, front, rear and the production panel layout. MOVE pans the canvas; zoom keeps the model geometry fixed.'},
+    {selector:'.control-tabs',kicker:'CONFIGURATION',title:'BUILD IT YOUR WAY.',copy:'Material, colors, text, logos, mats, coverage, finish, overlays and notes are separate editable steps.'},
+    {selector:'[data-tab="personalize"]',kicker:'PERSONALIZATION',title:'ADD YOUR IDENTITY.',copy:'Add rider text, race number, an original library badge or your own logo. Uploaded logos can be dragged directly on the ski.'},
+    {selector:'[data-view="template"]',kicker:'PRODUCTION MAP',title:'VERIFY THE PANELS.',copy:'The panel layout and 1:1 SVG use the supplied Spark Trixx 2UP cut template for plot and production review.'},
+    {selector:'.control-actions',kicker:'SAVE + ORDER',title:'YOUR BUILD IS READY.',copy:'Save the configuration, add the exact build to the cart, or export the mapped 1:1 production SVG.'}
+  ];
+  let tourIndex=0;
+  let tourTarget=null;
+  const clearTourTarget=()=>{if(tourTarget)tourTarget.classList.remove('tour-highlight');tourTarget=null;};
+  const paintTour=()=>{
+    clearTourTarget();
+    const step=tourSteps[tourIndex];
+    tourTarget=document.querySelector(step.selector);
+    if(tourTarget){
+      tourTarget.classList.add('tour-highlight');
+      if(tourTarget.scrollIntoView)tourTarget.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});
+    }
+    document.querySelector('[data-tour-step]').textContent=`${String(tourIndex+1).padStart(2,'0')} / ${String(tourSteps.length).padStart(2,'0')}`;
+    document.querySelector('[data-tour-kicker]').textContent=step.kicker;
+    document.querySelector('[data-tour-title]').textContent=step.title;
+    document.querySelector('[data-tour-copy]').textContent=step.copy;
+    document.querySelector('[data-tour-back]').disabled=tourIndex===0;
+    document.querySelector('[data-tour-next]').textContent=tourIndex===tourSteps.length-1?'FINISH':'NEXT';
+  };
+  const endTour=()=>{
+    clearTourTarget();tourLayer.hidden=true;localStorage.setItem(introKey,'seen');
+  };
+  const startTour=()=>{
+    if(document.querySelector('[data-support-dialog]').open)document.querySelector('[data-support-dialog]').close();
+    tourIndex=0;tourLayer.hidden=false;paintTour();
+  };
+  document.querySelector('[data-tour-next]').addEventListener('click',()=>{
+    if(tourIndex>=tourSteps.length-1){endTour();return;}
+    tourIndex+=1;paintTour();
+  });
+  document.querySelector('[data-tour-back]').addEventListener('click',()=>{if(tourIndex>0){tourIndex-=1;paintTour();}});
+  document.querySelector('[data-tour-skip]').addEventListener('click',endTour);
+  document.querySelectorAll('[data-tour-start]').forEach((button)=>button.addEventListener('click',startTour));
+  document.querySelector('[data-help-open]').addEventListener('click',()=>document.querySelector('[data-support-dialog]').showModal());
+  document.querySelector('[data-model-gate-continue]').addEventListener('click',()=>{
+    modelGate.close();setProduct('trixx-2up');startTour();
+  });
+  document.querySelector('[data-model-gate-close]').addEventListener('click',()=>{
+    modelGate.close();localStorage.setItem(introKey,'seen');
+  });
+  const loader=document.querySelector('[data-loader]');
+  const finishLoading=()=>{
+    document.querySelector('[data-loader-status]').textContent='STUDIO READY';
+    document.querySelector('[data-loader-progress]').style.width='100%';
+    setTimeout(()=>{
+      loader.classList.add('done');
+      if(!localStorage.getItem(introKey)&&!modelGate.open)modelGate.showModal();
+    },350);
+  };
+  document.querySelector('[data-loader-progress]').style.width='62%';
+  document.querySelector('[data-loader-status]').textContent='MAPPING 2UP PANELS + TRACTION MATS…';
+  if(document.readyState==='complete')setTimeout(finishLoading,300);
+  else window.addEventListener('load',()=>setTimeout(finishLoading,300),{once:true});
   const query = new URLSearchParams(location.search || sessionStorage.getItem('trixlab-studio-query') || '');
   if (query.get('product') && products[query.get('product')]?.available) state.product = query.get('product');
   if (query.get('tab') && q(`[data-tab="${query.get('tab')}"]`)) q(`[data-tab="${query.get('tab')}"]`).click();
