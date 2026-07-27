@@ -16,14 +16,14 @@
       <img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB">
     </a>
     <nav>
-      <a href="#shop">SHOP</a>
-      <a href="studio.html">STUDIO</a>
-      <button type="button" data-cart>CART <b>0</b></button>
+      <a href="#models">MODELS</a>
+      <a href="studio.html?product=trixx-2up">STUDIO</a>
+      <button type="button" data-cart-open>CART <b data-cart-count>0</b></button>
     </nav>
   </header>
   <div class="menu-drawer" data-menu-drawer hidden>
-    <a href="#shop">SEA-DOO WRAPS <span>↗</span></a>
-    <a href="studio.html">LIVE DESIGN STUDIO <span>↗</span></a>
+    <a href="#models">SEA-DOO WRAPS <span>↗</span></a>
+    <a href="studio.html?product=trixx-2up">LIVE DESIGN STUDIO <span>↗</span></a>
     <a href="#process">HOW IT WORKS <span>↗</span></a>
   </div>
 
@@ -36,7 +36,7 @@
         <h1>EVERYTHING YOUR SEA-DOO<br>NEEDS TO STAND OUT.</h1>
         <p>Custom graphics, premium marine vinyl and performance parts — designed for riders who refuse to look stock.</p>
         <div>
-          <a class="button accent" href="studio.html">OPEN DESIGN STUDIO</a>
+          <a class="button accent" href="studio.html?product=trixx-2up">CONFIGURE TRIXX 2UP</a>
           <a class="button outline" href="#process">HOW IT WORKS</a>
         </div>
       </div>
@@ -51,16 +51,28 @@
       <div><b>EU</b><span>PRODUCTION READY</span></div>
     </section>
 
-    <section class="section categories" id="shop">
+    <section class="section categories model-selector" id="models">
       <header class="section-head">
-        <div><p class="kicker">CHOOSE YOUR PLATFORM</p><h2>GRAPHICS FOR THE MACHINES YOU ACTUALLY RIDE.</h2></div>
-        <p>Exact templates, premium materials and a clean approval process from your first click to final production.</p>
+        <div><p class="kicker">CHOOSE YOUR MACHINE</p><h2>ONE MODEL. ONE EXACT PANEL MAP.</h2></div>
+        <p>TRIXX 1UP, 2UP und 3UP sind unterschiedliche Geometrien. Aktuell ist ausschließlich der Spark Trixx 2UP vollständig konfigurierbar.</p>
       </header>
-      <div class="category-grid">
-        <article><span>2UP</span><small>SPARK SERIES</small><h3>SEA-DOO TRIXX 2UP</h3><a href="studio.html?product=trixx-2up">CONFIGURE →</a></article>
-        <article><span>3UP</span><small>SPARK SERIES</small><h3>SEA-DOO TRIXX 3UP</h3><a href="studio.html?product=trixx-3up">CONFIGURE →</a></article>
-        <article><span>EVA</span><small>CUSTOM TRACTION</small><h3>TRACTION MAT KITS</h3><a href="studio.html?tab=mats">DESIGN MATS →</a></article>
-        <article><span>325</span><small>PERFORMANCE</small><h3>SEA-DOO RXP-X</h3><a href="studio.html?product=rxp-x">CONFIGURE →</a></article>
+      <div class="model-grid">
+        <article class="model-card coming-soon" data-model-card="trixx-1up">
+          <div class="model-visual model-visual-1up"><span>1UP</span></div>
+          <div class="model-card-copy"><small>SPARK TRIXX · DIFFERENT GEOMETRY</small><h3>TRIXX 1UP</h3><p>Eigene Vorlage und eigene Panel-Geometrie.</p><span class="status-pill">COMING SOON</span></div>
+        </article>
+        <article class="model-card model-active" data-model-card="trixx-2up">
+          <div class="model-visual model-visual-2up"><img src="assets/apex-race-left.webp" alt="Sea-Doo Spark Trixx 2UP mit TRIXLAB APEX R Graphics"></div>
+          <div class="model-card-copy"><small>SPARK TRIXX · 2022 BASE</small><h3>TRIXX 2UP</h3><p>240 Varianten, fünf Ansichten, Traction Mats und 1:1 Panel-Export.</p><a class="model-action" href="studio.html?product=trixx-2up">CONFIGURE NOW <span>↗</span></a></div>
+        </article>
+        <article class="model-card coming-soon" data-model-card="trixx-3up">
+          <div class="model-visual model-visual-3up"><span>3UP</span></div>
+          <div class="model-card-copy"><small>SPARK TRIXX · DIFFERENT GEOMETRY</small><h3>TRIXX 3UP</h3><p>Eigene Vorlage und längere Plattform.</p><span class="status-pill">COMING SOON</span></div>
+        </article>
+        <article class="model-card mat-card" data-model-card="traction-mats">
+          <div class="model-visual mat-visual"><span>EVA</span></div>
+          <div class="model-card-copy"><small>TRIXX 2UP · 8 PIECE SET</small><h3>TRACTION MATS</h3><p>Sechs Fräsmuster, Top-/Reveal-Farbe und eigener Text.</p><a class="model-action secondary-action" href="studio.html?product=trixx-2up&tab=mats">DESIGN MATS <span>↗</span></a></div>
+        </article>
       </div>
     </section>
 
@@ -76,9 +88,9 @@
           <li>Custom two-layer traction mats</li>
           <li>Saved builds and live price calculation</li>
         </ul>
-        <a class="button accent" href="studio.html">CUSTOMIZE APEX R</a>
+        <a class="button accent" href="studio.html?product=trixx-2up">CUSTOMIZE APEX R</a>
       </div>
-      <a class="studio-teaser-image" href="studio.html" aria-label="APEX R im Studio anpassen">
+      <a class="studio-teaser-image" href="studio.html?product=trixx-2up" aria-label="APEX R im Studio anpassen">
         <img src="assets/trixlab-seadoo-trixx-2up.webp" alt="Sea-Doo Spark Trixx 2UP mit TRIXLAB APEX R Wrap">
         <span>OPEN LIVE STUDIO ↗</span>
       </a>
@@ -105,8 +117,34 @@
 
   <footer class="footer">
     <img src="trix-performance-theme/assets/trixlab-logo.svg" alt="TRIXLAB">
-    <div><p>RACE GRAPHICS &amp; PERFORMANCE PARTS</p><form><input type="email" placeholder="EMAIL ADDRESS"><button type="button">JOIN NOW →</button></form></div>
+    <div><p>RACE GRAPHICS &amp; PERFORMANCE PARTS</p><form data-newsletter><input type="email" required placeholder="EMAIL ADDRESS" aria-label="Email address"><button type="submit">JOIN NOW →</button></form></div>
   </footer>
+
+  <aside class="cart-drawer" data-cart-drawer aria-hidden="true">
+    <button class="cart-backdrop" type="button" data-cart-close aria-label="Warenkorb schließen"></button>
+    <div class="cart-sheet">
+      <div class="cart-head"><div><small>YOUR CONFIGURATIONS</small><h2>CART</h2></div><button type="button" data-cart-close aria-label="Warenkorb schließen">×</button></div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-summary"><span>SUBTOTAL</span><strong data-cart-subtotal>0,00 €</strong><small>Final production proof and shipping are confirmed before payment.</small><button type="button" data-checkout>CONTINUE TO CHECKOUT</button></div>
+    </div>
+  </aside>
+
+  <dialog class="checkout-dialog" data-checkout-dialog>
+    <button class="dialog-close" type="button" data-checkout-close aria-label="Checkout schließen">×</button>
+    <small>SECURE ORDER REQUEST</small>
+    <h2>CHECKOUT</h2>
+    <p class="checkout-note">Keine Zahlung wird jetzt eingezogen. Wir prüfen Modell, Paneldatei und Versand und senden dir anschließend die Bestätigung.</p>
+    <form data-checkout-form>
+      <label>NAME<input name="name" required autocomplete="name"></label>
+      <label>EMAIL<input name="email" type="email" required autocomplete="email"></label>
+      <label>PHONE (OPTIONAL)<input name="phone" autocomplete="tel"></label>
+      <label>NOTES<textarea name="notes" rows="3" placeholder="Installation, Farbcode, Deadline …"></textarea></label>
+      <div class="checkout-total"><span>ORDER TOTAL</span><strong data-checkout-total>0,00 €</strong></div>
+      <button class="checkout-submit" type="submit">SUBMIT ORDER REQUEST</button>
+    </form>
+    <div class="checkout-success" data-checkout-success hidden><span>✓</span><h3>REQUEST SAVED</h3><p>Deine Konfiguration wurde lokal als Bestellanfrage gespeichert. Für einen echten Live-Shop wird als nächster Schritt Shopify Checkout verbunden.</p><button type="button" data-checkout-close>DONE</button></div>
+  </dialog>
+  <div class="site-toast" data-site-toast></div>
   <script src="landing.js"></script>
 </body>
 </html>
