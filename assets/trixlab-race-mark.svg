@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 220" role="img" aria-labelledby="title desc">
+  <title id="title">TRIXLAB Race Graphics</title>
+  <desc id="desc">Forward leaning TRIXLAB motorsport wordmark</desc>
+  <g transform="skewX(-11)">
+    <path fill="#fff" stroke="#090b0a" stroke-width="12" paint-order="stroke" d="M48 34h162l-26 34h-54l-78 103H4L82 68H22Zm174 0h151c34 0 47 20 29 47-11 17-31 27-56 31l36 59h-56l-43-69h45c12 0 21-5 27-14 5-8 1-14-11-14h-95l-73 97h-48Zm201 0h48l-104 137h-48Zm72 0h55l32 45 91-45h61L610 94l51 77h-59l-34-52-99 52h-61l132-68Z"/>
+    <text x="678" y="171" fill="#ef1f2d" stroke="#090b0a" stroke-width="12" paint-order="stroke" font-family="Arial Black,Arial,sans-serif" font-size="132" font-weight="1000" letter-spacing="-10">LAB</text>
+  </g>
+  <path fill="#ef1f2d" d="m25 183 88-20-21 28-87 20Zm126-12 59-14-18 24-59 13Z"/>
+  <text x="206" y="211" fill="#fff" stroke="#090b0a" stroke-width="5" paint-order="stroke" font-family="Arial,Helvetica,sans-serif" font-size="24" font-style="italic" font-weight="900" letter-spacing="8">RACE GRAPHICS</text>
+</svg>

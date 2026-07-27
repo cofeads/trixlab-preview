@@ -71,23 +71,56 @@
           <img class="vehicle-image" data-vehicle-image src="assets/trixx-2022-left.webp" alt="Real 2022 Sea-Doo Spark Trixx 2UP studio photo">
           <svg class="photo-wrap-layer" data-wrap-layer viewBox="0 0 800 600" aria-label="Vinyl design preview">
             <defs>
-              <pattern id="photo-pattern" width="42" height="42" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
-                <rect width="11" height="42" fill="var(--wrap-accent)" opacity=".82"/>
+              <pattern id="photo-apex" width="150" height="90" patternUnits="userSpaceOnUse" patternTransform="skewX(-18)">
+                <path d="M-18 82 46-8h23L5 82Zm62 0 61-90h12L58 82Zm62 0 40-61v37l-17 24Z" fill="var(--wrap-accent)"/>
+                <path d="m15 82 72-90h15L36 82Zm91 0 44-64v23l-28 41Z" fill="var(--wrap-secondary)" opacity=".88"/>
+                <path d="M0 69h150v5H0Z" fill="var(--wrap-primary)"/>
               </pattern>
-              <pattern id="photo-hex" width="30" height="26" patternUnits="userSpaceOnUse">
-                <path d="M8 1h14l7 12-7 12H8L1 13Z" fill="none" stroke="var(--wrap-accent)" stroke-width="3"/>
+              <pattern id="photo-hex" width="44" height="38" patternUnits="userSpaceOnUse">
+                <path d="M11 2h22l10 17-10 17H11L1 19Z" fill="none" stroke="var(--wrap-accent)" stroke-width="3"/>
+                <path d="M11 19h22" stroke="var(--wrap-primary)" stroke-width="2"/>
               </pattern>
-              <pattern id="photo-topo" width="46" height="36" patternUnits="userSpaceOnUse">
-                <path d="M-4 9Q10-5 50 10M-4 27Q12 10 51 28" fill="none" stroke="var(--wrap-accent)" stroke-width="3"/>
+              <pattern id="photo-bolt" width="110" height="74" patternUnits="userSpaceOnUse">
+                <path d="M-8 62 42-6h25L45 29h37L27 80l16-39H12Z" fill="var(--wrap-accent)"/>
+                <path d="m70 74 28-42h16L93 74Z" fill="var(--wrap-secondary)"/>
               </pattern>
-              <pattern id="photo-carbon" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                <rect width="8" height="20" fill="var(--wrap-accent)"/>
+              <pattern id="photo-topo" width="70" height="52" patternUnits="userSpaceOnUse">
+                <path d="M-10 10Q14-10 80 13M-8 28Q17 6 79 31M-5 47Q22 24 82 49" fill="none" stroke="var(--wrap-accent)" stroke-width="3"/>
+                <path d="M8 17Q29 1 61 17T113 17" fill="none" stroke="var(--wrap-secondary)" stroke-width="1.5"/>
               </pattern>
-              <pattern id="photo-wave" width="40" height="24" patternUnits="userSpaceOnUse">
-                <path d="M0 13Q10 2 20 13t20 0" fill="none" stroke="var(--wrap-accent)" stroke-width="4"/>
+              <pattern id="photo-carbon" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <rect width="12" height="28" fill="var(--wrap-accent)"/>
+                <rect x="14" width="5" height="28" fill="var(--wrap-primary)" opacity=".75"/>
               </pattern>
-              <pattern id="photo-digital" width="34" height="34" patternUnits="userSpaceOnUse">
-                <path d="M2 2h13v10H8v10H2ZM20 16h12v16H20Z" fill="var(--wrap-accent)"/>
+              <pattern id="photo-wave" width="62" height="36" patternUnits="userSpaceOnUse">
+                <path d="M-4 23Q12 3 28 23T60 23T92 23" fill="none" stroke="var(--wrap-accent)" stroke-width="5"/>
+                <path d="M-4 31Q12 11 28 31T60 31T92 31" fill="none" stroke="var(--wrap-secondary)" stroke-width="2"/>
+              </pattern>
+              <pattern id="photo-ice" width="72" height="58" patternUnits="userSpaceOnUse">
+                <path d="m4 50 18-45 12 25L51 4l17 46-30-14Z" fill="var(--wrap-accent)"/>
+                <path d="m19 50 18-18 15 18Z" fill="var(--wrap-secondary)" opacity=".72"/>
+              </pattern>
+              <pattern id="photo-camo" width="92" height="66" patternUnits="userSpaceOnUse">
+                <path d="M-8 15 18 1l27 12-7 20-31 5Zm52 25 19-18 33 5 9 26-29 15-35-10Z" fill="var(--wrap-accent)"/>
+                <path d="m23 54 18-22 21 12-8 21Z" fill="var(--wrap-secondary)"/>
+              </pattern>
+              <pattern id="photo-stripes" width="118" height="58" patternUnits="userSpaceOnUse" patternTransform="skewX(-20)">
+                <rect width="44" height="58" fill="var(--wrap-accent)"/>
+                <rect x="51" width="13" height="58" fill="var(--wrap-secondary)"/>
+                <rect x="70" width="7" height="58" fill="var(--wrap-primary)"/>
+              </pattern>
+              <pattern id="photo-digital" width="48" height="48" patternUnits="userSpaceOnUse">
+                <path d="M2 2h19v12H12v13H2Zm24 18h20v26H26ZM9 33h12v13H9Z" fill="var(--wrap-accent)"/>
+                <path d="M27 3h11v10H27Z" fill="var(--wrap-secondary)"/>
+              </pattern>
+              <pattern id="photo-fetti" width="68" height="58" patternUnits="userSpaceOnUse">
+                <path d="m8 7 8 16-14 5Zm28-4 13 8-9 12-11-9Zm13 30 16 6-7 14-15-8ZM15 41l13-7 6 16-15 5Z" fill="var(--wrap-accent)"/>
+                <circle cx="57" cy="15" r="6" fill="var(--wrap-secondary)"/>
+              </pattern>
+              <pattern id="photo-factory" width="126" height="64" patternUnits="userSpaceOnUse" patternTransform="skewX(-12)">
+                <rect width="66" height="64" fill="var(--wrap-accent)"/>
+                <rect x="72" width="22" height="64" fill="var(--wrap-secondary)"/>
+                <path d="M100 0h10v64h-10Zm16 0h4v64h-4Z" fill="var(--wrap-primary)"/>
               </pattern>
             </defs>
 
@@ -173,7 +206,7 @@
             </g>
           </svg>
           <div class="coverage-mask"></div>
-          <div class="brand-stamp"><b>TRIXLAB</b><span data-preview-name>RACE GRAPHICS</span></div>
+          <div class="brand-stamp"><img src="assets/trixlab-race-mark.svg" alt="TRIXLAB Race Graphics"><span data-preview-name>RACE GRAPHICS</span></div>
           <div class="race-number" data-preview-number>21</div>
           <img class="custom-logo" data-logo-preview alt="Uploaded custom logo" draggable="false" hidden>
         </div>
@@ -183,6 +216,7 @@
             <div class="template-layer template-black"></div>
             <div class="template-layer template-white"></div>
             <div class="template-layer template-grey"></div>
+            <div class="template-layer template-pattern"></div>
           </div>
           <div class="template-legend"><b>ONE FULL DESIGN KIT</b><span><i class="legend-primary"></i>PRIMARY</span><span><i class="legend-secondary"></i>SECONDARY</span><span><i class="legend-accent"></i>ACCENT</span><em>LEFT + RIGHT CUT PANELS</em></div>
         </div>

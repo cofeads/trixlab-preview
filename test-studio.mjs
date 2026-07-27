@@ -10,10 +10,16 @@ for(const angle of ['left','right','front','rear']){
   assert.ok(fs.existsSync(image),`real 2022 Trixx 2UP ${angle} render exists`);
   assert.ok(fs.statSync(image).size>8_000,`${angle} render contains a real studio image`);
 }
+for(const render of ['race-left','ocean-left','toxic-left','miami-left','ice-left','race-right','race-front','race-rear']){
+  const image=`assets/apex-${render}.webp`;
+  assert.ok(fs.existsSync(image),`high-quality APEX ${render} render exists`);
+  assert.ok(fs.statSync(image).size>30_000,`${render} render contains a finished panel-aligned livery`);
+}
 for(const layer of ['white','black','red','grey']){
   const template=`assets/trixx-2up-template-${layer}.webp`;
   assert.ok(fs.existsSync(template),`real PDF template layer ${layer} exists`);
 }
+assert.ok(fs.existsSync('assets/trixx-2up-template-all.webp'),'single combined PDF kit mask exists');
 assert.match(landing,/href="studio\.html"/,'landing links to standalone studio');
 assert.doesNotMatch(landing,/data-studio/,'studio is no longer embedded in landing');
 for(const selector of ['data-studio','data-design','data-material','data-colorway','data-name','data-number','data-logo','data-coverage','data-finish','data-save','data-add','data-mat-pattern','data-mats-enabled','data-products-drawer']){
@@ -38,8 +44,10 @@ assert.equal((html.match(/data-camera-map="/g)||[]).length,4,'four separately ma
 assert.equal((html.match(/data-view="/g)||[]).length,5,'four camera angles plus panel layout are selectable');
 assert.doesNotMatch(html,/fit-points|mapping-status|P[1-9]/,'internal mapping points are never exposed in the customer UI');
 assert.match(html,/data-camera-mats="rear"/,'traction mats have a dedicated rear-view mapping');
-assert.doesNotMatch(css,/\.vehicle-image\{[^}]*filter:/,'base vehicle is never recolored by CSS filters');
+assert.match(css,/data-hq-filter=ocean/,'pre-rendered alternate camera angles use a scoped colorway filter');
+assert.doesNotMatch(css,/^\.vehicle-image\{[^}]*filter:/m,'neutral base vehicle has no global recolor filter');
 assert.match(js,/const cameraImages =/,'camera-specific fixed base images are registered');
+assert.match(js,/const hqRenderImages =/,'high-quality colorway and camera renders are registered');
 assert.match(js,/state\.design = button\.dataset\.design/,'design selection changes overlay state');
 assert.ok(!js.includes('const $$'),'avoids double-dollar upload mangling');
 console.log('TRIXLAB standalone studio: 48 structure and interaction checks passed.');

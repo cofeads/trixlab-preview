@@ -36,8 +36,17 @@ assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),
 click('[data-view="left"]');
 assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),fixedBase,'left camera returns to the same fixed base');
 
+click('[data-colorway="ocean"]');
+assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/apex-ocean-left/,'ocean preset uses its own high-quality panel render');
+click('[data-colorway="toxic"]');
+assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/apex-toxic-left/,'toxic preset uses its own high-quality panel render');
+click('[data-colorway="race"]');
+assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),fixedBase,'race preset restores its exact high-quality render');
+
 click('.design-card[data-design="electric"]');
-assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),fixedBase,'design keeps fixed base image');
+const neutralBase = document.querySelector('[data-vehicle-image]').getAttribute('src');
+assert.match(neutralBase,/trixx-2022-left/,'other editable motifs use the fixed neutral Trixx base');
+assert.equal(document.querySelector('[data-studio]').dataset.hq,'false','editable vector motif does not stack over a finished render');
 assert.equal(document.querySelector('[data-studio]').dataset.pattern,'bolt','design changes vector pattern');
 
 click('[data-products-open]');
@@ -46,7 +55,7 @@ click('[data-product="gti"]');
 assert.match(document.querySelector('[data-vehicle-image]').getAttribute('src'),/performance/,'product can be changed');
 click('[data-products-open]');
 click('[data-product="trixx-2up"]');
-assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),fixedBase,'fixed Trixx base returns');
+assert.equal(document.querySelector('[data-vehicle-image]').getAttribute('src'),neutralBase,'fixed neutral Trixx base returns for editable motif');
 
 click('[data-tab="mats"]');
 click('[data-mat-pattern="hive"]');
