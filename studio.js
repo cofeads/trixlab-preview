@@ -3,6 +3,7 @@
   const q = (selector) => root.querySelector(selector);
   const qa = (selector) => [...root.querySelectorAll(selector)];
   const storageKey = 'trixlab-studio-builds-v3';
+  const cartKey = 'trixlab-cart-v1';
   const basePrices = {full:59900,side:39900,accent:24900};
   const materialPrices = {standard:0,chrome:30000,holographic:30000};
   const finishPrices = {gloss:0,matte:4900,sparkle:7900};
@@ -69,6 +70,11 @@
     material:{standard:'Standard Marine Vinyl',chrome:'Chrome Base',holographic:'Holographic Base'},
     finish:{gloss:'High Gloss',matte:'Stealth Matte',sparkle:'Metal Flake'}
   };
+  const coverageLabels = {
+    full:'FULL KIT · UPPER + SIDE PANELS',
+    side:'SIDE KIT · HULL SIDES + REAR',
+    accent:'ACCENT KIT · SELECTED IMPACT PANELS'
+  };
   const matPatternLabels = {
     diamond:'DIAMOND',hive:'HIVE',razor:'RAZOR',spark:'SPARK',topo:'TOPO',wave:'WAVE'
   };
@@ -102,6 +108,11 @@
   const getBuilds = () => {
     try{return JSON.parse(localStorage.getItem(storageKey)||'[]');}catch{return [];}
   };
+  const getCart = () => {
+    try{return JSON.parse(localStorage.getItem(cartKey)||'[]');}catch{return [];}
+  };
+  const saveCart = (items) => localStorage.setItem(cartKey,JSON.stringify(items));
+  const cartCount = () => getCart().reduce((sum,item) => sum + Number(item.quantity || 1),0);
   const snapshot = () => ({...state,logo:''});
   const setActive = (selector,key,value) => document.querySelectorAll(selector).forEach((button) => button.classList.toggle('active',button.dataset[key]===value));
   const escapeXml = (value) => String(value ?? '').replace(/[<>&"']/g,(character) => ({
@@ -136,6 +147,15 @@
     };
     return definitions[state.pattern] || definitions.slash;
   };
+  const coverageClipDefinition = () => {
+    if (state.coverage === 'side') {
+      return '<path d="M0 0H760V3000H0ZM2240 0H3000V3000H2240ZM520 620H1100V2380H520ZM1900 620H2480V2380H1900Z"/>';
+    }
+    if (state.coverage === 'accent') {
+      return '<path d="M260 480H720V1240H260ZM2280 480H2740V1240H2280ZM560 1720H1040V2450H560ZM1960 1720H2440V2450H1960ZM1220 180H1780V880H1220ZM1260 2200H1740V2920H1260Z"/>';
+    }
+    return '<rect width="3000" height="3000"/>';
+  };
   const downloadBlob = (blob,filename) => {
     const url=URL.createObjectURL(blob);
     const anchor=document.createElement('a');
@@ -161,7 +181,6 @@
         'assets/trixx-2up-template-all.webp','assets/trixx-2up-template-outline.webp',
         'assets/trixlab-race-mark.svg'
       ].map(assetAsDataUrl));
-      const coverageOpacity={full:1,side:.72,accent:.48}[state.coverage];
       const safeName=escapeXml(state.name || 'RACE GRAPHICS');
       const safeNumber=escapeXml(state.number || '21');
       const safeMatText=escapeXml(state.matText || 'TRIXLAB');
@@ -195,12 +214,13 @@
     <mask id="mask-white"><image href="${whiteMask}" width="3000" height="3000"/></mask>
     <mask id="mask-grey"><image href="${greyMask}" width="3000" height="3000"/></mask>
     <mask id="mask-all"><image href="${allMask}" width="3000" height="3000"/></mask>
+    <clipPath id="coverage-clip">${coverageClipDefinition()}</clipPath>
     ${patternDefinition()}
     <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".22" stop-color="#616a66"/><stop offset=".5" stop-color="#f8ffff"/><stop offset=".74" stop-color="#7f8783"/><stop offset="1" stop-color="#fff"/></linearGradient>
     <linearGradient id="holo" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff4da6"/><stop offset=".25" stop-color="#7d5cff"/><stop offset=".5" stop-color="#37e7ff"/><stop offset=".75" stop-color="#d7ff42"/><stop offset="1" stop-color="#ff7b45"/></linearGradient>
     <pattern id="sparkle" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="5" cy="7" r="2.2" fill="#fff"/><circle cx="22" cy="20" r="1.5" fill="#fff"/><circle cx="13" cy="28" r="1" fill="#fff"/></pattern>
   </defs>
-  <g id="CONFIGURED_ARTWORK" opacity="${coverageOpacity}">
+  <g id="CONFIGURED_ARTWORK" clip-path="url(#coverage-clip)">
     <rect width="3000" height="3000" fill="${state.primary}" mask="url(#mask-red)"/>
     <rect width="3000" height="3000" fill="${state.secondary}" mask="url(#mask-black)"/>
     <rect width="3000" height="3000" fill="${state.accent}" mask="url(#mask-white)"/>
@@ -258,8 +278,9 @@
   const render = () => {
     const product = products[state.product];
     const usesTrixxMapping = state.product === 'trixx-2up';
-    const usesHqRender = usesTrixxMapping && state.view === 'left' && Boolean(designRenderImages[state.design]);
-    const usesLiveMapping = usesTrixxMapping && ['right','front','rear'].includes(state.view);
+    const usesHqRender = usesTrixxMapping && state.view === 'left' && state.coverage === 'full' && Boolean(designRenderImages[state.design]);
+    const usesLiveMapping = usesTrixxMapping && ['left','right','front','rear'].includes(state.view) && !usesHqRender;
+    const matsVisible = usesTrixxMapping && state.matsEnabled && ['left','right','rear'].includes(state.view);
     const designHue = hexHue(designColors[state.design][0]);
     const paletteHue = hexHue(state.primary);
     root.dataset.design = state.design;
@@ -284,9 +305,9 @@
     q('[data-photo-view]').hidden = state.view==='template';
     q('[data-template-view]').hidden = state.view!=='template';
     q('[data-wrap-layer]').hidden = !usesLiveMapping;
-    q('[data-mat-layer]').hidden = state.view !== 'rear';
+    q('[data-mat-layer]').hidden = !matsVisible;
     qa('[data-camera-map]').forEach((map) => map.toggleAttribute('hidden',!usesTrixxMapping || map.dataset.cameraMap!==state.view));
-    qa('[data-camera-mats]').forEach((map) => map.toggleAttribute('hidden',state.view!=='rear' || map.dataset.cameraMats!=='rear'));
+    qa('[data-camera-mats]').forEach((map) => map.toggleAttribute('hidden',!matsVisible || map.dataset.cameraMats!==state.view));
     const hqImage = usesHqRender ? designRenderImages[state.design] : '';
     q('[data-vehicle-image]').src = hqImage || (usesTrixxMapping && cameraImages[state.view] ? cameraImages[state.view] : product.image);
     q('[data-vehicle-image]').alt = `${usesHqRender ? 'TRIXLAB rendered' : 'Neutral'} 2022 Sea-Doo ${product.name} · ${cameraLabels[state.view] || 'studio view'}`;
@@ -294,6 +315,7 @@
     q('[data-preview-name]').textContent = state.name || 'RACE GRAPHICS';
     q('[data-preview-number]').textContent = state.number || '21';
     q('[data-design-name]').textContent = designLabels[state.design];
+    q('[data-coverage-label]').textContent = coverageLabels[state.coverage];
     const paletteIndex=Math.max(0,Object.keys(colorways).indexOf(state.colorway));
     q('[data-variant-id]').textContent = `${state.colorway ? 'VARIANT' : 'CUSTOM'} ${String(Object.keys(designLabels).indexOf(state.design)*Object.keys(colorways).length+paletteIndex+1).padStart(3,'0')} / ${Object.keys(designLabels).length*Object.keys(colorways).length}`;
     q('[data-vehicle-meta]').textContent = `SEA-DOO ${product.name.toUpperCase()} · ${state.year} · ${cameraLabels[state.view]}`;
@@ -308,7 +330,7 @@
     q('[data-logo-size]').value = state.logoSize;
     q('[data-mats-enabled]').checked = state.matsEnabled;
     q('[data-mat-text]').value = state.matText;
-    q('[data-mat-preview]').textContent = state.matText || 'TRIXLAB';
+    qa('[data-mat-preview]').forEach((element) => element.textContent = state.matText || 'TRIXLAB');
     q('[data-mat-color="top"]').value = state.matTop;
     q('[data-mat-color="bottom"]').value = state.matBottom;
     q('.mat-controls').hidden = !state.matsEnabled;
@@ -344,6 +366,7 @@
     document.querySelector('[data-breakdown-finish]').textContent = labels.finish[state.finish];
     document.querySelector('[data-breakdown-mats]').textContent = state.matsEnabled ? format(matsPrice) : 'Not selected';
     document.querySelector('[data-build-count]').textContent = getBuilds().length;
+    document.querySelector('[data-cart] b').textContent = cartCount();
     setActive('.design-card','design',state.design);
     setActive('[data-material]','material',state.material);
     setActive('[data-coverage]','coverage',state.coverage);
@@ -363,6 +386,7 @@
 
   qa('[data-tab]').forEach((button) => button.addEventListener('click',() => {
     const tab = button.dataset.tab;
+    if (tab === 'mats' && state.view !== 'rear') state.view = 'rear';
     qa('[data-tab]').forEach((item) => item.classList.toggle('active',item===button));
     qa('[data-panel]').forEach((panel) => {
       const active = panel.dataset.panel===tab;
@@ -370,6 +394,7 @@
       panel.classList.toggle('active',active);
     });
     q('[data-progress]').textContent = `${String(qa('[data-tab]').indexOf(button)+1).padStart(2,'0')} / 08`;
+    render();
   }));
   qa('.design-card').forEach((button) => button.addEventListener('click',() => {
     state.design = button.dataset.design;
@@ -384,7 +409,12 @@
     button.querySelector('i').setAttribute('aria-label',`${label} rendered graphics preview`);
   });
   qa('[data-material]').forEach((button) => button.addEventListener('click',() => {state.material=button.dataset.material;render();}));
-  qa('[data-coverage]').forEach((button) => button.addEventListener('click',() => {state.coverage=button.dataset.coverage;render();}));
+  qa('[data-coverage]').forEach((button) => button.addEventListener('click',() => {
+    state.coverage=button.dataset.coverage;
+    if (state.view === 'template') state.view = 'left';
+    render();
+    notify(`${coverageLabels[state.coverage]} SELECTED`);
+  }));
   qa('[data-finish]').forEach((button) => button.addEventListener('click',() => {state.finish=button.dataset.finish;render();}));
   qa('[data-colorway]').forEach((button) => button.addEventListener('click',() => {
     state.colorway = button.dataset.colorway;
@@ -455,10 +485,27 @@
   logo.addEventListener('pointerup',endDrag);
   logo.addEventListener('pointercancel',endDrag);
 
-  q('[data-mats-enabled]').addEventListener('change',(event) => {state.matsEnabled=event.target.checked;render();});
-  qa('[data-mat-pattern]').forEach((button) => button.addEventListener('click',() => {state.matPattern=button.dataset.matPattern;render();}));
-  qa('[data-mat-color]').forEach((input) => input.addEventListener('input',(event) => {state[event.target.dataset.matColor==='top'?'matTop':'matBottom']=event.target.value;render();}));
-  q('[data-mat-text]').addEventListener('input',(event) => {state.matText=event.target.value.toUpperCase();render();});
+  q('[data-mats-enabled]').addEventListener('change',(event) => {
+    state.matsEnabled=event.target.checked;
+    if (state.matsEnabled && !['left','right','rear'].includes(state.view)) state.view='rear';
+    render();
+  });
+  qa('[data-mat-pattern]').forEach((button) => button.addEventListener('click',() => {
+    state.matPattern=button.dataset.matPattern;
+    state.matsEnabled=true;
+    if (!['left','right','rear'].includes(state.view)) state.view='rear';
+    render();
+  }));
+  qa('[data-mat-color]').forEach((input) => input.addEventListener('input',(event) => {
+    state[event.target.dataset.matColor==='top'?'matTop':'matBottom']=event.target.value;
+    state.matsEnabled=true;
+    render();
+  }));
+  q('[data-mat-text]').addEventListener('input',(event) => {
+    state.matText=event.target.value.toUpperCase();
+    state.matsEnabled=true;
+    render();
+  });
   q('[data-zoom-in]').addEventListener('click',() => {state.zoom=Math.min(1.25,state.zoom+.05);render();});
   q('[data-zoom-out]').addEventListener('click',() => {state.zoom=Math.max(.8,state.zoom-.05);render();});
   q('[data-price-info]').addEventListener('click',() => document.querySelector('[data-price-dialog]').showModal());
@@ -488,16 +535,32 @@
   document.querySelectorAll('[data-dialog-close]').forEach((button)=>button.addEventListener('click',()=>button.closest('dialog').close()));
   document.querySelectorAll('dialog').forEach((dialog)=>dialog.addEventListener('click',(event)=>{if(event.target===dialog)dialog.close();}));
   q('[data-add]').addEventListener('click',() => {
-    document.querySelector('[data-cart] b').textContent='1';
+    const items=getCart();
+    const configuration={
+      product:state.product,year:state.year,design:state.design,designName:designLabels[state.design],
+      colorway:state.colorway || 'custom',coverage:state.coverage,coverageName:labels.coverage[state.coverage],
+      material:state.material,finish:state.finish,matsEnabled:state.matsEnabled,
+      matPattern:state.matPattern,name:state.name,number:state.number
+    };
+    const key=JSON.stringify(configuration);
+    const existing=items.find((item)=>item.key===key);
+    if(existing) existing.quantity=Number(existing.quantity || 1)+1;
+    else items.push({
+      id:`trixlab-${Date.now()}`,key,quantity:1,
+      title:`${designLabels[state.design]} · Spark Trixx 2UP`,
+      subtitle:`${labels.coverage[state.coverage]} · ${labels.material[state.material]}${state.matsEnabled ? ` · ${matPatternLabels[state.matPattern]} Mats` : ''}`,
+      price:price(),image:designRenderImages[state.design],configuration
+    });
+    saveCart(items);
+    render();
     notify('CONFIGURED KIT ADDED TO CART');
   });
   document.querySelector('[data-cart]').addEventListener('click',() => {
-    const count=Number(document.querySelector('[data-cart] b').textContent||0);
-    if(!count){notify('YOUR CART IS EMPTY');return;}
-    document.querySelector('[data-price-dialog]').showModal();
+    if(!cartCount()){notify('YOUR CART IS EMPTY');return;}
+    location.href='index.html?cart=open';
   });
   const query = new URLSearchParams(location.search || sessionStorage.getItem('trixlab-studio-query') || '');
-  if (query.get('product') && products[query.get('product')]) state.product = query.get('product');
+  if (query.get('product') && products[query.get('product')]?.available) state.product = query.get('product');
   if (query.get('tab') && q(`[data-tab="${query.get('tab')}"]`)) q(`[data-tab="${query.get('tab')}"]`).click();
   render();
 })();
