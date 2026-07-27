@@ -42,7 +42,17 @@ assert.equal((html.match(/data-colorway="/g)||[]).length,20,'20 palettes create 
 assert.match(html,/240 VARIANTS/,'the full variant library is visible');
 assert.equal((html.match(/data-mat-pattern="/g)||[]).length,6,'traction mats offer 6 routed patterns');
 assert.equal((html.match(/button class="option[^"]*" type="button" data-coverage="/g)||[]).length,3,'full, side and accent kits have separate controls');
-assert.equal((html.match(/data-tab="/g)||[]).length,8,'studio has 8 configuration steps');
+assert.equal((html.match(/data-tab="/g)||[]).length,10,'studio has 10 configuration steps');
+assert.match(html,/data-loader/,'branded loading screen is present');
+assert.match(html,/data-model-gate/,'exact-model onboarding gate is present');
+assert.match(html,/data-tour-layer/,'guided studio tour is present');
+assert.match(html,/data-move-mode/,'canvas move tool is present');
+assert.match(html,/data-undo/,'undo control is present');
+assert.match(html,/data-redo/,'redo control is present');
+assert.equal((html.match(/data-library-logo="/g)||[]).length,6,'original element library offers 6 badges');
+assert.equal((html.match(/data-overlay="/g)||[]).length,5,'five overlay treatments are available');
+assert.match(html,/data-ai-generate/,'local concept design assistant is available');
+assert.equal((html.match(/data-coverage-zone="/g)||[]).length,3,'custom coverage has three independent panel areas');
 assert.match(html,/class="photo-wrap-layer"/,'wrap is a separate panel-aligned vector layer');
 assert.match(html,/class="photo-wrap-layer"[^>]*hidden/,'internal mapping layer is hidden before JavaScript loads');
 assert.match(html,/class="photo-mat-layer"/,'traction mat is a separate vector layer');
