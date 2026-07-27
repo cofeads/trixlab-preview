@@ -25,7 +25,7 @@ for(const layer of ['white','black','red','grey']){
   assert.ok(fs.existsSync(template),`real PDF template layer ${layer} exists`);
 }
 assert.ok(fs.existsSync('assets/trixx-2up-template-all.webp'),'single combined PDF kit mask exists');
-assert.match(landing,/href="studio\.html"/,'landing links to standalone studio');
+assert.match(landing,/href="studio\.html\?product=trixx-2up"/,'landing links to the active standalone Trixx 2UP studio');
 assert.doesNotMatch(landing,/data-studio/,'studio is no longer embedded in landing');
 for(const selector of ['data-studio','data-design','data-material','data-colorway','data-name','data-number','data-logo','data-coverage','data-finish','data-save','data-add','data-mat-pattern','data-mats-enabled','data-products-drawer']){
   assert.ok(html.includes(selector),`studio includes ${selector}`);
@@ -41,6 +41,7 @@ assert.equal((html.match(/class="product-card/g)||[]).length,3,'product drawer g
 assert.equal((html.match(/data-colorway="/g)||[]).length,20,'20 palettes create 240 live motif combinations');
 assert.match(html,/240 VARIANTS/,'the full variant library is visible');
 assert.equal((html.match(/data-mat-pattern="/g)||[]).length,6,'traction mats offer 6 routed patterns');
+assert.equal((html.match(/button class="option[^"]*" type="button" data-coverage="/g)||[]).length,3,'full, side and accent kits have separate controls');
 assert.equal((html.match(/data-tab="/g)||[]).length,8,'studio has 8 configuration steps');
 assert.match(html,/class="photo-wrap-layer"/,'wrap is a separate panel-aligned vector layer');
 assert.match(html,/class="photo-wrap-layer"[^>]*hidden/,'internal mapping layer is hidden before JavaScript loads');
@@ -52,6 +53,8 @@ assert.match(html,/data-export-svg/,'configured production SVG can be downloaded
 assert.doesNotMatch(html,/trixx-2up-template-outline\.webp/,'duplicate source-template overlay is not rendered');
 assert.match(html,/data-vehicle-image src="assets\/design-digital-left\.webp"/,'a new high-quality DIGITAL VOID render is the initial customer view');
 assert.equal((html.match(/data-camera-map="/g)||[]).length,4,'four separately mapped camera angles exist');
+assert.match(html,/coverage-side/,'mapped camera panels contain dedicated side-kit zones');
+assert.match(html,/coverage-accent/,'mapped camera panels contain dedicated accent-kit zones');
 assert.equal((html.match(/data-view="/g)||[]).length,5,'four camera angles plus panel layout are selectable');
 assert.doesNotMatch(html,/fit-points|mapping-status|P[1-9]/,'internal mapping points are never exposed in the customer UI');
 assert.match(html,/data-camera-mats="rear"/,'traction mats have a dedicated rear-view mapping');
@@ -67,6 +70,8 @@ assert.match(js,/data-cart.*addEventListener/,'cart button is wired');
 assert.match(js,/state\.design = button\.dataset\.design/,'design selection changes overlay state');
 assert.match(js,/width="4000mm" height="4000mm"/,'production SVG is explicitly exported at 1:1 on the 4000 mm master canvas');
 assert.match(js,/CONFIGURED_ARTWORK/,'production SVG separates configured artwork');
+assert.match(js,/coverage-clip/,'production export clips artwork to the selected kit coverage');
+assert.doesNotMatch(js,/coverageOpacity/,'coverage is never simulated with opacity');
 assert.match(js,/CUT_REFERENCE/,'production SVG includes a cut-reference layer');
 for(const [design,image] of Object.entries({
   apex:'apex-race-left',midnight:'design-midnight-left',electric:'design-electric-left',
@@ -77,4 +82,9 @@ for(const [design,image] of Object.entries({
   assert.match(css,new RegExp(`design-card i\\.${design}\\{background-image:url\\("assets/${image}\\.webp"\\)`),`${design} card uses its matching finished render`);
 }
 assert.ok(!js.includes('const $$'),'avoids double-dollar upload mangling');
+assert.match(landing,/data-model-card="trixx-1up"/,'homepage model chooser contains Trixx 1UP');
+assert.match(landing,/data-model-card="trixx-2up"/,'homepage model chooser contains active Trixx 2UP');
+assert.match(landing,/data-model-card="trixx-3up"/,'homepage model chooser contains Trixx 3UP');
+assert.match(landing,/data-cart-drawer/,'homepage includes a working cart drawer');
+assert.match(landing,/data-checkout-form/,'homepage includes checkout request flow');
 console.log('TRIXLAB standalone studio: structure, grouped models and HQ render checks passed.');
